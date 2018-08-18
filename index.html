@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Big Donut</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+  <script src="main.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Big Donut</h1>
+    <div class="donut"></div>
+  </header>
+  <main>
+    <div class="item">
+      <div class="donut"></div>
+      <div class="name">Amethyst</div>
+      <div class="description">Purple flavoured donut with purple</div>
+      <div class="buy">
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" />
+        <button>Buy</button>
+      </div>      
+    </div>
+  </main>
+  <script>
+    const donut = document.querySelector('.donut');
+    for (let i = 0; i < 300; i++) {
+      const sprinkle = document.createElement('div');
+      sprinkle.classList.add('sprinkle');
+
+      const left = Math.random() * 100;
+      const top = Math.random() * 100;
+
+      if (isInCircle(left, top, 45) && !isInCircle(left, top, 22)) {
+        sprinkle.style.backgroundColor = `hsl(${Math.random() * 359}, 70%, 50%)`;
+        sprinkle.style.left = `${left}%`;
+        sprinkle.style.top = `${top - 2}%`;
+        sprinkle.style.transform = `rotate(${Math.random()}turn)`;
+
+        donut.append(sprinkle);
+      }
+      
+    }
+
+    function isInCircle(x, y, r) {
+      const d = Math.sqrt((x - 50)**2 + (y - 50)**2);
+      return d < r;
+    }
+  </script>
+</body>
+</html>
