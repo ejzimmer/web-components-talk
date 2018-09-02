@@ -1,12 +1,18 @@
+@font-face {
+  font-family: Riffic;
+  src:  url('webfonts_Riffic/Riffic.ttf.woff') format('woff');
+}
+
 *, *::after, *::before {
   box-sizing: border-box;
 }
 
 body {
   --stroke-width: 1px;
+  --donut-size: 300px;
+  font-family: Verdana;
   background-color: #a1a2f4;
-  color: white;
-  font-family: Arial, Helvetica, sans-serif;
+  color: #209;
   font-weight: bold;
   font-size: 20px;
 }
@@ -19,18 +25,21 @@ header {
 
 h1 {
   -webkit-text-stroke: black 2px;
-  font-weight: bold;
+  color: white;
+  font-weight: 400;
+  font-family: Riffic;
   font-size: 80px;
   text-shadow: -4px 0 black, -4px 1px black, -4px 2px black, -4px 3px black;
   position: relative;
 }
 
 .donut {
-  width: 300px;
-  height: 300px;
+  width: var(--donut-size);
+  height: var(--donut-size);
+  --icing-colour: hotpink;
   border-radius: 50%;
   position: relative;
-  background-image: radial-gradient(circle at center, transparent, transparent 20%, black 20%, black 22%, brown 22%, hotpink 25%, hotpink 65%, brown 69%, black 69%);
+  background-image: radial-gradient(circle at center, transparent, transparent 20%, black 20%, black 22%, brown 22%, var(--icing-colour) 25%, var(--icing-colour) 65%, brown 69%, black 69%);
 }
 .sprinkle {
   width: 4px;
@@ -38,8 +47,26 @@ h1 {
   position: absolute;
 }
 
-.item .name {
+.information {
+  width: var(--donut-size);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h2 {
   font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.item .description {
+  padding: 0 1em;
+}
+
+.buy {
+  display: flex;
+  align-items: center;
+  margin-top: .5em;
 }
 
 .item input, .item button {
@@ -52,6 +79,8 @@ input {
   padding: .5ch 1ch;
   text-align: right;
   height: 35px;
+  margin-right: 1.5em;
+  margin-left: .75em;
 }
 
 .item button {
@@ -59,6 +88,6 @@ input {
   color: white;
   font-size: 20px; 
   width: 4.5ch;
-  height: 4.5ch;
+  height: 35px;
   position: relative;
 }
