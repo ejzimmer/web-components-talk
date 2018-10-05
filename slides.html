@@ -44,8 +44,10 @@
     <div class="reveal">
       <div class="slides">
 	      <section>
-					<h1>Web Components</h1>
-					<div class="subtitle">It's about time.</div>
+					<div class="centred">
+						<h1>Web Components</h1>
+						<div class="subtitle">It's about time.</div>		
+					</div>
 				</section>
 				<section data-background-image="images/Steven_Universe_title.jpg">
 				</section>
@@ -201,7 +203,7 @@
 						});
 					</script>
 				</section>
-				<section data-background-image="Big_Donut.png">
+				<section data-background-image="images/Big_Donut.png">
 					<a class="card" href="big-donut.html" target="blank">Big Demo</a>
 				</section>
 				<section>
@@ -296,15 +298,15 @@
 	      </section>
 	      <section>
 					<div>
-						<select class="hover-highlight" style="margin: 200px; transform: scale(3) translateX(-50%);">
+						<select class="hover-highlight">
 							<option>Steven</option>
 							<option>Connie</option>
 							<option>Peridot</option>
 							<option>Pink Diamond</option>
 						</select>
-						<input type="file" style="transform: scale(3) translateX(10%)" class="hover-highlight" />					
-				</div>
-				<video controls class="abc-tv hover-highlight" style="transform: scale(1.5) translateX(-20px)"></video> 
+						<input type="file" class="hover-highlight" style="transform: scale(2.5); margin: 50px" />					
+					</div>
+					<video controls class="abc-tv hover-highlight" style="transform: scale(2); margin: 100px;"></video> 
 					<div class="notes">
 						Actually, you're probably already familiar with shadow DOM
 						Each of these elements is obviously made up of a bunch of different parts,
@@ -316,8 +318,8 @@
 					</div>
 				</section>
 				<section>
-<pre style="width: 600px; margin-bottom: 0; transform: translateY(-70px);" class="fragment"><code><div id="outer"></div></code></pre>
-<pre style="width: 600px; transform: translateY(-70px);" class="fragment"><code>#outer {
+<pre style="width: 600px; margin-bottom: 0;" class="fragment"><code><div id="outer"></div></code></pre>
+<pre style="width: 600px;" class="fragment"><code>#outer {
  width: 200px;
  height: 200px;
  background-color: var(--yellow);
@@ -423,8 +425,8 @@ inner.style.margin = 'auto';</span>
 					</div>
 				</section>
 				<section>
-					<div style="transform: translateY(-100px); width: 600px; display: flex; flex-direction: column;">
-						<pre class="fragment"><code><template>
+					<div style="width: 600px; display: flex; flex-direction: column;">
+						<pre class="fragment" style="margin-top: 0;"><code><template>
   <div>Hello, <slot></slot></div>
 </template></code></pre>
 					<pre class="fragment"><code class="xml"><div class="greeting">
@@ -619,6 +621,7 @@ customElements.define('shadow-element', ShadowElement);
         controls: false,
         progress: false,
 				history: true,
+				center: false,
 				display: 'flex',
 				dependencies: [
 					{ src: 'reveal/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
