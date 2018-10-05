@@ -373,6 +373,14 @@ inner.style.margin = 'auto';</span>
 							- change to closed, show can't access via JS
 						</div>
 				</section>
+				<section>
+					<img src="images/caniuse-shadow-dom.png" class="border" />
+					<div class="notes">
+						- Shadow DOM v0, vs v1
+						- Under consideration for Edge
+						- Safari has minor bugs
+					</div>
+				</section>
 				<section data-state="shadow-dom-summary">
 					<div style="display: flex;">
 						<ul id="shadow-dom-summary" class="clear-list" style="margin: auto; font-size: 2em">
@@ -425,18 +433,20 @@ inner.style.margin = 'auto';</span>
 					</div>
 				</section>
 				<section>
-					<div style="width: 600px; display: flex; flex-direction: column;">
+					<div style="width: 650px; display: flex; flex-direction: column;">
 						<pre class="fragment" style="margin-top: 0;"><code><template>
   <div>Hello, <slot></slot></div>
 </template></code></pre>
 					<pre class="fragment"><code class="xml"><div class="greeting">
-  <span>World</span>
+  <span style="color: var(--yellow)">
+   World
+  </span>
 </div></code></pre>
 					<template id="greeting-template">
 						<div>Hello, <slot></slot></div>
 					</template>
 					<div id="greeting" class="fragment" style="margin-top: 50px">
-						<span>World</span>
+						<span style="color: var(--yellow)">World</span>
 					</div>
 					<script>
 						const greetingTemplate = document.getElementById('greeting-template').content;
@@ -444,6 +454,15 @@ inner.style.margin = 'auto';</span>
 						const greetingShadowRoot = greeting.attachShadow({ mode: 'open' });
 						greetingShadowRoot.appendChild(greetingTemplate.cloneNode(true));
 					</script>
+				</section>
+				<section data-background-image="images/sardonyx-background.png">
+					<div class="card light">Demo!</div>
+					<div class="notes">
+						If you remember back to our demo... (template.html)
+						- Cleaned things up a lot
+						- Still some repeated code: some structural code in the main HTML
+						- Slots will allow us to move all structural code to template & just have content in the main HTML
+					</div>
 				</section>
 				<section data-state="slots-demo">
 					<pre><code class="xml slots-demo-code"><template id="item-template">
@@ -494,96 +513,26 @@ inner.style.margin = 'auto';</span>
  </span>
 </div></code></pre>
 				</section>
-
-
-
-				<section data-background-image="images/sardonyx-background.png">
-					<div class="card light">Demo!</div>
-				</section>
-
-
-
-				<section>
-					<pre><code>
-const template = document.getElementById('buy-template');
-const items = document.querySelectorAll('.item');
-      
-items.forEach((item) => {
-  const clone = document.importNode(template.content, true);
-  const shadow = item.attachShadow({ mode: 'open' });
-  shadow.appendChild(clone);
-});
-					</code></pre>
-				</section>
-				<section>
-					<div class="notes">
-						but it gets better! new ability unlocked! html slots
-						something else you've seen before
+				<section data-state="slots-summary">
+					<div style="display: flex;">
+						<ul id="slots-summary" class="clear-list" style="margin: auto; font-size: 2em">
+							<li>Custom</li>
+							<li class="highlighted">Reusable</li>
+							<li class="highlighted">Encapsulated</li>
+						</ul>
 					</div>
+					<script>
+						Reveal.addEventListener('slots-summary', () => {
+							doOnKeyPress(highlightSummaryList.bind(undefined, '#slots-summary'));
+						});
+					</script>
 				</section>
-				<section>
-				</section>
-				<section>
-<pre><code>
-<select>
- <option>Steven</option>
- <option>Connie</option>
- <option>Peridot</option>
- <option>Pink Diamond</option>
-</select>
-</code></pre>
-<div class="notes">
-  shadow dom + you can pass things into it!
-</div>
-</section>
-	       <section>
-	       </section>
-	       <section>
-<pre><code data-noescape>&lt;div class="item"&gt;
- &lt;div class="picture"&gt;
-  &lt;img src="images/<span class="dimmed">donut.png"</span> /&gt;
- &lt;/div&gt;
- &lt;h2&gt;<span class="dimmed">Donut</span>&lt;/h2&gt;
- &lt;div class="description"&gt;
-  <span class="dimmed">Exactly what you'd expect at a donut shop</span>
- &lt;/div&gt;
- &lt;div class="buy"&gt;
-  &lt;label&gt;
-   &lt;span&gt;How many?&lt;/span&gt;
-   &lt;input type="number" /&gt;
-  &lt;/label&gt;
-  &lt;button&gt;Buy&lt;/button&gt;
- &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-dim on keypress
-better font
-syntax highlighting
-need to enable code highlighting
-	       </section>
-	       <section>
-<pre><code data-noescape>&lt;div class="item"&gt;
- &lt;div class="picture"&gt;
-  &lt;img src="<span style="font-family: Riffic; color: var(--yellow)">???</span>.png" /&gt;
- &lt;/div&gt;
- &lt;h2&gt;<span style="font-family: Riffic; color: var(--yellow)">???</span>&lt;/h2&gt;
- &lt;div class="description"&gt;
-  <span style="font-family: Riffic; color: var(--yellow)">???</span>
- &lt;/div&gt;
- &lt;div class="buy"&gt;
-  &lt;label&gt;
-   &lt;span&gt;How many?&lt;/span&gt;
-   &lt;input type="number" /&gt;
-  &lt;/label&gt;
-  &lt;button&gt;Buy&lt;/button&gt;
- &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
+	
 
-	         <div class="notes">
-	           Wouldn't it be great if we could create a template with holes in it that we could fill in later
-	         </div>
-	       </section>
+
+
+
+
 	       <section>
 	         template with slots
 	         element using slot
