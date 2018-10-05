@@ -33,6 +33,10 @@
 				}
 				doOnKeyPress(...callbacks);
 			}
+			function highlightSummaryList(listSelector) {
+				document.querySelectorAll(`${listSelector} li:not(.highlighted)`).forEach(li => li.classList.add('dimmed'));
+			}
+
 		</script>						
 			
   </head>
@@ -40,8 +44,8 @@
     <div class="reveal">
       <div class="slides">
 	      <section>
-				<h1>Web Components</h1>
-				<div class="subtitle">It's about time.</div>
+					<h1>Web Components</h1>
+					<div class="subtitle">It's about time.</div>
 				</section>
 				<section data-background-image="images/Steven_Universe_title.jpg">
 				</section>
@@ -229,10 +233,10 @@
 					<div class="card light">Demo!</div>
 				</section>
 				<section>
-				<img src="images/caniuse-templates.png" class="border" />
-				<div class="notes">
-					explanation of IE and opera mini
-				</div>
+					<img src="images/caniuse-templates.png" class="border" />
+					<div class="notes">
+						explanation of IE and opera mini
+					</div>
 				</section>
 				<section data-state="template-summary">
 					<div style="display: flex;">
@@ -244,17 +248,13 @@
 					</div>
 					<script>
 						Reveal.addEventListener('template-summary', () => {
-							function highlightReusable() {
-								document.querySelectorAll('#template-summary li:not(.highlighted)')
-								.forEach(li => li.classList.add('dimmed'));
-							}
-							doOnKeyPress(highlightReusable);
+							doOnKeyPress(highlightSummaryList.bind(undefined, '#template-summary'));
 						});
 					</script>
 				</section>
 				<section>
 					<div style="display: flex; width: 100%">
-						<img style="width: 66%" src="images/shadow-dom.svg" />
+						<img style="flex-grow: 2" src="images/shadow-dom.svg" />
 						<img src="images/GarnetByKmes.png" />
 					</div>
 				</section>
@@ -315,9 +315,9 @@
 						New Shadow DOM spec = you can now build elements like this.
 					</div>
 				</section>
-				<section data-nocenter>
-<pre style="width: 600px; margin-bottom: 0; transform: translateY(-100px);" class="fragment"><code><div id="outer"></div></code></pre>
-<pre style="width: 600px; transform: translateY(-100px);" class="fragment"><code>#outer {
+				<section>
+<pre style="width: 600px; margin-bottom: 0; transform: translateY(-70px);" class="fragment"><code><div id="outer"></div></code></pre>
+<pre style="width: 600px; transform: translateY(-70px);" class="fragment"><code>#outer {
  width: 200px;
  height: 200px;
  background-color: var(--yellow);
@@ -370,17 +370,85 @@ inner.style.margin = 'auto';</span>
 							- can access via JS and change styles (use background-color)
 							- change to closed, show can't access via JS
 						</div>
-		
 				</section>
-				<section>
+				<section data-state="shadow-dom-summary">
+					<div style="display: flex;">
+						<ul id="shadow-dom-summary" class="clear-list" style="margin: auto; font-size: 2em">
+							<li>Custom</li>
+							<li>Reusable</li>
+							<li class="highlighted">Encapsulated</li>
+						</ul>
+					</div>
+					<script>
+						Reveal.addEventListener('shadow-dom-summary', () => {
+							doOnKeyPress(highlightSummaryList.bind(undefined, '#shadow-dom-summary'));
+						});
+					</script>
 					<div class="notes">
-						so this is nice and all, but it only works if you build all your DOM in JavaScript
-						wouldn't it be great if there was a way to combine shadow DOM with HTML
+						This is cool and all, but where things start getting much more interesting is when
+						we combine the two specs we've looked at already
 					</div>
 				</section>
 				<section>
-					Sardonyx - HTML templates + Shadow DOM
+					<div class="spec-pics">
+						<img src="images/templates.svg" />
+						<img src="images/shadow-dom.svg" />
+					</div>
+					<img style="position: fixed; right: -100px; bottom: 0;" src="images/Sardonyx_by_Lenhi.png" class="fragment" />
 				</section>
+				<section>
+					<h2 style="font-size: 4em">Slots</h2>
+					<div class="notes">
+							Slots are shadow DOM that we can pass bits of light DOM into
+							Like select elements - pass in options
+						</div>	
+				</section>
+				<section>
+					<select>
+						<option>Steven</option>
+						<option>Connie</option>
+						<option>Peridot</option>
+						<option>Pink Diamond</option>
+					</select>	
+					<pre><code><select>
+ <option>Steven</option>
+ <option>Connie</option>
+ <option>Peridot</option>
+ <option>Pink Diamond</option>
+</select></code></pre>	
+					<div class="notes">
+						Even though we can't affect the inner DOM of the select very much at all
+						(can't even add padding!), we can still pass it these options elements
+						Slots work a lot like this.
+					</div>
+				</section>
+				<section>
+					<div style="transform: translateY(-100px); width: 600px; display: flex; flex-direction: column;">
+						<pre class="fragment"><code><template>
+  <div>Hello, <slot></slot></div>
+</template></code></pre>
+					<pre class="fragment"><code class="xml"><div class="greeting">
+  <span>World</span>
+</div></code></pre>
+					<template id="greeting-template">
+						<div>Hello, <slot></slot></div>
+					</template>
+					<div id="greeting" class="fragment" style="margin-top: 50px">
+						<span>World</span>
+					</div>
+					<script>
+						const greetingTemplate = document.getElementById('greeting-template').content;
+						const greeting = document.getElementById('greeting');
+						const greetingShadowRoot = greeting.attachShadow({ mode: 'open' });
+						greetingShadowRoot.appendChild(greetingTemplate.cloneNode(true));
+					</script>
+				</section>
+				<section data-background-image="images/sardonyx-background.png">
+					<div class="card light">Demo!</div>
+				</section>
+
+
+
 				<section>
 					<pre><code>
 const template = document.getElementById('buy-template');
@@ -400,27 +468,6 @@ items.forEach((item) => {
 					</div>
 				</section>
 				<section>
-					<pre>
-					<style>
-						#clod {
-							border: 4px solid var(--black);
-							border-radius: 5px;
-							width: 75%;
-							background-color: transparent;
-							font-size: 2em;
-							font-family: Riffic;
-							padding: .5em;
-							padding-top: .75em;
-							color: var(--blue);
-						}
-					</style>
-					</pre>
-					<select id="clod">
-						<option>Steven</option>
-						<option>Connie</option>
-						<option>Peridot</option>
-						<option>Pink Diamond</option>
-					</select>
 				</section>
 				<section>
 <pre><code>
