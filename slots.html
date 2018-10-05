@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Big Donut</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="main.css">
+  
+  <template id="item-template">
+    <div class="item">
+      <div class="picture">
+        <slot name="picture"></slot>
+      </div>
+      <h2><slot name="item-name"></slot></h2>
+      <div class="description"><slot name="description"></slot></div>
+      <div class="buy">
+        <label>
+          <span>How many?</span>
+          <input type="number" />
+        </label>
+        <button>Buy</button>
+      </div>
+    </div>
+  </template>
+</head>
+<body>
+  <header>
+    <h1>BIG DONUT</h1>
+    <div class="donut"></div>
+  </header>
+  <main>
+    <div class="item">
+      <img slot="picture" src="images/donut.png" />
+      <span slot="item-name">Donut</span>
+      <span slot="description">Exactly what you'd expect at a donut shop</span>
+    </div>
+    
+    <div class="item">
+      <img slot="picture" src="images/Cookie_Cat.png" />
+      <span slot="item-name">Cookie Cat</span>
+      <span slot="description">Cat-flavoured ice cream sandwich</span>
+    </div>
+    
+    <div class="item">
+      <img slot="picture" src="images/Lion_Lickers.png" />
+      <span slot="item-name">Lion Licker</span>
+      <span slot="description">Superior lion-based ice cream</span>
+    </div>
+
+    <div class="item">
+      <img slot="picture" src="images/Dog-Nut.png" />
+      <span slot="item-name">Dog-nut</span>
+      <span slot="description">Hot dog with donuts and mustard</span>
+    </div>
+
+    <div class="item">
+      <img slot="picture" src="images/Spicy_Pretzel.png" />
+      <span slot="item-name">Spicy Pretzel</span>
+      <span slot="description">So spicy you'll die</span>
+    </div>
+
+    <div class="item">
+      <img slot="picture" src="images/Sugar_Shock_Shut_Down.png" />
+      <span slot="item-name">Sugar Shock Shut Down</span>
+      <span slot="description">Turns everything red</span>
+    </div>
+
+    <div class="item">
+      <img slot="picture" src="images/Durian_Juice.png" />
+      <span slot="item-name">Durian Juice</span>
+      <span slot="description">All natural durian juice, made from concentrate</span>
+    </div>
+
+  </main>
+  <script>
+    // Different way of copying nodes. Make them consistent
+    window.onload = function () {
+      const template = document.getElementById('item-template').content;
+      const items = document.querySelectorAll('.item');
+      
+      items.forEach((item) => {
+        const shadowRoot = item.attachShadow({ mode: 'open' });
+        shadowRoot.appendChild(template.cloneNode(true));
+      });
+    };
+  
+    const donut = document.querySelector('.donut');
+    for (let i = 0; i < 300; i++) {
+      const sprinkle = document.createElement('div');
+      sprinkle.classList.add('sprinkle');
+
+      const left = Math.random() * 100;
+      const top = Math.random() * 100;
+
+      if (isInCircle(left, top, 45) && !isInCircle(left, top, 22)) {
+        sprinkle.style.backgroundColor = `hsl(${Math.random() * 359}, 70%, 50%)`;
+        sprinkle.style.left = `${left}%`;
+        sprinkle.style.top = `${top - 2}%`;
+        sprinkle.style.transform = `rotate(${Math.random()}turn)`;
+
+        donut.append(sprinkle);
+      }
+      
+    }
+
+    function isInCircle(x, y, r) {
+      const d = Math.sqrt((x - 50)**2 + (y - 50)**2);
+      return d < r;
+    }
+  </script>
+</body>
+</html>

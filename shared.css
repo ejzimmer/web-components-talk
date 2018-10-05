@@ -1,0 +1,28 @@
+@font-face {
+  font-family: Riffic;
+  src:  url('webfonts_Riffic/Riffic.ttf.woff') format('woff');
+}
+
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+*:focus {
+  outline: none;
+}
+
+body {
+  --blue: #80b5ff;
+  --yellow: #f4ce58;
+  --black: #331d01;
+  --red: #f26868;
+  --purple: #9324c6;
+  --dark-blue: #1d2ff7;
+  background-color: var(--blue);
+  color: var(--text);
+  margin: 0;
+  font-family: Riffic;
+  font-size: 2em;
+  text-align: left;
+}
+
