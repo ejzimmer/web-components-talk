@@ -11,7 +11,23 @@
 
 		<script>
 			const isNextSlide = key => key === 'PageDown' || key === 'ArrowRight' || key === ' ';
-		</script>
+			function doOnKeyPress(...callbacks) {
+				function listener(event) {
+					if (isNextSlide(event.key)) {
+						event.stopPropagation();
+						callbacks[0]();
+						document.body.removeEventListener('keydown', listener);
+
+						if (callbacks.length > 1) {
+							callbacks = callbacks.slice(1);
+							doOnKeyPress(...callbacks);
+						}
+					}
+				}
+				document.body.addEventListener('keydown', listener);
+			}
+		</script>						
+			
   </head>
   <body>
     <div class="reveal">
@@ -205,41 +221,70 @@
 				<section data-background-image="images/pearl-to-action.jpg">
 					<div class="card light">Demo!</div>
 				</section>
-	       <section>
-					<img src="images/caniuse-templates.png" class="border" />
-					<div class="notes">
-						explanation of IE and opera mini
+				<section>
+				<img src="images/caniuse-templates.png" class="border" />
+				<div class="notes">
+					explanation of IE and opera mini
+				</div>
+				</section>
+				<section data-state="template-summary">
+					<div style="display: flex;">
+						<ul id="template-summary" class="clear-list" style="margin: auto; font-size: 2em">
+							<li>Custom</li>
+							<li class="highlighted">Reusable</li>
+							<li>Encapsulated</li>
+						</ul>
 					</div>
-	       </section>
-	       <section data-state="template-summary">
-	         <div style="display: flex">
-             <ul id="template-summary" class="clear-list" style="margin: auto; font-size: 2em">
-                <li>Custom</li>
-                <li class="highlighted">Reusable</li>
-                <li>Encapsulated</li>
-              </ul>
-            </div>
+					<script>
+						Reveal.addEventListener('template-summary', () => {
+							function highlightReusable() {
+								document.querySelectorAll('#template-summary li:not(.highlighted)')
+								.forEach(li => li.classList.add('dimmed'));
+							}
+							doOnKeyPress(highlightReusable);
+						});
+					</script>
+				</section>
+				<section>
+					<div style="display: flex; width: 100%">
+						<img style="width: 66%" src="images/shadow-dom.svg" />
+						<img src="images/GarnetByKmes.png" />
+					</div>
+				</section>
+				<section data-state="ruby-sapphire-fusion">
+						<div class="alert">Spoiler Alert!</div>
+						<div id="ruby-sapphire-fusion" class="bottom-up-images down">
+							<img class="ruby" src="images/ruby.png" />
+							<img class="sapphire" src="images/sapphire.png" />
+							<img class="garnet hidden" src="images/GarnetByKmes.png" style="margin: auto" />
+						</div>
+						<div class="notes">
+							Spoiler alert for the last episode of season 1
+							Garnet demonstrates shadow DOM because she's actually a gem fusion
+							She's made up inside of two gems, with different abilities, but presents
+							a single, unified API to the outside world
+						</div>
 						<script>
-							Reveal.addEventListener('template-summary', () => {
-								function highlightReusable() {
-									document.querySelectorAll('#template-summary li:not(.highlighted)')
-									.forEach(li => li.classList.add('dimmed'));
+							Reveal.addEventListener('ruby-sapphire-fusion', () => {
+								function showRubyAndSapphire() {
+									document.getElementById('ruby-sapphire-fusion').classList.remove('down');
 								}
-								doOnKeyPress(highlightReusable);
+								function fuseRubyAndSapphire() {
+									document.querySelectorAll('#ruby-sapphire-fusion img').forEach(gem => gem.classList.add('fused'));
+									document.body.addEventListener('transitionend', () => {
+										document.querySelectorAll('#ruby-sapphire-fusion img').forEach(gem => gem.classList.add('hidden'));
+										const garnet = document.querySelector('#ruby-sapphire-fusion .garnet');
+										requestAnimationFrame(() => {
+											garnet.classList.remove('hidden');
+											requestAnimationFrame(() => {
+												garnet.style.transform = 'scale(1.5)';
+											});
+										});
+									}, { once: true });
+								}
+								doOnKeyPress(showRubyAndSapphire, fuseRubyAndSapphire);
 							});
 						</script>
-	       </section>
-	       <section>
-	         <div style="display: flex">
-  	         <img style="width: 66%" src="images/shadow-dom.svg" />
-	           <img src="images/GarnetByKmes.png" />
-	         </div>
-	         credit for Garnet picture
-	       </section>
-	       <section>
-	         spoiler alert
-	         perma-fusion - two different gems on the inside, single united gem on outside
-	         picture of ruby and sapphire
 	       </section>
 	       <section>
 	         <div class="notes">
@@ -519,17 +564,5 @@ customElements.define('shadow-element', ShadowElement);
 				]
 			});
 		</script>
-		<script>
-			function doOnKeyPress(callback) {
-				function listener(event) {
-					if (isNextSlide(event.key)) {
-						event.stopPropagation();
-						callback();
-						document.body.removeEventListener('keydown', listener);
-					}
-				}
-				document.body.addEventListener('keydown', listener);
-			}
-		</script>						
   </body>
 </html>
