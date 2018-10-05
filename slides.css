@@ -179,7 +179,7 @@ ol li {
 .dimmed {
   color: var(--shadow-colour);
 }
-code .dimmed, code .dimmed * {
+code .dimmed, code .dimmed *, .hljs.dimmed {
   color: var(--purple);
 }
 

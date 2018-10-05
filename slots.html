@@ -24,6 +24,7 @@
       </div>
     </div>
   </template>
+
 </head>
 <body>
   <header>
@@ -75,7 +76,12 @@
 
   </main>
   <script>
-    // Different way of copying nodes. Make them consistent
+
+    // Coding demo
+    // Select template & items exactly the same as before
+    // Loop through exactly the same as before
+    // Attach a shadow root, rather than just appending the cloned node
+    // Append the cloned node to the shadow root
     window.onload = function () {
       const template = document.getElementById('item-template').content;
       const items = document.querySelectorAll('.item');

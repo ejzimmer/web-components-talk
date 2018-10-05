@@ -445,6 +445,58 @@ inner.style.margin = 'auto';</span>
 						greetingShadowRoot.appendChild(greetingTemplate.cloneNode(true));
 					</script>
 				</section>
+				<section data-state="slots-demo">
+					<pre><code class="xml slots-demo-code"><template id="item-template">
+<div class="item">
+ <div class="picture">
+  <slot name="picture"></slot>
+ </div>
+ <h2><slot name="item-name"></slot></h2>
+ <div class="description">
+  <slot name="description"></slot>
+ </div>
+ <div class="buy">
+  <label>
+   <span>How many?</span>
+   <input type="number" />
+  </label>
+  <button>Buy</button>
+ </div>
+</div>
+</template></code></pre>
+					<script>
+						Reveal.addEventListener('slots-demo', () => {
+							const linesToHighlight = [4, 8, 12];
+
+							function highlightSlots() {
+								document.querySelectorAll('.slots-demo-code, .slots-demo-code *').forEach(element => element.classList.add('dimmed'));
+								linesToHighlight.forEach(lineNumber => {
+									highlightChild(lineNumber);
+									highlightChild(lineNumber + 1);
+								});
+							}
+							function highlightChild(n) {
+								const selector = `.slots-demo-code > .hljs-tag:nth-child(${n})`;
+								document.querySelector(selector).classList.remove('dimmed');
+								document.querySelectorAll(`${selector} *`).forEach(element => element.classList.remove('dimmed'));
+							}
+
+							doOnKeyPress(highlightSlots);
+						});
+					</script>
+				</section>
+				<section>
+					<pre><code class="xml"><div class="item">
+ <img slot="picture" src="images/donut.png" />
+ <span slot="item-name">Donut</span>
+ <span slot="description">
+  Exactly what you'd expect at a donut shop
+ </span>
+</div></code></pre>
+				</section>
+
+
+
 				<section data-background-image="images/sardonyx-background.png">
 					<div class="card light">Demo!</div>
 				</section>
