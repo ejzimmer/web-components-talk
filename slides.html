@@ -174,25 +174,25 @@
 						});
 					</script>
 				</section>
-	       <section data-background-image="Big_Donut.png">
-	         <a class="card" href="big-donut.html" target="blank">Big Demo</a>
-	       </section>
-	       <section>
-	         <h2>HTML Templates</h2>
-	         <img src="images/templates.svg" style="width: 40vw" />
-	       </section>
-	       <section>
-	         <div style="display: flex; align-items: center">
-  	         <ol>
-  	           <li>Create a reusable template using <code>&lt;template&gt;&lt;/template&gt;</code></li>
-  	           <li>Clone the template</li>
-  	           <li>Attach the clone to the DOM</li>
-  	         </ol>
-  	         <img src="images/holo-pearl.jpg" style="width: 50%" />
-  	       </div>
-	       </section>
-	       <section>
-	         <pre><code class="xml"><template id="buy-template">
+				<section data-background-image="Big_Donut.png">
+					<a class="card" href="big-donut.html" target="blank">Big Demo</a>
+				</section>
+				<section>
+					<h2>HTML Templates</h2>
+					<img src="images/templates.svg" style="width: 40vw" />
+				</section>
+				<section>
+					<div style="display: flex; align-items: center">
+						<ol>
+							<li>Create a reusable template using <code>&lt;template&gt;&lt;/template&gt;</code></li>
+							<li>Clone the template</li>
+							<li>Attach the clone to the DOM</li>
+						</ol>
+						<img src="images/holo-pearl.jpg" style="width: 50%" />
+					</div>
+				</section>
+				<section>
+					<pre><code class="xml"><template id="buy-template">
  <div class="buy">
   <label>
     <span>How many?</span>
@@ -201,20 +201,33 @@
   <button>Buy</button>
  </div>
 </template></code></pre>
-	       </section>
+				</section>
+				<section data-background-image="images/pearl-to-action.jpg">
+					<div class="card light">Demo!</div>
+				</section>
 	       <section>
-	         - caniuse table of template
-	         - explanation of IE & opera mini
+					<img src="images/caniuse-templates.png" class="border" />
+					<div class="notes">
+						explanation of IE and opera mini
+					</div>
 	       </section>
-	       <section>
+	       <section data-state="template-summary">
 	         <div style="display: flex">
-             <ul class="clear-list" style="margin: auto; font-size: 2em">
-                <li class="dimmed">Custom</li>
-                <li>Reusable</li>
-                <li class="dimmed">Encapsulated</li>
+             <ul id="template-summary" class="clear-list" style="margin: auto; font-size: 2em">
+                <li>Custom</li>
+                <li class="highlighted">Reusable</li>
+                <li>Encapsulated</li>
               </ul>
             </div>
-            make it so dimmed class gets added on keypress
+						<script>
+							Reveal.addEventListener('template-summary', () => {
+								function highlightReusable() {
+									document.querySelectorAll('#template-summary li:not(.highlighted)')
+									.forEach(li => li.classList.add('dimmed'));
+								}
+								doOnKeyPress(highlightReusable);
+							});
+						</script>
 	       </section>
 	       <section>
 	         <div style="display: flex">
@@ -506,5 +519,17 @@ customElements.define('shadow-element', ShadowElement);
 				]
 			});
 		</script>
+		<script>
+			function doOnKeyPress(callback) {
+				function listener(event) {
+					if (isNextSlide(event.key)) {
+						event.stopPropagation();
+						callback();
+						document.body.removeEventListener('keydown', listener);
+					}
+				}
+				document.body.addEventListener('keydown', listener);
+			}
+		</script>						
   </body>
 </html>
