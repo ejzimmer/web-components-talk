@@ -16,7 +16,7 @@ body {
   --yellow: #f4ce58;
   --black: #331d01;
   --red: #f26868;
-  --purple: #9324c6;
+  --purple: #b898ca;
   --dark-blue: #1d2ff7;
   background-color: var(--blue);
   color: var(--text);
@@ -26,3 +26,6 @@ body {
   text-align: left;
 }
 
+.hidden {
+  display: none;
+}

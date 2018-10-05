@@ -26,6 +26,13 @@
 				}
 				document.body.addEventListener('keydown', listener);
 			}
+			function doOnKeyPresses(callback, times) {
+				const callbacks = [];
+				for (let i = 0; i < times; i++) {
+					callbacks.push(callback);
+				}
+				doOnKeyPress(...callbacks);
+			}
 		</script>						
 			
   </head>
@@ -263,6 +270,7 @@
 							Garnet demonstrates shadow DOM because she's actually a gem fusion
 							She's made up inside of two gems, with different abilities, but presents
 							a single, unified API to the outside world
+							And that's how shadow DOM works! Kind of.
 						</div>
 						<script>
 							Reveal.addEventListener('ruby-sapphire-fusion', () => {
@@ -285,90 +293,96 @@
 								doOnKeyPress(showRubyAndSapphire, fuseRubyAndSapphire);
 							});
 						</script>
-	       </section>
-	       <section>
-	         <div class="notes">
-	           Actually, you're probably already familiar with shadow DOM
-	         </div>
-	         <select>
-	           <option>Steven</option>
-	           <option>Connie</option>
-	           <option>Peridot</option>
-	           <option>Pink Diamond</option>
-	         </select>
-	         <input type="file" />
-	         <video></video>
-	       </section>
-	       <section>
-	         <pre><code>
-	         <style style="display: block" contenteditable="true">
-	           #impervious-checkbox {
-	             width: 200px;
-	             height: 200px;
-	             border-radius: 0;
-	             border: initial;
-	             background-color: initial;
-	             color: blue;
-	             font-size: 16px;
-	             font-weight: bold;
-	           }
-	         </style>
-	         </code></pre>
-	         <input type="checkbox" id="impervious-checkbox" />
-	         <div class="notes">
-	           Can change width and height, but only to squares
-	           Can't change pretty much anything else at all
-	           Behaves differently in different browsers (show if time)
-	         </div>
-	       </section>
-	       <section>
-	         <div class="notes">
-	           checkbox has shield that allows it to repel our CSS
-	           steven with shield repelling attack
-	         </div>
-	       </section>
-	       <section>
-	         shadow DOM - gives us a DOM that's isolated from the normal DOM
-	         Garnet - actually a fusion of two gems, but presents a single API
-	         that hides this implementation detail
-	         Shadow DOM elements could have multiple elements inside them, but
-	         they appear as a single element in the main DOM
-	         And, with the new Shadow DOM spec, that power is yours too! (picture of Garnet pointing)
-	       </section>
-	       <section>
-	         <div id="outer-box"></div>
-	         <pre><code><style style="display: block">
-	           #outer-box {
-	             width: 200px;
-	             height: 200px;
-	             background-color: var(--yellow);
-	             display: flex;
-	           }
-	         </style></code></pre>
-	         <pre><code><script style="display: block">
-	           const shadow = document.getElementById('outer-box').attachShadow({ mode: 'open' });
-	           const inner = document.createElement('div');
-	           inner.style.width = '100px';
-	           inner.style.height = '100px';
-	           inner.style.border = '4px solid var(--red)';
-	           inner.style.margin = 'auto';
-	           shadow.appendChild(inner);
-	         </script></code></pre>
-	         <div class="notes">
-	           show that we can't target it with js or css
-	         </div>
-	       </section>
-	       <section>
-	         <div class="notes">
-	           so this is nice and all, but it only works if you build all your DOM in JavaScript
-	           wouldn't it be great if there was a way to combine shadow DOM with HTML
-	         </div>
-	       </section>
-	       <section>
-	         Sardonyx - HTML templates + Shadow DOM
-	       </section>
-	       <section>
-	         <pre><code>
+	      </section>
+	      <section>
+					<div>
+						<select class="hover-highlight" style="margin: 200px; transform: scale(3) translateX(-50%);">
+							<option>Steven</option>
+							<option>Connie</option>
+							<option>Peridot</option>
+							<option>Pink Diamond</option>
+						</select>
+						<input type="file" style="transform: scale(3) translateX(10%)" class="hover-highlight" />					
+				</div>
+				<video controls class="abc-tv hover-highlight" style="transform: scale(1.5) translateX(-20px)"></video> 
+					<div class="notes">
+						Actually, you're probably already familiar with shadow DOM
+						Each of these elements is obviously made up of a bunch of different parts,
+						but they appear as a single element to the developer
+						(Exception: select, but even then the options elements are clearly each made up of
+						multiple bits which appear as a single element to the user)
+						They are - essentially - a bit of DOM that is hidden from the main DOM
+						New Shadow DOM spec = you can now build elements like this.
+					</div>
+				</section>
+				<section data-nocenter>
+<pre style="width: 600px; margin-bottom: 0; transform: translateY(-100px);" class="fragment"><code><div id="outer"></div></code></pre>
+<pre style="width: 600px; transform: translateY(-100px);" class="fragment"><code>#outer {
+ width: 200px;
+ height: 200px;
+ background-color: var(--yellow);
+ display: flex;
+}</code></pre>
+				</section>
+				<section>
+					<div id="outer"></div>
+				</section>
+				<section data-state="create-shadow">
+					<pre><code data-noescape class="create-shadow"><span>const inner = document.createElement('div');</span>
+<span>inner.style.width = '100px';
+inner.style.height = '100px';
+inner.style.border = '4px solid var(--red)';
+inner.style.margin = 'auto';</span>
+
+<span>const outer = document.getElementById('outer');</span>
+<span>const shadow = outer.attachShadow({ mode: 'open' });</span>
+<span>outer.appendChild(inner);</span>
+</code></pre>
+					<script>
+						Reveal.addEventListener('create-shadow', () => {
+							let n = 0;
+
+							function highlightLine() {
+								document.querySelectorAll('code.create-shadow > span').forEach(line => line.classList.add('dimmed'));
+								document.querySelector(`code.create-shadow > span:nth-child(${++n})`).classList.remove('dimmed');
+							}
+
+							doOnKeyPresses(highlightLine, 5);
+						});
+					</script>
+				</section>
+				<section class="box-in-box">
+					<div id="outer"></div>
+					<script>
+						const inner = document.createElement('div');
+						inner.style.width = '100px';
+						inner.style.height = '100px';
+						inner.style.border = '4px solid var(--red)';
+						inner.style.margin = 'auto';
+
+						const outer = document.querySelector('.box-in-box #outer');
+						const shadow = outer.attachShadow({ mode: 'open' });
+						shadow.appendChild(inner);						
+					</script>
+						<div class="notes">
+							- show CSS can't touch it
+							- this is a little bit different from some browser native shadow elements, as CSS can touch them a bit
+							- can access via JS and change styles (use background-color)
+							- change to closed, show can't access via JS
+						</div>
+		
+				</section>
+				<section>
+					<div class="notes">
+						so this is nice and all, but it only works if you build all your DOM in JavaScript
+						wouldn't it be great if there was a way to combine shadow DOM with HTML
+					</div>
+				</section>
+				<section>
+					Sardonyx - HTML templates + Shadow DOM
+				</section>
+				<section>
+					<pre><code>
 const template = document.getElementById('buy-template');
 const items = document.querySelectorAll('.item');
       
@@ -377,38 +391,38 @@ items.forEach((item) => {
   const shadow = item.attachShadow({ mode: 'open' });
   shadow.appendChild(clone);
 });
-	         </code></pre>
-	       </section>
-	       <section>
-	         <div class="notes">
-	           but it gets better! new ability unlocked! html slots
-	           something else you've seen before
-	         </div>
-	       </section>
-	       <section>
-	         <pre>
-	         <style>
-	           #clod {
-	             border: 4px solid var(--black);
-	             border-radius: 5px;
-	             width: 75%;
-	             background-color: transparent;
-	             font-size: 2em;
-	             font-family: Riffic;
-	             padding: .5em;
-	             padding-top: .75em;
-	             color: var(--blue);
-	           }
-		       </style>
-	         </pre>
-	         <select id="clod">
- 	           <option>Steven</option>
-	           <option>Connie</option>
-	           <option>Peridot</option>
-	           <option>Pink Diamond</option>
-	         </select>
-	       </section>
-	       <section>
+					</code></pre>
+				</section>
+				<section>
+					<div class="notes">
+						but it gets better! new ability unlocked! html slots
+						something else you've seen before
+					</div>
+				</section>
+				<section>
+					<pre>
+					<style>
+						#clod {
+							border: 4px solid var(--black);
+							border-radius: 5px;
+							width: 75%;
+							background-color: transparent;
+							font-size: 2em;
+							font-family: Riffic;
+							padding: .5em;
+							padding-top: .75em;
+							color: var(--blue);
+						}
+					</style>
+					</pre>
+					<select id="clod">
+						<option>Steven</option>
+						<option>Connie</option>
+						<option>Peridot</option>
+						<option>Pink Diamond</option>
+					</select>
+				</section>
+				<section>
 <pre><code>
 <select>
  <option>Steven</option>
