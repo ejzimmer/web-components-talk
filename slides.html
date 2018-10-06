@@ -247,7 +247,7 @@
 				</section>
 				<section data-state="template-summary">
 					<div style="display: flex;">
-						<ul id="template-summary" class="clear-list" style="margin: auto; font-size: 2em">
+						<ul id="template-summary">
 							<li>Custom</li>
 							<li class="highlighted">Reusable</li>
 							<li>Encapsulated</li>
@@ -384,7 +384,7 @@ inner.style.margin = 'auto';</span>
 				</section>
 				<section data-state="shadow-dom-summary">
 					<div style="display: flex;">
-						<ul id="shadow-dom-summary" class="clear-list" style="margin: auto; font-size: 2em">
+						<ul id="shadow-dom-summary">
 							<li>Custom</li>
 							<li>Reusable</li>
 							<li class="highlighted">Encapsulated</li>
@@ -516,7 +516,7 @@ inner.style.margin = 'auto';</span>
 				</section>
 				<section data-state="slots-summary">
 					<div style="display: flex;">
-						<ul id="slots-summary" class="clear-list" style="margin: auto; font-size: 2em">
+						<ul id="slots-summary">
 							<li>Custom</li>
 							<li class="highlighted">Reusable</li>
 							<li class="highlighted">Encapsulated</li>
@@ -701,7 +701,7 @@ customElements.define('element-with-child', ElementWithChild);</code></pre>
 				</section>
 				<section>
 					<div style="display: flex;">
-						<ul class="clear-list" style="margin: auto; font-size: 2em">
+						<ul>
 							<li>Custom</li>
 							<li>Reusable</li>
 							<li>Encapsulated</li>
@@ -721,9 +721,9 @@ customElements.define('element-with-child', ElementWithChild);</code></pre>
 					</div>
 				</section>
 				<section>
-					<pre><code class="html fragment" style="width: 775px"><script type="module" src="app.js"></script></code></pre>
-					<pre><code class="html fragment" style="width: 775px"><link rel="stylesheet" href="styles.css"></code></pre>
-					<pre class="html fragment" style="width: 775px"><code><link rel="import" href="template.html"></code></pre>
+					<pre><code class="html fragment" style="width: 775px">&lt;script type="module" src="app.js"&gt;</script></code></pre>
+					<pre><code class="html fragment" style="width: 775px">&lt;link rel="stylesheet" href="styles.css"&gt;</code></pre>
+					<pre class="html fragment" style="width: 775px"><code>&lt;link rel="import" href="template.html"&gt;</code></pre>
 				</section>
 				<section>
 					<img src="images/caniuse-html-imports.png" class="border" />
@@ -738,6 +738,67 @@ customElements.define('element-with-child', ElementWithChild);</code></pre>
 				<section data-background-image="images/crying.jpg"></section>
 				<section data-background-image="images/lapis-lazuli-background.png">
 					<div class="card">Demo...</div>
+				</section>
+				<section>
+					<div class="summary-heading">
+						<h2>HTML templates</h2>
+						<img src="images/templates.svg" />
+					</div>
+					<ul>
+						<li class="fragment">Reusable HTML</li>
+						<li class="fragment">Can include CSS</li>
+						<li class="fragment">Available in (almost)<br> all browsers</li>
+					</ul>
+					<img style="position: fixed; bottom: 0; right: 0; z-index: -1;" src="images/pearl.png" />
+				</section>
+				<section>
+					<div class="summary-heading">
+						<h2>Shadow DOM</h2>
+						<img src="images/shadow-dom.svg" />
+					</div>
+					<ul>
+						<li class="fragment">Encapsulated DOM</li>
+						<li class="fragment">Impervious to outside CSS</li>
+						<li class="fragment">Available in most browsers</li>
+						<li class="fragment">Combine with &lt;template&gt; <br> to get &lt;slot&gt;s</li>
+					</ul>
+					<img style="position: fixed; bottom: 80px; right: 0; z-index: -1" src="images/FusionTemplateGarnet.png" />
+				</section>
+				<section>
+					<div class="summary-heading">
+						<h2>Custom Elements</h2>
+						<img src="images/custom-elements.svg" />
+					</div>
+					<ul style="display: flex; flex-direction: column; align-items: flex-end">
+						<li style="width: 55%;" class="fragment">Your own HTML elements</li>
+						<li style="width: 55%;" class="fragment">Available in most browsers</li>
+					</ul>
+					<img style="position: fixed; bottom: 0; left: -100px; z-index: -1" src="images/amethyst-horse.png" />
+				</section>
+				<section>
+					<div class="summary-heading">
+						<h2>HTML Imports</h2>
+						<img src="images/custom-elements.svg" />
+					</div>
+					<ul style="margin-left: 0;">
+						<li class="fragment">Import HTML like <br> it's JS or CSS</li>
+						<li class="fragment">The saddest spec</li>
+					</ul>
+					<img style="position: fixed; bottom: 0; right: 0; z-index: -1" src="images/lapis-lazuli.png" />
+				</section>
+				<section>
+					<div class="summary-heading">
+						<h2>Web Components</h2>
+						<img style="margin-left: 2ch" src="images/web-components-logo.png" />
+					</div>
+					<div style="display: flex; align-items: center; width: 100%; justify-items: space-around">
+						<img src="images/FusionTemplateAlexandrite.png" />
+						<ul>
+							<li>Custom</li>
+							<li>Reusabled</li>
+							<li>Encapsulated</li>
+						</ul>			
+					</div>
 				</section>
       </div>
 		</div>
