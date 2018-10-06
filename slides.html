@@ -33,10 +33,15 @@
 				}
 				doOnKeyPress(...callbacks);
 			}
+
 			function highlightSummaryList(listSelector) {
 				document.querySelectorAll(`${listSelector} li:not(.highlighted)`).forEach(li => li.classList.add('dimmed'));
 			}
 
+			function highlightLineInBlock(block, n) {
+				document.querySelectorAll(`${block} > span`).forEach(line => line.classList.add('dimmed'));
+				document.querySelector(`${block} > span:nth-child(${n})`).classList.remove('dimmed');
+			}
 		</script>						
 			
   </head>
@@ -343,12 +348,8 @@ inner.style.margin = 'auto';</span>
 					<script>
 						Reveal.addEventListener('create-shadow', () => {
 							let n = 0;
-
-							function highlightLine() {
-								document.querySelectorAll('code.create-shadow > span').forEach(line => line.classList.add('dimmed'));
-								document.querySelector(`code.create-shadow > span:nth-child(${++n})`).classList.remove('dimmed');
-							}
-
+							const blockSelector = 'code.create-shadow';
+							function highlightLine() { highlightLineInBlock(blockSelector, ++n); }
 							doOnKeyPresses(highlightLine, 5);
 						});
 					</script>
@@ -526,94 +527,174 @@ inner.style.margin = 'auto';</span>
 							doOnKeyPress(highlightSummaryList.bind(undefined, '#slots-summary'));
 						});
 					</script>
+					<div class="notes">
+						HTML just contains the content - the styling is abstracted away, just as it should be
+						BUT requires JavaScript every time you want to add a new element to the page, which
+						is not how anyone wants to write HTML
+						What we really want to do is write...
+					</div>
 				</section>
-	
-
-
-
-
-
-	       <section>
-	         template with slots
-	         element using slot
-	         named vs default slot
-	         bit of javascript to tie it all together
-	       </section>
-	       <section>
-	         browser support for slots
-	       </section>
-	       <section>
-	         HTML just contains the content - the styling is abstracted away, just as it should be
-	         BUT requires JavaScript every time you want to add a new element to the page, which
-	         is not how anyone wants to write HTML
-	         What we really want to do is write
-	         <pre><code><big-donut-item name="foo" image="bar.png">description</big-donut-item></code></pre>
-	       </section>
-	       <section>
-	         Custom elements & Amethyst
-	       </section>
-	       <section>
-	         Creating your own HTML element is super easy
-	       </section>
-	       <section>
-	         <pre><code>
-class MyElement extends HTMLElement {
- constructor() {
-  super();
-  console.log('custom element created')
+				<section>
+						<pre><code class="xml"><big-donut-item name="Donut" image="images/donut.png">
+ Exactly what you'd expect at a donut shop
+</big-donut-item></code></pre>
+				</section>
+				<section>
+					<div style="display: flex; width: 100%">
+						<img style="flex-grow: 2" src="images/custom-elements.svg" />
+						<img src="images/amethyst.png" />
+					</div>
+					<div class="notes">
+						The custom elements spec lets you extend HTML by creating your own elements
+						Much like Angular/Vue/React
+						Works pretty similar to React components
+					</div>
+				</section>
+				<section data-state="create-custom-element-code">
+					<pre><code class="js create-custom-element-code" style="width: 800px" data-noescape><span>class MyElement extends HTMLElement {</span>
+ <span>constructor() {
+  super();</span>
+  <span>alert('custom element created');</span>
  }
 }
-customElements.define('my-element', MyElement)
-	         </code></pre>
-	         <!-- <script>
-class MyElement extends HTMLElement {
+<span>customElements.define('my-element', MyElement)</span></code></pre>
+					<pre><code class="html" style="width: 800px"><my-element></my-element></code></pre>
+					<script>
+						Reveal.addEventListener('create-custom-element-code', () => {
+							let n = 0;
+							const blockSelector = 'code.create-custom-element-code';
+							function highlightLine() { highlightLineInBlock(blockSelector, ++n); }
+							doOnKeyPresses(highlightLine, 4);
+
+							class MyElement extends HTMLElement {
+								constructor() {
+									super();
+									alert('custom element created.');
+								}
+							}
+							customElements.define('my-element', MyElement);
+						});
+					</script>
+					<div class="notes">
+						Must have a hyphen in the name
+						So that's pretty useless - what we really want to do is put stuff inside our custom element
+					</div>
+				</section>
+				<section>
+					<pre><code class="js" style="width: 1000px">class ElementWithChild extends HTMLElement {
  constructor() {
   super();
-  console.log('custom element created');
   this.appendChild(document.createElement('div'));
  }
 }
-customElements.define('my-element', MyElement)
-	         </script>
-	         <pre><code><my-element></my-element></code></pre>
-	         <my-element></my-element>
-	       </section>
-	       <section>
-	         Unfortunately, we're not allowed to put any DOM elements
-	         inside our custom element
-	         Demo of adding innerHTML
-	         	         <script>
-class IllegalElement extends HTMLElement {
+customElements.define('element-with-child', ElementWithChild);</code></pre>
+					<pre><code class="html" style="width: 1000px"><illegal-element></illegal-element></code></pre><illegal-element></illegal-element>
+				</section>
+				<section>
+					<div class="browser-error">Uncaught DOMException: Failed to construct 'CustomElement': The result must not have children</div>
+					<div class="notes">
+						So that's pretty unhelpful
+						Luckily, we know a way to add stuff that is hidden from the DOM!
+					</div>
+				</section>
+				<section>
+					<div class="spec-pics">
+						<img src="images/custom-elements.svg" />
+						<img src="images/shadow-dom.svg" />
+					</div>
+					<img style="position: fixed; left: -200px; bottom: 0;" src="images/Sugilite.png" class="fragment" />
+				</section>
+				<section data-state="element-with-shadow">
+					<pre><code class="javascript element-with-shadow-code" data-noescape>class ShadowElement extends HTMLElement {
  constructor() {
   super();
-  console.log('custom element created');
-  this.appendChild(document.createElement('div'));
- }
-}
-customElements.define('illegal-element', IllegalElement)
-	         </script> -->
-	       </section>
-	       <section>
-	         Luckily, we know of a way to add stuff inside an element
-	         that isn't part of the DOM
-	         	         	         <!-- <script>
-class ShadowElement extends HTMLElement {
- constructor() {
-  super();
-  console.log('shadow element created');
-  const shadowRoot = this.attachShadow({ mode: 'open' });
   const div = document.createElement('div');
   div.innerHTML = 'hello world';
-  shadowRoot.appendChild(div);
+
+  <span class="highlighted">const shadowRoot = this.attachShadow({ mode: 'open' });
+  shadowRoot.appendChild(div);</span>
  }
-}
-customElements.define('shadow-element', ShadowElement);
-	         </script> -->
-	         <shadow-element></shadow-element>
-	       </section>
-	       <section>
-	         
-	       </section>
+
+ customElements.define('shadow-element', ShadowElement);
+}</code></pre>
+					<script>
+						Reveal.addEventListener('element-with-shadow', () => {
+							const block = 'code.element-with-shadow-code';
+							doOnKeyPress(() => {
+								document.querySelectorAll(`${block}, ${block} *`)
+									.forEach(bitOfCode => bitOfCode.classList.add('dimmed'));
+								document.querySelectorAll(`${block} .highlighted`)
+									.forEach(bitOfCode => {
+										bitOfCode.classList.remove('dimmed');
+										bitOfCode.style.color = 'var(--blue)';
+									});
+								document.querySelectorAll(`${block} .highlighted *`)
+									.forEach(bitOfCode => bitOfCode.classList.remove('dimmed'));
+							});
+						});
+					</script>
+				</section>
+				<section>
+					<pre><code class="html"><shadow-element></shadow-element></code></pre>
+					<shadow-element class="fragment" style="margin-top: 100px"></shadow-element>
+					<script>
+						class ShadowElement extends HTMLElement {
+							constructor() {
+								super();
+								const div = document.createElement('div');
+								div.innerHTML = 'hello world';
+
+								const shadowRoot = this.attachShadow({ mode: 'open' });
+								shadowRoot.appendChild(div);
+							}
+						}
+						customElements.define('shadow-element', ShadowElement);
+					</script>
+					<div class="notes">
+						So that's cool, but now we're once again left with the problem of writing
+						all our DOM in JavaScript - particularly annoying for CSS!
+						If only there was a way...
+					</div>
+				</section>
+				<section>
+					<div class="spec-pics three">
+						<img src="images/templates.svg" />
+						<img src="images/shadow-dom.svg" />
+						<img src="images/custom-elements.svg" />
+					</div>
+					<img style="position: fixed; left: 0; top: 0;" src="images/Alexandrite.png" class="fragment" />
+				</section>
+				<section>
+					<pre><code><template id="example-template">
+ <style>div { -webkit-text-stroke: var(--red) 2px }</style>
+ <div>Hello, world!</div>
+</template>
+
+<script>
+ class MyAwesomeElement extends HTMLElement {
+  constructor() {
+   super();
+
+   const shadowRoot = this.attachShadow({ mode: 'open' });
+   const template = document.getElementById('example-template')
+   const content = template.content.cloneNode(true);
+
+   shadowRoot.appendChild(content);
+  }
+ }
+ customElements.define('my-awesome-element', MyAwesomeElement);
+</script></code></pre>
+				</section>
+				<section>
+					<pre><code class="html"><my-awesome-element></my-awesome-element></code></pre>
+					<my-awesome-element class="fragment" style="margin-top: 100px; transform: scale(2)"></my-awesome-element>
+				</section>
+				<section data-background-image="images/alexandrite-demo.png">
+					<div class="card light">Demo!</div>
+				</section>
+				<section>summary</section>
+				<section>caniuse</section>
+				<section>html imports</section>
       </div>
 		</div>
 		<script src="reveal/head.min.js"></script>

@@ -22,12 +22,12 @@ header {
 }
 
 h1 {
-  -webkit-text-stroke: black 2px;
-  color: white;
+  -webkit-text-stroke: var(--black) 2px;
+  color: var(--white);
   font-weight: 400;
   font-family: Riffic;
   font-size: 80px;
-  text-shadow: -4px 0 black, -4px 1px black, -4px 2px black, -4px 3px black;
+  text-shadow: -4px 0 var(--black), -4px 1px var(--black), -4px 2px var(--black), -4px 3px var(--black);
   position: relative;
 }
 
@@ -37,7 +37,7 @@ h1 {
   --icing-colour: hotpink;
   border-radius: 50%;
   position: relative;
-  background-image: radial-gradient(circle at center, transparent, transparent 20%, black 20%, black 22%, brown 22%, var(--icing-colour) 25%, var(--icing-colour) 65%, brown 69%, black 69%);
+  background-image: radial-gradient(circle at center, transparent, transparent 20%, var(--black) 20%, var(--black) 22%, brown 22%, var(--icing-colour) 25%, var(--icing-colour) 65%, brown 69%, var(--black) 69%);
 }
 .sprinkle {
   width: 4px;
@@ -59,7 +59,7 @@ main {
   display: flex;
   flex-direction: column;
   width: 300px;
-  border: 4px solid black;
+  border: 4px solid var(--black);
   padding: 1em;
   border-radius: 8px;
   margin: .5em;
@@ -90,7 +90,7 @@ main {
 }
 
 .item input, .item button {
-  border: 2px solid black;
+  border: 2px solid var(--black);
   border-radius: 8px;
 }
 
@@ -104,9 +104,10 @@ input {
 
 .item button {
   background-color: var(--red);
-  color: white;
+  color: var(--white);
   font-size: 20px;
   width: 4.5ch;
   height: 35px;
   position: relative;
+  cursor: pointer;
 }

@@ -18,6 +18,7 @@ body {
   --red: #f26868;
   --purple: #b898ca;
   --dark-blue: #1d2ff7;
+  --white: #fffff2;
   background-color: var(--blue);
   color: var(--text);
   margin: 0;
