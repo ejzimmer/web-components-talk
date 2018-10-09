@@ -8,7 +8,15 @@
   <link rel="stylesheet" href="shared.css">
   <link rel="stylesheet" href="main.css">
   
-  <!-- Create template -->
+  <template id="buy-template">
+    <div class="buy">
+     <label>
+       <span>How many?</span>
+       <input type="number">
+     </label>
+     <button>Buy</button>
+    </div>
+   </template>
 </head>
 <body>
   <header>
@@ -22,15 +30,8 @@
       </div>
       <h2>Donut</h2>
       <div class="description">Exactly what you'd expect at a donut shop</div>
-      <div class="buy">
-        <label>
-          <span>How many?</span>
-          <input type="number" />
-        </label>
-        <button>Buy</button>
-      </div>
     </div>
-    
+
     <div class="item">
       <div class="picture">
         <img src="images/Cookie_Cat.png" />
@@ -108,6 +109,12 @@
     // 1. clone template
     // 2. attach clone to DOM
     window.onload = function () {
+      const template = document.getElementById('buy-template').content;
+      const items = document.querySelectorAll('.item');
+      
+      items.forEach((item) => {
+        item.appendChild(template.cloneNode(true)); // true = deep copy
+      });
     }
   </script>
 </body>

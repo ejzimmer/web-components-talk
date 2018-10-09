@@ -84,9 +84,9 @@
     </style>
     <div class="item">
       <div class="picture">
-        <slot name="picture"></slot>
+        <img id="product-image" />
       </div>
-      <h2><slot name="item-name"></slot></h2>
+      <h2></h2>
       <div class="description">
         <slot></slot>
       </div>
@@ -141,6 +141,35 @@
     // Create the class and element first, with heading and image missing
     // Then do attributes
     // Then add action to buy button - note how it's more awkward than framework component
+    class BigDonutItem extends HTMLElement {
+      constructor() {
+        super();
+
+        this.attachShadow({ mode: 'open' });
+        const content = document.getElementById('item-template').content.cloneNode(true);
+        this.shadowRoot.appendChild(content);
+
+        const name = this.attributes.name.value; 
+        this.shadowRoot.querySelector('h2').innerText = name;
+
+        const image = this.attributes.image.value;
+        const imgElement = this.shadowRoot.querySelector('.picture img');
+        imgElement.src = image;
+
+        this.input = this.shadowRoot.querySelector('input');
+        this.button = this.shadowRoot.getElementById('buy');
+
+        this.button.addEventListener('click', this.onBuy.bind(this));
+
+      }
+
+      onBuy() {
+        const quantity = this.input.value;
+        alert(quantity);
+        this.input.value = '';
+      }
+    }
+    customElements.define('big-donut-item', BigDonutItem);
   
     const donut = document.querySelector('.donut');
     for (let i = 0; i < 300; i++) {

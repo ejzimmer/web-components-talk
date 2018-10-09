@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Big Donut</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="main.css">
+  <!-- import item component -->
+</head>
+<body>
+  <header>
+    <h1>BIG DONUT</h1>
+    <div class="donut"></div>
+  </header>
+  <main>
+    <big-donut-item name="Donut" image="images/donut.png">
+      Exactly what you'd expect at a donut shop
+    </big-donut-item>
+
+    <big-donut-item name="Cookie Cat" image="images/Cookie_Cat.png">
+      Cat-flavoured ice cream sandwich
+    </big-donut-item>
+
+    <big-donut-item name="Lion Licker" image="images/Lion_Lickers.png">
+      Superior lion-based ice cream
+    </big-donut-item>
+
+    <big-donut-item name="Dog-nut" image="images/Dog-Nut.png">
+      Hot dog with donuts and mustard
+    </big-donut-item>
+
+    <big-donut-item name="Spicy Pretzel" image="images/Spicy_Pretzel.png">
+      So spicy you'll die
+    </big-donut-item>
+
+    <big-donut-item name="Sugar Shock Shut Down" image="images/Sugar_Shock_Shut_Down.png">
+      Turns everything red
+    </big-donut-item>
+
+    <big-donut-item name="Durian Juice" image="images/Durian_Juice.png">
+      All natural durian juice, made from concentrate
+    </big-donut-item>
+    
+  </main>
+  <script> 
+    const donut = document.querySelector('.donut');
+    for (let i = 0; i < 300; i++) {
+      const sprinkle = document.createElement('div');
+      sprinkle.classList.add('sprinkle');
+
+      const left = Math.random() * 100;
+      const top = Math.random() * 100;
+
+      if (isInCircle(left, top, 45) && !isInCircle(left, top, 22)) {
+        sprinkle.style.backgroundColor = `hsl(${Math.random() * 359}, 70%, 50%)`;
+        sprinkle.style.left = `${left}%`;
+        sprinkle.style.top = `${top - 2}%`;
+        sprinkle.style.transform = `rotate(${Math.random()}turn)`;
+
+        donut.append(sprinkle);
+      }
+      
+    }
+
+    function isInCircle(x, y, r) {
+      const d = Math.sqrt((x - 50)**2 + (y - 50)**2);
+      return d < r;
+    }
+  </script>
+</body>
+</html>
