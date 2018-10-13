@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Elephant</title>
+  <style>
+    body {
+      --background: #c8a2c8;
+      background-color: var(--background);
+      --colour: #555;
+      --height: 150px;
+      margin: 40px;
+    }
+    .elephant {
+      position: relative;
+    }
+    .head {
+      --head-width: var(--height);
+      width: var(--head-width);
+      height: var(--head-width);
+      background-color: var(--colour);
+      border-radius: 50%; 
+      position: relative;
+    }
+    .ear {
+      --ear-diameter: calc(var(--head-width) * .9 );
+      width: var(--ear-diameter);
+      height: var(--ear-diameter);
+      border: 4px solid var(--background);
+      border-radius: 50%;
+      position: absolute;
+      right: -40px;
+      top: -10px;
+      background-color: var(--colour);
+      border-left-color: transparent;
+      z-index: 2;
+    }
+    .trunk {
+      --trunk-width: calc(var(--head-width) / 4);
+      width: var(--trunk-width);
+      height: 120px;
+      background-color: var(--colour);
+      position: absolute;
+      top: 50%;
+    }
+    .trunk::before {
+      content: '';
+      width: calc(var(--trunk-width) * 1.5);
+      height: calc(var(--trunk-width) * 1.5);
+      background-color: var(--colour);
+      position: absolute;
+      bottom: -25px;
+      border-radius: 50%;
+    }
+    .trunk::after {
+      content: '';
+      width: calc(var(--trunk-width) * .75 - 3px);
+      border: 2px solid var(--background);
+      position: absolute;
+      bottom: 0;
+      transform: rotate(.31turn);
+      transform-origin: right;
+    }
+
+    .body {
+      --body-height: calc(var(--height) * 1.1);
+      --body-width: calc(var(--height) * 1.5);
+      width: var(--body-width);
+      height: var(--body-height);
+      background-color: var(--colour);
+      position: absolute;
+      border-radius: calc(var(--body-height) / 2);
+      left: calc(var(--height) / 2);
+      top: calc(var(--height) * .3);
+    }
+    .body::after {
+      content: '';
+      width: 8px;
+      height: 100px;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      background-color: var(--colour);
+      border-bottom-right-radius: 50%;
+      border-bottom-left-radius: 50%;
+    }
+    .leg {
+      --leg-width: calc(var(--body-width) * .25);
+      --offset: calc(var(--leg-width) * .5 + 15px);
+      width: var(--leg-width);
+      height: var(--height);
+      background-color: var(--colour);
+      position: absolute;
+      top: 50%;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <div class="elephant">
+    <div class="head">
+      <div class="ear"></div>
+      <div class="trunk"></div>
+    </div>
+    <div class="body">
+      <div class="leg" style="left: 15px; box-shadow: 4px 0 var(--background);"></div>
+      <div class="leg" style="left: var(--offset); z-index: -2; transform: translateY(-8px)"></div>
+      <div class="leg" style="right: 15px; box-shadow: -4px 0 var(--background);"></div>
+      <div class="leg" style="right: var(--offset); z-index: -2; transform: translateY(-8px)"></div>
+    </div>
+  </div>
+</body>
+</html>
