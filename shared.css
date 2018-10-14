@@ -20,7 +20,7 @@ body {
   --dark-blue: #1d2ff7;
   --white: #fffff2;
   background-color: var(--blue);
-  color: var(--text);
+  color: var(--black);
   margin: 0;
   font-family: Riffic;
   font-size: 2em;

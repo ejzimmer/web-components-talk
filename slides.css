@@ -17,7 +17,7 @@ body {
 h1 {
   font-size: 3em;
   color: var(--red);
-  -webkit-text-stroke: black 2px;
+  -webkit-text-stroke: var(--black) 2px;
   margin-bottom: 1em;
 }
 .subtitle {
@@ -295,6 +295,7 @@ select {
   background-color: transparent;
   font-size: 2em;
   font-family: Riffic;
+  color: var(--black);
 }
 
 .browser-error {

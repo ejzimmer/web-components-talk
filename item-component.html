@@ -93,7 +93,7 @@
       super();
 
       this.attachShadow({ mode: 'open' });
-      const content = document.currentScript.ownerDocument.getElementById('item-template').content.cloneNode(true);
+      const content = document.getElementById('item-template').content.cloneNode(true);
       this.shadowRoot.appendChild(content);
 
       const name = this.attributes.name.value; 

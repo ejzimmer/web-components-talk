@@ -345,7 +345,7 @@ inner.style.margin = 'auto';</span>
 
 <span>const outer = document.getElementById('outer');</span>
 <span>const shadow = outer.attachShadow({ mode: 'open' });</span>
-<span>outer.appendChild(inner);</span>
+<span>shadow.appendChild(inner);</span>
 </code></pre>
 					<script>
 						Reveal.addEventListener('create-shadow', () => {
