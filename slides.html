@@ -591,10 +591,10 @@ customElements.define('element-with-child', ElementWithChild);</code></pre>
 							constructor() {
 								super();
 								const div = document.createElement('div');
-								div.innerHTML = 'hello world';
+								this.innerHTML = 'hello world';
 
-								const shadowRoot = this.attachShadow({ mode: 'open' });
-								shadowRoot.appendChild(div);
+								// const shadowRoot = this.attachShadow({ mode: 'open' });
+								// shadowRoot.appendChild(div);
 							}
 						}
 						customElements.define('shadow-element', ShadowElement);
@@ -662,12 +662,6 @@ customElements.define('element-with-child', ElementWithChild);</code></pre>
 						<img style="flex-grow: 2" src="images/html-imports.svg" />
 						<img src="images/lapis-lazuli.png" />
 					</div>
-					<div class="notes">
-						Lapis Lazuli is the saddest of the crystal gems
-						Her gem was cracked and she ended up as a mirror
-						Steven healed her, but, since then, life has still been pretty rough for her
-						The same is kind of true of HTML imports.
-					</div>
 				</section>
 				<section>
 					<pre><code class="html fragment" style="width: 775px">&lt;script type="module" src="app.js"&gt;</script></code></pre>
@@ -676,13 +670,6 @@ customElements.define('element-with-child', ElementWithChild);</code></pre>
 				</section>
 				<section>
 					<img src="images/caniuse-html-imports.png" class="border" />
-					<div class="notes">
-						It might look like Firefox is adding support, but actually they're just about to remove it.
-						Mozilla hate HTML imports in their current form, for a variety of reasons, and just aren't going to implement them
-						They're hoping to develop a solution based on ES6 imports, which will probably be a long way away
-						In the meantime, there are other options, like Webpack or polyfills.
-						But let's have a look at how they would work, just for shits and giggles
-					</div>
 				</section>
 				<section data-background-image="images/crying.jpg"></section>
 				<section data-background-image="images/lapis-lazuli-background.png">
