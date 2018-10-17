@@ -54,12 +54,24 @@
 						<div class="subtitle">It's about time.</div>		
 					</div>
 				</section>
-				<section>intro</section>
+				<section data-background-image="images/lion-bag.gif">
+					<div class="card end fragment">Erin Zimmer</div>
+					<div class="card end fragment">@ErinJZimmer</div>
+					<div class="card end fragment">ejzimmer.github.com/web-components-talk</div>
+				</section>
 				<section data-background-image="images/Steven_Universe_title.jpg">
 				</section>
-				<section>steven & rose</section>
-				<section>amethyst, pearl, garnet</section>
-				<section>pearl + garnet, alexandria</section>
+				<section>
+						<img class="fragment" src="images/steven-tada.png" style="position: fixed; right: 0; width: 400px" />
+						<img class="fragment" src="images/Rose_Quartz_-_Weaponized.png" style="position: fixed; left: -300px; top: -100px" />
+				</section>
+				<section>
+					<div style="display: flex">
+						<img class="fragment" src="images/amethyst.png" style="transform: translate(-50px, 50px)" />
+						<img class="fragment" src="images/pearl.png" style="transform: translate(-130px, -50px)" />
+						<img class="fragment" src="images/GarnetByKmes.png" style="transform: scale(1.5)" />
+					</div>
+				</section>
 				<section>
 					<div style="display: flex; justify-content: space-evenly; width: 100%">
 						<figure style="display: flex; flex-direction: column; align-items: center">
@@ -591,10 +603,9 @@ customElements.define('element-with-child', ElementWithChild);</code></pre>
 							constructor() {
 								super();
 								const div = document.createElement('div');
-								this.innerHTML = 'hello world';
 
-								// const shadowRoot = this.attachShadow({ mode: 'open' });
-								// shadowRoot.appendChild(div);
+								const shadowRoot = this.attachShadow({ mode: 'open' });
+								shadowRoot.appendChild(div);
 							}
 						}
 						customElements.define('shadow-element', ShadowElement);
