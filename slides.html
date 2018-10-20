@@ -188,8 +188,91 @@
           <img src="images/custom-elements.svg" style="flex-grow: 1" />
           <h2>Custom Elements</h2>
         </section>
-        <section></section>
+        <section>
+          <ul>
+            <li>Register new HTML tags</li>
+            <li>Control life cycle and behaviour</li>
+          </ul>
+        </section>
+        <section>
+          <pre style="align-self: center"><code>customElements.define('my-element', MyElement)</code></pre>
+          <div class="notes">
+            customElements is available on window object in browsers that support it
+            first argument is name - must have hyphen
+            second argument is class defined by you that controls the appearance, life-cycle and behaviour of the element
+          </div>
+        </section>
+        <section class="vertical">
+          <pre style="align-self: center"><code>class MyElement extends HTMLElement {
+ constructor() {
+  super();
+ }
 
+ connectedCallback() { ... }
+ 
+ disconnectedCallback() { ... }
+
+ adoptedCallback() { ... }
+
+ attributeChangedCallback() { ... } 
+}</code></pre>
+        </section>
+        <section class="vertical">
+          <img src="images/shadow-dom.svg" style="flex-grow: 1" />
+          <h2>Shadow DOM</h2>
+          <div class="notes">
+            shadow DOM is a bit trickier, but also something you've seen before.
+            browsers have been doing shadow DOM since forever - the new spec just opens up this capability to developers
+          </div>
+        </section>
+        <section class="vertical">
+          <pre style="align-self: center"><code class="html"><video controls></video></code></pre>
+          <video controls class="abc-tv hover-highlight" style="height: 400px; width: 600px; align-self: center"></video> 
+          <div class="notes">
+            show how it's only a single element in the dev tools
+            also can't affect the styling of the inside of the element eg control bar
+          </div>
+        </section>
+        <section>
+          <style>
+            #outer {
+              margin: auto;
+              background-color: var(--green);
+              width: 200px;
+              height: 200px;
+              display: flex;
+            }
+          </style>
+          <div id="outer"></div>
+          <script>
+            const shadowRoot = document.getElementById('outer').attachShadow({ mode: 'open' });
+            shadowRoot.innerHTML = `
+              <style>
+                .inner {
+                  border: 12px solid var(--mid-blue);
+                  width: 100px;
+                  height: 100px;
+                  margin: auto;
+                }
+              </style>
+              <div class="inner"></div>
+            `;
+          </script>
+          <div class="notes">
+            - can see shadow root in dev tools (unlike video element)
+            - can't affect inner element with new css class (like video element)
+            - can access inner element via JS (unlike video element)
+            - can make closed
+          </div>
+        </section>
+        <section class="vertical">
+          <h2>Shadow Root</h2>
+          <ul>
+            <li>Impervious to CSS</li>
+            <li>Semi-impervious to JS</li>
+            <li>Vulnerable to dev tools</li>
+          </ul>
+        </section>
 
 
 

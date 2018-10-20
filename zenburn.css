@@ -14,7 +14,7 @@
 	color:var(--yellow)
 }
 .hljs-code,.hljs-title,.hljs-section,.hljs-selector-class {
-	color:var(--red)
+	color:var(--green)
 }
 .hljs-strong{
 	font-weight:bold
@@ -26,7 +26,7 @@
 	color:var(--yellow)
 }
 .hljs-keyword {
-	color: var(--red)
+	color: var(--green)
 }
 .hljs-symbol,.hljs-attribute{
 	color:var(--blue)
@@ -38,20 +38,20 @@
 	color:var(--yellow)
 }
 .hljs-comment,.hljs-deletion,.hljs-meta{
-	color:var(--red)
+	color:var(--green)
 }
 .hljs-name{
-	color:var(--red)
+	color:var(--green)
 }
 .hljs-name{
-	color:var(--red)
+	color:var(--green)
 }
 .hljs-name{
-	color:var(--red)
+	color:var(--green)
 }
 .hljs-name{
-	color:var(--red)
+	color:var(--green)
 }
 .hljs-name{
-	color:var(--red)
+	color:var(--green)
 }
