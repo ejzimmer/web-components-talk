@@ -1,8 +1,3 @@
-@font-face {
-  font-family: Riffic;
-  src:  url('webfonts_Riffic/Riffic.ttf.woff') format('woff');
-}
-
 *, *::after, *::before {
   box-sizing: border-box;
 }
@@ -12,21 +7,22 @@
 }
 
 body {
-  --blue: #80b5ff;
-  --yellow: #f4ce58;
-  --black: #331d01;
-  --red: #f26868;
-  --purple: #b898ca;
-  --dark-blue: #1d2ff7;
-  --white: #fffff2;
-  background-color: var(--blue);
-  color: var(--black);
-  margin: 0;
-  font-family: Riffic;
-  font-size: 2em;
-  text-align: left;
-}
+  --background: #333;
+  --black: #010101;
+  --blue: #29ABE2;
+  --green: #8FDB69;
+  --yellow: #E7F716;
+  --mid-blue: #166DA5;
 
-.hidden {
-  display: none;
+  --colour-1: #2A3B8F; /* no */
+  --colour-3: #B4D44E; /* yes */
+
+  --shadow-colour: #111;
+  --text-shadow: 2px 2px 4px var(--background);
+  --box-shadow: 2px 2px 8px 2px var(--shadow-colour);
+  --drop-shadow: drop-shadow(1px 1px 4px var(--shadow-colour));
+  margin: 0;
+  background: var(--background);
+  font-family: 'Source Sans Pro', sans-serif;
+  color: white;
 }

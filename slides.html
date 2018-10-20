@@ -1,763 +1,241 @@
-
 <!doctype html>
 <html>
   <head>
     <link rel="stylesheet" href="reveal/reveal.css">
-    <link rel="stylesheet" href="shared.css" />
-		<link rel="stylesheet" href="slides.css" />
-		<link rel="stylesheet" href="zenburn.css" />
-
-		<script src="reveal/reveal.js"></script>
-
-		<script>
-			const isNextSlide = key => key === 'PageDown' || key === 'ArrowRight' || key === ' ';
-			function doOnKeyPress(...callbacks) {
-				function listener(event) {
-					if (isNextSlide(event.key)) {
-						event.stopPropagation();
-						callbacks[0]();
-						document.body.removeEventListener('keydown', listener);
-
-						if (callbacks.length > 1) {
-							callbacks = callbacks.slice(1);
-							doOnKeyPress(...callbacks);
-						}
-					}
-				}
-				document.body.addEventListener('keydown', listener);
-			}
-			function doOnKeyPresses(callback, times) {
-				const callbacks = [];
-				for (let i = 0; i < times; i++) {
-					callbacks.push(callback);
-				}
-				doOnKeyPress(...callbacks);
-			}
-
-			function highlightSummaryList(listSelector) {
-				document.querySelectorAll(`${listSelector} li:not(.highlighted)`).forEach(li => li.classList.add('dimmed'));
-			}
-
-			function highlightLineInBlock(block, n) {
-				document.querySelectorAll(`${block} > span`).forEach(line => line.classList.add('dimmed'));
-				document.querySelector(`${block} > span:nth-child(${n})`).classList.remove('dimmed');
-			}
-		</script>						
+		<link rel="stylesheet" href="zenburn.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro"> 
+    <link rel="stylesheet" href="shared.css">
+    <link rel="stylesheet" href="slides.css">
+    
+    <script src="reveal/reveal.js"></script>
 			
   </head>
   <body>
     <div class="reveal">
       <div class="slides">
-	      <section>
-					<div class="centred">
-						<h1>Web Components</h1>
-						<div class="subtitle">It's about time.</div>		
-					</div>
-				</section>
-				<section data-background-image="images/lion-bag.gif">
-					<div class="card end fragment">Erin Zimmer</div>
-					<div class="card end fragment">@ErinJZimmer</div>
-					<div class="card end fragment">ejzimmer.github.com/web-components-talk</div>
-				</section>
-				<section data-background-image="images/Steven_Universe_title.jpg">
-				</section>
-				<section>
-						<img class="fragment" src="images/steven-tada.png" style="position: fixed; right: 0; width: 400px" />
-						<img class="fragment" src="images/Rose_Quartz_-_Weaponized.png" style="position: fixed; left: -300px; top: -100px" />
-				</section>
-				<section>
-					<div style="display: flex">
-						<img class="fragment" src="images/amethyst.png" style="transform: translate(-50px, 50px)" />
-						<img class="fragment" src="images/pearl.png" style="transform: translate(-130px, -50px)" />
-						<img class="fragment" src="images/GarnetByKmes.png" style="transform: scale(1.5)" />
-					</div>
-				</section>
-				<section>
-					<div style="display: flex; justify-content: space-evenly; width: 100%">
-						<figure style="display: flex; flex-direction: column; align-items: center">
-						<img src="images/web-components-logo.png" style="width: 100%" />
-						<figcaption style="font-size: .9em; font-family: sans-serif">
-							WEB COMPONENTS
-						</figcaption>
-					</figure>
-					<div style="width: 40%; display: flex">
-						<div class="notes">Allow you to create new HTML elements that are</div>
-						<ul>
-							<li class="fragment">Custom</li>
-							<li class="fragment">Reusable</li>
-							<li class="fragment">Encapsulated</li>
-						</ul>
-					</div>
-					</div>
-				</section>
-				<section>
-					<div class="specs-grid">
-						<div class="html-template"></div>
-						<div class="custom-element"></div>
-						<div class="shadow-dom"></div>
-						<div class="html-import"></div>
-					</div>
-					<img src="images/Alexandrite.png" class="fragment" style="position: fixed; top: 0; left: 20%" />
-				</section>
-				<section>
-					<div class="notes">
-						Back in 2011, Alex Russell presented a proposal for web components (and some other stuff)
-						at Fronteers in Holland. You can watch it here, if you want. 
-						Talks about reasons for web components
-						It's... long.
-						And, really, the proposal didn't get much traction when it was first presented.
-					</div>
-					<img src="images/proposal-video.png" class="border" style="margin-bottom: 1em; width: 100%" />
-					<a style="font-size: .7em; font-family: Arial; position: relative; transform: scale(.9); color: var(--yellow); bottom: 3.5em" 
-						class="fragment"
-						href="https://fronteers.nl/congres/2011/sessions/web-components-and-model-driven-views-alex-russell">
-						https://fronteers.nl/congres/2011/sessions/web-components-and-model-driven-views-alex-russell
-					</a>
-				</section>
-				<section class="framework-logos">
-					<img src="images/angular-logo.png" />
-					<img src="images/react-logo.png" />
-					<img src="images/vue-logo.png" />
-				</section>
-				<section>
-					 <pre style="font-size: 1.5em"><code class="xml"><div>Hello, {{ name }}</div></code></pre>
-					 <div class="notes">
-							Interpolation (with a differing number of curly braces depending on which framework you're using)
-						</div>
-				 </section>
-				<section>
-					 <pre style="font-size: .8em"><code class="javascript">document.querySelector('#hello').textContent = `Hello, ${name}`</code></pre>
-					 <div class="notes">
-						 You can do it with web components, it's just a bit more involved, and you have to write a bit of JavaScript.
-					 </div>
-				</section>
-				<section>
-					<pre style="font-size: 2em"><code>render()</code></pre>
-					<div class="notes">
-						You're also not going to get the automatic change detection you do in Angular & Vue,
-						or even the manual DOM updating that you get in React. You're basically going to need
-						to write your own render() function.
-					</div>
-				</section>
-				<section>
-					<pre><code class="xml">&lt;MyAwesomeComponent config="configOptions" /&gt;</code></pre>
-					<div class="notes">
-						You also can't pass objects in as attributes like you could with a framework component
-						You can only pass strings
-					</div>
-				</section>
-				<section data-state="framework-or-web-component">
-<pre class="should-i-web-component">
- <span class="framework highlight-0">&lt;app-root&gt;</span>
-  <span class="framework highlight-1">&lt;container-component&gt;</span>
-   <span class="framework highlight-2">&lt;presentation-component&gt;</span>
-    <span class="web-component highlight-3">&lt;div&gt;</span>
-     <span class="web-component highlight-3">&lt;label&gt;&lt;/label&gt;</span>
-     <span class="web-component highlight-3">&lt;input /&gt;</span>
-    <span class="web-component highlight-3">&lt;/div&gt;</span>
-   <span class="framework highlight-2">&lt;/presentation-component&gt;</span>
-   <span class="web-component-maybe highlight-2">&lt;presentation-component&gt;</span>
-   <span class="web-component-maybe highlight-2">&lt;/presentation-component&gt;</span>
-  <span class="framework highlight-1">&lt;/container-component&gt;</span>
- <span class="framework highlight-0">&lt;/app-root&gt;</span>
-</pre>
-					<script>
-						Reveal.addEventListener('framework-or-web-component', () => {
-							let index = 0;
+        <section>
+          <img src="images/web-components-logo.svg" style="width: 50%; margin: auto" />
+          <h1 class="overlay-text" style="top: calc(50% - 1.75em); text-shadow: var(--text-shadow)">Web Components</h1>
+          <div class="overlay-text" style="top: calc(50%); text-shadow: var(--text-shadow); color: hsl(198, 76%, 80%)">It's about time.</div>
+        </section>
+        <section>
+          <ul>
+            <li class="fragment">Custom</li>
+            <li class="fragment">Reusable</li>
+            <li class="fragment">Encapsulated</li>
+          </ul>  
+        </section>
+        <section class="vertical">
+          <img src="images/proposal-video.png" class="border" style="margin: auto; width: 100%" />
+          <a style="font-size: .4em; position: relative; color: var(--green); bottom: 3.5em" 
+            href="https://fronteers.nl/congres/2011/sessions/web-components-and-model-driven-views-alex-russell">
+            https://fronteers.nl/congres/2011/sessions/web-components-and-model-driven-views-alex-russell
+          </a>
+          <div class="notes">
+            - first proposed by Alex Russell in 2011
+            - strong support from Chrome & Google
+            - not that much interest from other browser vendors
+            - low adoption
+          </div>
+        </section>
+        <section class="framework-logos">
+          <img src="images/angular-logo.png" />
+          <img src="images/react-logo.png" />
+          <img src="images/vue-logo.png" />
+        </section>
+        <section>
+          <img src="images/browser-support.png" class="border" style="align-self: center">
+          <div class="notes">
+            web components aren't just in chrome anymore
+            ie - polyfills available - bit fiddly but workable
+            you'll notice there are actually 4 different specs listed - we'll talk about them in a minute
+          </div>
+        </section>
+        <section data-background-image="images/batman-vs-superman.jpg">
+          <div class="notes">
+            we have frameworks full of components - why do we need web components?
+            There are some things that frameworks are much better at than web components
+          </div>
+        </section>
+        <section class="framework-logos">
+            <img src="images/angular-logo.png" />
+            <img src="images/react-logo.png" />
+            <img src="images/vue-logo.png" />
+            <div class="notes">There are some things that frameworks are much better at than web components</div>
+          </section>
+          <section>
+          <img src="images/change-detection.jpg" style="margin: auto" class="border" />
+          <div class="notes">
+            Angular + Vue give you automatic change detection, that can automatically update your view
+            when you JavaScript model changes
+          </div>
+        </section>
+        <section>
+          <pre class="border" style="margin: auto"><code>setState();</code></pre>
+          <div class="notes">
+            React doesn't detect the changes automatically for you, but it does handle all the DOM updates.
+          </div>
+        </section>
+        <section>
+          drawing of intercomponent communication
+        </section>
+        <section>
+          drawing of routing
+        </section>
+        <section>
+          drawing of state management (or maybe victorian government logo)
+        </section>
+        <section>
+          <img src="images/web-components-logo.svg" style="width: 50%; margin: auto" />
+        </section>
+        <section class="many-logos">
+          <img src="images/chrome-logo.png" />
+          <img src="images/safari-logo.png" />
+          <img src="images/firefox-logo.png" />
+          <img src="images/edge-logo.png" />
+          <img src="images/ios-logo.png" />
+          <img src="images/android-logo.svg" />
+          <div class="notes">
+            native implementation - some advantages
+          </div>
+        </section>
+        <section>
+          - picture of something just as good but smaller
+          <div class="notes">
+            no framework code
+            maybe polyfills but not as big and ways to mitigate (only serve to browsers that need them ie edge)
+          </div>
+        </section>
+        <section data-background-image="images/steven-in-a-bubble.png">
+          <div class="notes">
+            CSS encapsulated without needing to write it as JS or use the smol hax that Angular uses to achieve the same effect
+          </div>
+        </section>
+        <section>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 774 875.7">
+              <path fill="#FFF" d="M387 0l387 218.9v437.9L387 875.7 0 656.8V218.9z"/>
+              <path fill="#8ed6fb" d="M704.9 641.7L399.8 814.3V679.9l190.1-104.6 115 66.4zm20.9-18.9V261.9l-111.6 64.5v232l111.6 64.4zM67.9 641.7L373 814.3V679.9L182.8 575.3 67.9 641.7zM47 622.8V261.9l111.6 64.5v232L47 622.8zm13.1-384.3L373 61.5v129.9L172.5 301.7l-1.6.9-110.8-64.1zm652.6 0l-312.9-177v129.9l200.5 110.2 1.6.9 110.8-64z"/>
+              <path fill="#1c78c0" d="M373 649.3L185.4 546.1V341.8L373 450.1v199.2zm26.8 0l187.6-103.1V341.8L399.8 450.1v199.2zm-13.4-207zM198.1 318.2l188.3-103.5 188.3 103.5-188.3 108.7-188.3-108.7z"/>
+              <g class="shadow">
+                <path stroke="red" stroke-width="40" d="M110 110 L650 750"/>
+                <circle stroke="red" stroke-width="40" cx="387" cy="438" r="416" fill="transparent" />    
+              </g>
+            </svg>
+        </section>
+        <section data-background-image="images/batman-vs-superman.jpg">
+          <div class="notes">
+            So which should you use?
+          </div>
+        </section>
+        <section data-background-image="images/batman-and-superman.jpeg">
+          <div class="notes">Why not both?</div>
+          <div class="attribution">@richsimmonsart</div>
+        </section>
+        <section>
+          <iframe style="width: 100%" src="https://custom-elements-everywhere.com"></iframe>
+          <div class="notes">
+            can also be used with wordpress, joomla, drupal, aem etc
+            very easy to share - usually just a single file
+          </div>
+        </section>
+        <section>
+          <script>
+            class YesOrNo extends HTMLElement {
+              constructor() {
+                super();
 
-							function removeHighlighting() {
-								document.querySelectorAll('.should-i-web-component span')
-									.forEach(element => element.classList.remove('dimmed'));
-							}
+                this.attachShadow({ mode: 'open' });
+                this.shadowRoot.innerHTML = `
+                  <style>
+                    button {
+                      padding: 1em;
+                      background-color: var(--blue);
+                      color: white;
+                      font-size: 1.5em;
+                      border-radius: 8px;
+                      border: solid 6px white;
+                      box-shadow: inset 2px 2px 16px 10px var(--mid-blue), var(--box-shadow);
+                      transition: all .1s;
+                      cursor: pointer;
+                      width: 10ch;
+                    }
+                    button:active {
+                      box-shadow: inset 2px 2px 16px 10px var(--mid-blue);
+                    }
+                  </style>
+                  <button>Click me</button>
+                `;
 
-							function highlightNext() {
-								removeHighlighting();
-								document.querySelectorAll(`.should-i-web-component span:not(.highlight-${index++})`)
-									.forEach(element => element.classList.add('dimmed'));
-							}
+                this.onclick = this.onClick.bind(this);
+              }
 
-							function changeColour(selector, colour) {
-								document.querySelectorAll(`.should-i-web-component ${selector}`)
-											.forEach(element => element.style.color = `var(--${colour})`)
-							}
+              onClick() {
+                const response = Math.round(Math.random());
+                this.shadowRoot.querySelector('button').textContent = response ? 'YES' : 'NO';
+              }
+            }
+            customElements.define('yes-or-no-button', YesOrNo);
+          </script>
+          <div style="margin: auto">
+            <h2>Yes or No?</h2>
+            <yes-or-no-button style="margin: auto"></yes-or-no-button>
+          </div>
+          <div class="notes">
+            To understand how this works, we need to know about two things
+          </div>
+        </section>
+        <section class="vertical">
+          <img src="images/custom-elements.svg" style="flex-grow: 1" />
+          <h2>Custom Elements</h2>
+        </section>
+        <section></section>
 
-							function listener(event) {
-								if (isNextSlide(event.key)) {
-									event.stopPropagation();
 
-									if (index < 4) {
-										highlightNext();
-									}
 
-									else if (index === 4) {
-										removeHighlighting();
-										changeColour('.web-component', 'yellow');
-										index++;
-									}
 
-									else if (index === 5) {
-										changeColour('.web-component-maybe', 'yellow');
-										index++;
-									}
 
-									else if (index == 6) {
-										changeColour('.framework', 'red');
-										index++;
-									}
-
-									if (index > 6) {
-										document.body.removeEventListener('keydown', listener);
-									}
-								}
-							}
-
-							document.body.addEventListener('keydown', listener);
-
-						});
-					</script>
-				</section>
-				<section>
-					advantages of web components over framework components
-				</section>
-				<section data-background-image="images/Big_Donut.png">
-					<a class="card" href="big-donut.html" target="blank">Big Demo</a>
-				</section>
-				<section>
-					<div style="display: flex; width: 100%">
-						<img style="flex-grow: 2" src="images/templates.svg" />
-						<img src="images/pearl.png" />
-					</div>
-				</section>
-				<section>
-					<div style="display: flex; align-items: center">
-						<ol>
-							<li>Create a reusable template using <code>&lt;template&gt;&lt;/template&gt;</code></li>
-							<li>Clone the template</li>
-							<li>Attach the clone to the DOM</li>
-						</ol>
-						<img src="images/holo-pearl.jpg" style="width: 50%" />
-					</div>
-				</section>
-				<section data-background-image="images/pearl-to-action.jpg">
-					<div class="card light">Demo!</div>
-				</section>
-				<section>
-					<img src="images/caniuse-templates.png" class="border" />
-					<div class="notes">
-						explanation of IE and opera mini
-					</div>
-				</section>
-				<section data-state="template-summary">
-					<div style="display: flex;">
-						<ul id="template-summary">
-							<li>Custom</li>
-							<li class="highlighted">Reusable</li>
-							<li>Encapsulated</li>
-						</ul>
-					</div>
-					<script>
-						Reveal.addEventListener('template-summary', () => {
-							doOnKeyPress(highlightSummaryList.bind(undefined, '#template-summary'));
-						});
-					</script>
-				</section>
-				<section>
-					<div style="display: flex; width: 100%">
-						<img style="flex-grow: 2" src="images/shadow-dom.svg" />
-						<img src="images/GarnetByKmes.png" />
-					</div>
-				</section>
-				<section data-state="ruby-sapphire-fusion">
-						<div class="alert">Spoiler Alert!</div>
-						<div id="ruby-sapphire-fusion" class="bottom-up-images down">
-							<img class="ruby" src="images/ruby.png" />
-							<img class="sapphire" src="images/sapphire.png" />
-							<img class="garnet hidden" src="images/GarnetByKmes.png" style="margin: auto" />
-						</div>
-						<div class="notes">
-							Spoiler alert for the last episode of season 1
-							Garnet demonstrates shadow DOM because she's actually a gem fusion
-							She's made up inside of two gems, with different abilities, but presents
-							a single, unified API to the outside world
-							And that's how shadow DOM works! Kind of.
-						</div>
-						<script>
-							Reveal.addEventListener('ruby-sapphire-fusion', () => {
-								function showRubyAndSapphire() {
-									document.getElementById('ruby-sapphire-fusion').classList.remove('down');
-								}
-								function fuseRubyAndSapphire() {
-									document.querySelectorAll('#ruby-sapphire-fusion img').forEach(gem => gem.classList.add('fused'));
-									document.body.addEventListener('transitionend', () => {
-										document.querySelectorAll('#ruby-sapphire-fusion img').forEach(gem => gem.classList.add('hidden'));
-										const garnet = document.querySelector('#ruby-sapphire-fusion .garnet');
-										requestAnimationFrame(() => {
-											garnet.classList.remove('hidden');
-											requestAnimationFrame(() => {
-												garnet.style.transform = 'scale(1.5)';
-											});
-										});
-									}, { once: true });
-								}
-								doOnKeyPress(showRubyAndSapphire, fuseRubyAndSapphire);
-							});
-						</script>
-	      </section>
-	      <section>
-					<div>
-						<select class="hover-highlight">
-							<option>Steven</option>
-							<option>Connie</option>
-							<option>Peridot</option>
-							<option>Pink Diamond</option>
-						</select>
-						<input type="file" class="hover-highlight" style="transform: scale(2.5); margin: 50px" />					
-					</div>
-					<video controls class="abc-tv hover-highlight" style="transform: scale(2); margin: 100px;"></video> 
-					<div class="notes">
-						Actually, you're probably already familiar with shadow DOM
-						Each of these elements is obviously made up of a bunch of different parts,
-						but they appear as a single element to the developer
-						(Exception: select, but even then the options elements are clearly each made up of
-						multiple bits which appear as a single element to the user)
-						They are - essentially - a bit of DOM that is hidden from the main DOM
-						New Shadow DOM spec = you can now build elements like this.
-					</div>
-				</section>
-				<section>
-<pre style="width: 600px; margin-bottom: 0;" class="fragment"><code><div id="outer"></div></code></pre>
-<pre style="width: 600px;" class="fragment"><code>#outer {
- width: 200px;
- height: 200px;
- background-color: var(--yellow);
- display: flex;
-}</code></pre>
-				</section>
-				<section>
-					<div id="outer"></div>
-				</section>
-				<section data-state="create-shadow">
-					<pre><code data-noescape class="create-shadow"><span>const inner = document.createElement('div');</span>
-<span>inner.style.width = '100px';
-inner.style.height = '100px';
-inner.style.border = '4px solid var(--red)';
-inner.style.margin = 'auto';</span>
-
-<span>const outer = document.getElementById('outer');</span>
-<span>const shadow = outer.attachShadow({ mode: 'open' });</span>
-<span>shadow.appendChild(inner);</span>
-</code></pre>
-					<script>
-						Reveal.addEventListener('create-shadow', () => {
-							let n = 0;
-							const blockSelector = 'code.create-shadow';
-							function highlightLine() { highlightLineInBlock(blockSelector, ++n); }
-							doOnKeyPresses(highlightLine, 5);
-						});
-					</script>
-				</section>
-				<section class="box-in-box">
-					<div id="outer"></div>
-					<script>
-						const inner = document.createElement('div');
-						inner.style.width = '100px';
-						inner.style.height = '100px';
-						inner.style.border = '4px solid var(--red)';
-						inner.style.margin = 'auto';
-
-						const outer = document.querySelector('.box-in-box #outer');
-						const shadow = outer.attachShadow({ mode: 'open' });
-						shadow.appendChild(inner);						
-					</script>
-						<div class="notes">
-							- show CSS can't touch it
-							- this is a little bit different from some browser native shadow elements, as CSS can touch them a bit
-							- can access via JS and change styles (use background-color)
-							- change to closed, show can't access via JS
-						</div>
-				</section>
-				<section>
-					<img src="images/caniuse-shadow-dom.png" class="border" />
-					<div class="notes">
-						- Shadow DOM v0, vs v1
-						- Under consideration for Edge
-						- Safari has minor bugs
-					</div>
-				</section>
-				<section data-state="shadow-dom-summary">
-					<div style="display: flex;">
-						<ul id="shadow-dom-summary">
-							<li>Custom</li>
-							<li>Reusable</li>
-							<li class="highlighted">Encapsulated</li>
-						</ul>
-					</div>
-					<script>
-						Reveal.addEventListener('shadow-dom-summary', () => {
-							doOnKeyPress(highlightSummaryList.bind(undefined, '#shadow-dom-summary'));
-						});
-					</script>
-					<div class="notes">
-						This is cool and all, but where things start getting much more interesting is when
-						we combine the two specs we've looked at already
-					</div>
-				</section>
-				<section>
-					<div class="spec-pics">
-						<img src="images/templates.svg" />
-						<img src="images/shadow-dom.svg" />
-					</div>
-					<img style="position: fixed; right: -100px; bottom: 0;" src="images/Sardonyx_by_Lenhi.png" class="fragment" />
-				</section>
-				<section>
-					<h2 style="font-size: 4em">Slots</h2>
-					<div class="notes">
-							Slots are shadow DOM that we can pass bits of light DOM into
-							Like select elements - pass in options
-						</div>	
-				</section>
-				<section>
-					<select>
-						<option>Steven</option>
-						<option>Connie</option>
-						<option>Peridot</option>
-						<option>Pink Diamond</option>
-					</select>	
-					<pre><code><select>
- <option>Steven</option>
- <option>Connie</option>
- <option>Peridot</option>
- <option>Pink Diamond</option>
-</select></code></pre>	
-					<div class="notes">
-						Even though we can't affect the inner DOM of the select very much at all
-						(can't even add padding!), we can still pass it these options elements
-						Slots work a lot like this.
-					</div>
-				</section>
-				<section>
-					<div style="width: 650px; display: flex; flex-direction: column;">
-						<pre class="fragment" style="margin-top: 0;"><code><template>
-  <div>Hello, <slot></slot></div>
-</template></code></pre>
-					<pre class="fragment"><code class="xml"><div class="greeting">
-  <span style="color: var(--yellow)">
-   World
-  </span>
-</div></code></pre>
-					<template id="greeting-template">
-						<div>Hello, <slot></slot></div>
-					</template>
-					<div id="greeting" class="fragment" style="margin-top: 50px">
-						<span style="color: var(--yellow)">World</span>
-					</div>
-					<script>
-						const greetingTemplate = document.getElementById('greeting-template').content;
-						const greeting = document.getElementById('greeting');
-						const greetingShadowRoot = greeting.attachShadow({ mode: 'open' });
-						greetingShadowRoot.appendChild(greetingTemplate.cloneNode(true));
-					</script>
-				</section>
-				<section data-background-image="images/sardonyx-background.png">
-					<div class="card light">Demo!</div>
-					<div class="notes">
-						If you remember back to our demo... (template.html)
-						- Cleaned things up a lot
-						- Still some repeated code: some structural code in the main HTML
-						- Slots will allow us to move all structural code to template & just have content in the main HTML
-					</div>
-				</section>
-				<section data-state="slots-summary">
-					<div style="display: flex;">
-						<ul id="slots-summary">
-							<li>Custom</li>
-							<li class="highlighted">Reusable</li>
-							<li class="highlighted">Encapsulated</li>
-						</ul>
-					</div>
-					<script>
-						Reveal.addEventListener('slots-summary', () => {
-							doOnKeyPress(highlightSummaryList.bind(undefined, '#slots-summary'));
-						});
-					</script>
-					<div class="notes">
-						HTML just contains the content - the styling is abstracted away, just as it should be
-						BUT requires JavaScript every time you want to add a new element to the page, which
-						is not how anyone wants to write HTML
-						What we really want to do is write...
-					</div>
-				</section>
-				<section>
-						<pre><code class="xml"><big-donut-item name="Donut" image="images/donut.png">
- Exactly what you'd expect at a donut shop
-</big-donut-item></code></pre>
-				</section>
-				<section>
-					<div style="display: flex; width: 100%">
-						<img style="flex-grow: 2" src="images/custom-elements.svg" />
-						<img src="images/amethyst.png" />
-					</div>
-					<div class="notes">
-						The custom elements spec lets you extend HTML by creating your own elements
-						Much like Angular/Vue/React
-						Works pretty similar to React components
-					</div>
-				</section>
-				<section data-state="create-custom-element-code">
-					<pre><code class="js create-custom-element-code" style="width: 800px" data-noescape><span>class MyElement extends HTMLElement {</span>
- <span>constructor() {
-  super();</span>
-  <span>alert('custom element created');</span>
- }
-}
-<span>customElements.define('my-element', MyElement)</span></code></pre>
-					<pre><code class="html" style="width: 800px"><my-element></my-element></code></pre>
-					<script>
-						Reveal.addEventListener('create-custom-element-code', () => {
-							let n = 0;
-							const blockSelector = 'code.create-custom-element-code';
-							function highlightLine() { highlightLineInBlock(blockSelector, ++n); }
-							doOnKeyPresses(highlightLine, 4);
-
-							class MyElement extends HTMLElement {
-								constructor() {
-									super();
-									alert('custom element created.');
-								}
-							}
-							customElements.define('my-element', MyElement);
-						});
-					</script>
-					<div class="notes">
-						Must have a hyphen in the name
-						So that's pretty useless - what we really want to do is put stuff inside our custom element
-					</div>
-				</section>
-				<section>
-					<pre><code class="js" style="width: 1000px">class ElementWithChild extends HTMLElement {
- constructor() {
-  super();
-  this.appendChild(document.createElement('div'));
- }
-}
-customElements.define('element-with-child', ElementWithChild);</code></pre>
-					<pre><code class="html" style="width: 1000px"><illegal-element></illegal-element></code></pre><illegal-element></illegal-element>
-				</section>
-				<section>
-					<div class="browser-error">Uncaught DOMException: Failed to construct 'CustomElement': The result must not have children</div>
-					<div class="notes">
-						So that's pretty unhelpful
-						Luckily, we know a way to add stuff that is hidden from the DOM!
-					</div>
-				</section>
-				<section>
-					<div class="spec-pics">
-						<img src="images/custom-elements.svg" />
-						<img src="images/shadow-dom.svg" />
-					</div>
-					<img style="position: fixed; left: -200px; bottom: 0;" src="images/Sugilite.png" class="fragment" />
-				</section>
-				<section data-state="element-with-shadow">
-					<pre><code class="javascript element-with-shadow-code" data-noescape>class ShadowElement extends HTMLElement {
- constructor() {
-  super();
-  const div = document.createElement('div');
-  div.innerHTML = 'hello world';
-
-  <span class="highlighted">const shadowRoot = this.attachShadow({ mode: 'open' });
-  shadowRoot.appendChild(div);</span>
- }
-
- customElements.define('shadow-element', ShadowElement);
-}</code></pre>
-					<script>
-						Reveal.addEventListener('element-with-shadow', () => {
-							const block = 'code.element-with-shadow-code';
-							doOnKeyPress(() => {
-								document.querySelectorAll(`${block}, ${block} *`)
-									.forEach(bitOfCode => bitOfCode.classList.add('dimmed'));
-								document.querySelectorAll(`${block} .highlighted`)
-									.forEach(bitOfCode => {
-										bitOfCode.classList.remove('dimmed');
-										bitOfCode.style.color = 'var(--blue)';
-									});
-								document.querySelectorAll(`${block} .highlighted *`)
-									.forEach(bitOfCode => bitOfCode.classList.remove('dimmed'));
-							});
-						});
-					</script>
-				</section>
-				<section>
-					<pre><code class="html"><shadow-element></shadow-element></code></pre>
-					<shadow-element class="fragment" style="margin-top: 100px"></shadow-element>
-					<script>
-						class ShadowElement extends HTMLElement {
-							constructor() {
-								super();
-								const div = document.createElement('div');
-
-								const shadowRoot = this.attachShadow({ mode: 'open' });
-								shadowRoot.appendChild(div);
-							}
-						}
-						customElements.define('shadow-element', ShadowElement);
-					</script>
-					<div class="notes">
-						So that's cool, but now we're once again left with the problem of writing
-						all our DOM in JavaScript - particularly annoying for CSS!
-						If only there was a way...
-					</div>
-				</section>
-				<section>
-					<div class="spec-pics three">
-						<img src="images/templates.svg" />
-						<img src="images/shadow-dom.svg" />
-						<img src="images/custom-elements.svg" />
-					</div>
-					<img style="position: fixed; left: 0; top: 0;" src="images/Alexandrite.png" class="fragment" />
-				</section>
-				<section>
-					<pre><code><template id="example-template">
- <style>div { -webkit-text-stroke: var(--red) 2px }</style>
- <div>Hello, world!</div>
-</template>
-
-<script>
- class MyAwesomeElement extends HTMLElement {
-  constructor() {
-   super();
-
-   const shadowRoot = this.attachShadow({ mode: 'open' });
-   const template = document.getElementById('example-template')
-   const content = template.content.cloneNode(true);
-
-   shadowRoot.appendChild(content);
-  }
- }
- customElements.define('my-awesome-element', MyAwesomeElement);
-</script></code></pre>
-				</section>
-				<section>
-					<pre><code class="html"><my-awesome-element></my-awesome-element></code></pre>
-					<my-awesome-element class="fragment" style="margin-top: 100px; transform: scale(2)"></my-awesome-element>
-				</section>
-				<section data-background-image="images/alexandrite-demo.png">
-					<div class="card light">Demo!</div>
-				</section>
-				<section>
-					<img src="images/caniuse-custom-elements.png" class="border" />
-					<div class="notes">
-						coverage is kind of similar to shadow DOM
-						Safari doesn't support custom elements which extend DOM elements, which we didn't go into anyway
-					</div>
-				</section>
-				<section>
-					<div style="display: flex;">
-						<ul>
-							<li>Custom</li>
-							<li>Reusable</li>
-							<li>Encapsulated</li>
-						</ul>
-					</div>
-				</section>
-				<section>
-					<div style="display: flex; width: 100%;">
-						<img style="flex-grow: 2" src="images/html-imports.svg" />
-						<img src="images/lapis-lazuli.png" />
-					</div>
-				</section>
-				<section>
-					<pre><code class="html fragment" style="width: 775px">&lt;script type="module" src="app.js"&gt;</script></code></pre>
-					<pre><code class="html fragment" style="width: 775px">&lt;link rel="stylesheet" href="styles.css"&gt;</code></pre>
-					<pre class="html fragment" style="width: 775px"><code>&lt;link rel="import" href="template.html"&gt;</code></pre>
-				</section>
-				<section>
-					<img src="images/caniuse-html-imports.png" class="border" />
-				</section>
-				<section data-background-image="images/crying.jpg"></section>
-				<section data-background-image="images/lapis-lazuli-background.png">
-					<div class="card">Demo...</div>
-				</section>
-				<section>
-					<div class="summary-heading">
-						<h2>HTML templates</h2>
-						<img src="images/templates.svg" />
-					</div>
-					<ul>
-						<li class="fragment">Reusable HTML</li>
-						<li class="fragment">Can include CSS</li>
-						<li class="fragment">Available in (almost)<br> all browsers</li>
-					</ul>
-					<img style="position: fixed; bottom: 0; right: 0; z-index: -1;" src="images/pearl.png" />
-				</section>
-				<section>
-					<div class="summary-heading">
-						<h2>Shadow DOM</h2>
-						<img src="images/shadow-dom.svg" />
-					</div>
-					<ul>
-						<li class="fragment">Encapsulated DOM</li>
-						<li class="fragment">Impervious to outside CSS</li>
-						<li class="fragment">Available in most browsers</li>
-						<li class="fragment">Combine with &lt;template&gt; <br> to get &lt;slot&gt;s</li>
-					</ul>
-					<img style="position: fixed; bottom: 80px; right: 0; z-index: -1" src="images/FusionTemplateGarnet.png" />
-				</section>
-				<section>
-					<div class="summary-heading">
-						<h2>Custom Elements</h2>
-						<img src="images/custom-elements.svg" />
-					</div>
-					<ul style="display: flex; flex-direction: column; align-items: flex-end">
-						<li style="width: 55%;" class="fragment">Your own HTML elements</li>
-						<li style="width: 55%;" class="fragment">Available in most browsers</li>
-					</ul>
-					<img style="position: fixed; bottom: 0; left: -100px; z-index: -1" src="images/amethyst-horse.png" />
-				</section>
-				<section>
-					<div class="summary-heading">
-						<h2>HTML Imports</h2>
-						<img src="images/custom-elements.svg" />
-					</div>
-					<ul style="margin-left: 0;">
-						<li class="fragment">Import HTML like <br> it's JS or CSS</li>
-						<li class="fragment">The saddest spec</li>
-					</ul>
-					<img style="position: fixed; bottom: 0; right: 0; z-index: -1" src="images/lapis-lazuli.png" />
-				</section>
-				<section>
-					<div class="summary-heading">
-						<h2>Web Components</h2>
-						<img style="margin-left: 2ch" src="images/web-components-logo.png" />
-					</div>
-					<div style="display: flex; align-items: center; width: 100%; justify-items: space-around">
-						<img src="images/FusionTemplateAlexandrite.png" />
-						<ul>
-							<li>Custom</li>
-							<li>Reusabled</li>
-							<li>Encapsulated</li>
-						</ul>			
-					</div>
-				</section>
-				<section data-background-image="images/lion.gif">
-					<div class="card end fragment">Thank you!</div>
-					<div class="card end fragment">@ErinJZimmer</div>
-					<div class="card end fragment" style="font-size: 1.2em">Images from http://steven-universe.wikia.com</div>
-				</section>
+        <section>
+          explanation of shadow DOM
+        </section>
+        <section>
+          description of media object pattern
+        </section>
+        <section>
+          media object web component - need to pass in content
+        </section>
+        <section>
+          description of slots
+        </section>
+        <section>
+          what's required to get this working cross browser - polyfills & libraries
+        </section>
+        <section>
+          custom elements life cycle & intercomponent communication: make a stream
+        </section>
+        <section>
+          Polymer style components with HTML template and HTML import
+        </section>
+        <section>
+          publishing a web component to NPM
+        </section>
+        <section>
+          thanks, twitter, shine, slides
+        </section>
       </div>
-		</div>
-		<script src="reveal/head.min.js"></script>
-		<script>
-			Reveal.initialize({
+    </div>
+    <script src="reveal/head.min.js"></script>
+    <script>
+      Reveal.initialize({
         controls: false,
         progress: false,
-				history: true,
-				center: false,
-				display: 'flex',
-				dependencies: [
-					{ src: 'reveal/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-				]
-			});
-		</script>
+        history: true,
+        center: false,
+        display: 'flex',
+        dependencies: [
+          { src: 'reveal/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        ]
+      });
+    </script>
   </body>
 </html>
+      
