@@ -17,13 +17,9 @@
           <img src="images/web-components-logo.svg" style="width: 50%; margin: auto" />
           <h1 class="overlay-text" style="top: calc(50% - 1.75em); text-shadow: var(--text-shadow)">Web Components</h1>
           <div class="overlay-text" style="top: calc(50%); text-shadow: var(--text-shadow); color: hsl(198, 76%, 80%)">It's about time.</div>
-        </section>
-        <section>
-          <ul>
-            <li class="fragment">Custom</li>
-            <li class="fragment">Reusable</li>
-            <li class="fragment">Encapsulated</li>
-          </ul>  
+          <div class="notes">
+            First proposed by Alex Russell at Fronteers conf 2011 as a way to create new HTML elements that are custom, reusable and encapsulated
+          </div>
         </section>
         <section class="vertical">
           <img src="images/proposal-video.png" class="border" style="margin: auto; width: 100%" />
@@ -32,275 +28,373 @@
             https://fronteers.nl/congres/2011/sessions/web-components-and-model-driven-views-alex-russell
           </a>
           <div class="notes">
-            - first proposed by Alex Russell in 2011
-            - strong support from Chrome & Google
-            - not that much interest from other browser vendors
-            - low adoption
+            - Chrome loved them, but nobody else really got on board
+            - To this day, Chrome is only browser to implement full original spec
+          </div>
+        </section>
+        <section>
+          <img src="images/polymer-logo.png" />
+          <div>polymer</div>
+          <div class="notes">
+            - created by Chrome
+            - cross-browser web components
+            - most popular web components around (based on Google results when researching this article), but still not hugely popular
+          </div>
+        </section>
+        <section>
+          <img src="images/jquery-logo.png" />
+          <div class="notes">
+            devs didn't care
+            we were all busy writing jquery plugins. components weren't even a thing.
+            it's not 2011 anymore though, and a few things have changed
           </div>
         </section>
         <section class="framework-logos">
           <img src="images/angular-logo.png" />
           <img src="images/react-logo.png" />
           <img src="images/vue-logo.png" />
+          <div class="notes">
+            jquery replaced by frameworks
+            and what do we build framework-based apps out of? components
+            seeing components in the wild = inspiration for spec writers and implementers
+            new, improved web components spec
+          </div>
         </section>
         <section>
           <img src="images/browser-support.png" class="border" style="align-self: center">
           <div class="notes">
-            web components aren't just in chrome anymore
-            ie - polyfills available - bit fiddly but workable
-            you'll notice there are actually 4 different specs listed - we'll talk about them in a minute
+            supported by all but Edge
+            Edge is working to support
+            no, IE doesn't support any of this, of course
+            polyfills - fiddly - just like everything else in IE
           </div>
         </section>
         <section data-background-image="images/batman-vs-superman.jpg">
           <div class="notes">
-            we have frameworks full of components - why do we need web components?
-            There are some things that frameworks are much better at than web components
+            frameworks: easy creation of components & component based architectures
+            do we really need web components
+            who would win in a fight?
+          </div>
+        </section>
+        <section>
+          <ul>
+            <li>Automatic change detection</li>
+            <li>Binding</li>
+            <li>State management</li>
+            <li>Routing</li>
+          </ul>
+          <div class="notes">
+            bunch of stuff frameworks give you that web components don't
+            could implement with web components, but then you're just building a framework based on web components
+          </div>
+        </section>
+        <section>
+          Intercomponent communication
+          <div class="notes">
+            web components can do parent -> child & broadcast publish/subscribe
+            frameworks tend to do better child -> parent and sibling -> sibling (or between unrelated parts of the app)
+          </div>
+        </section>
+        <section data-background-image="images/contortionist.jpg">
+          <div class="notes">
+            strength of web components = flexibility
+            use them on their own with just a script tag
+            combine with framework
+          </div>
+        </section>
+        <section>
+          <iframe style="width: 100%" src="https://custom-elements-everywhere.com"></iframe>
+          <div class="notes">
+            indication of how well your framework works with web components
+            React: intercomponent communication - stringifying attributes + react's event system
+            open issues to fix
           </div>
         </section>
         <section class="framework-logos">
-            <img src="images/angular-logo.png" />
-            <img src="images/react-logo.png" />
-            <img src="images/vue-logo.png" />
-            <div class="notes">There are some things that frameworks are much better at than web components</div>
-          </section>
-          <section>
-          <img src="images/change-detection.jpg" style="margin: auto" class="border" />
+          <img src="images/wordpress-logo.png" />
+          <img src="images/drupal-logo.png" />
+          <img src="images/joomla-logo.png" />
+          <img src="images/aem-logo.png" />
           <div class="notes">
-            Angular + Vue give you automatic change detection, that can automatically update your view
-            when you JavaScript model changes
-          </div>
-        </section>
-        <section>
-          <pre class="border" style="margin: auto"><code>setState();</code></pre>
-          <div class="notes">
-            React doesn't detect the changes automatically for you, but it does handle all the DOM updates.
-          </div>
-        </section>
-        <section>
-          drawing of intercomponent communication
-        </section>
-        <section>
-          drawing of routing
-        </section>
-        <section>
-          drawing of state management (or maybe victorian government logo)
-        </section>
-        <section>
-          <img src="images/web-components-logo.svg" style="width: 50%; margin: auto" />
-        </section>
-        <section class="many-logos">
-          <img src="images/chrome-logo.png" />
-          <img src="images/safari-logo.png" />
-          <img src="images/firefox-logo.png" />
-          <img src="images/edge-logo.png" />
-          <img src="images/ios-logo.png" />
-          <img src="images/android-logo.svg" />
-          <div class="notes">
-            native implementation - some advantages
-          </div>
-        </section>
-        <section>
-          - picture of something just as good but smaller
-          <div class="notes">
-            no framework code
-            maybe polyfills but not as big and ways to mitigate (only serve to browsers that need them ie edge)
-          </div>
-        </section>
-        <section data-background-image="images/steven-in-a-bubble.png">
-          <div class="notes">
-            CSS encapsulated without needing to write it as JS or use the smol hax that Angular uses to achieve the same effect
-          </div>
-        </section>
-        <section>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 774 875.7">
-              <path fill="#FFF" d="M387 0l387 218.9v437.9L387 875.7 0 656.8V218.9z"/>
-              <path fill="#8ed6fb" d="M704.9 641.7L399.8 814.3V679.9l190.1-104.6 115 66.4zm20.9-18.9V261.9l-111.6 64.5v232l111.6 64.4zM67.9 641.7L373 814.3V679.9L182.8 575.3 67.9 641.7zM47 622.8V261.9l111.6 64.5v232L47 622.8zm13.1-384.3L373 61.5v129.9L172.5 301.7l-1.6.9-110.8-64.1zm652.6 0l-312.9-177v129.9l200.5 110.2 1.6.9 110.8-64z"/>
-              <path fill="#1c78c0" d="M373 649.3L185.4 546.1V341.8L373 450.1v199.2zm26.8 0l187.6-103.1V341.8L399.8 450.1v199.2zm-13.4-207zM198.1 318.2l188.3-103.5 188.3 103.5-188.3 108.7-188.3-108.7z"/>
-              <g class="shadow">
-                <path stroke="red" stroke-width="40" d="M110 110 L650 750"/>
-                <circle stroke="red" stroke-width="40" cx="387" cy="438" r="416" fill="transparent" />    
-              </g>
-            </svg>
-        </section>
-        <section data-background-image="images/batman-vs-superman.jpg">
-          <div class="notes">
-            So which should you use?
+            not just frameworks
+            share components between app and static site
           </div>
         </section>
         <section data-background-image="images/batman-and-superman.jpeg">
           <div class="notes">Why not both?</div>
           <div class="attribution">@richsimmonsart</div>
         </section>
+
         <section>
-          <iframe style="width: 100%" src="https://custom-elements-everywhere.com"></iframe>
+          <ul>
+            <li>HTML templates</li>
+            <li>ES imports</li>
+            <li>Custom elements</li>
+            <li>Shadow DOM</li>
+          </ul>
           <div class="notes">
-            can also be used with wordpress, joomla, drupal, aem etc
-            very easy to share - usually just a single file
+            Not going to talk about ES imports as I assume you know how they work already
+            Also not going to talk about HTML templates - not really useful without HTML imports
+            You will see templates and HTML imports used with Polymer components & other components built on libraries and polyfills
           </div>
         </section>
         <section>
-          <script>
-            class YesOrNo extends HTMLElement {
-              constructor() {
-                super();
-
-                this.attachShadow({ mode: 'open' });
-                this.shadowRoot.innerHTML = `
-                  <style>
-                    button {
-                      padding: 1em;
-                      background-color: var(--blue);
-                      color: white;
-                      font-size: 1.5em;
-                      border-radius: 8px;
-                      border: solid 6px white;
-                      box-shadow: inset 2px 2px 16px 10px var(--mid-blue), var(--box-shadow);
-                      transition: all .1s;
-                      cursor: pointer;
-                      width: 10ch;
-                    }
-                    button:active {
-                      box-shadow: inset 2px 2px 16px 10px var(--mid-blue);
-                    }
-                  </style>
-                  <button>Click me</button>
-                `;
-
-                this.onclick = this.onClick.bind(this);
-              }
-
-              onClick() {
-                const response = Math.round(Math.random());
-                this.shadowRoot.querySelector('button').textContent = response ? 'YES' : 'NO';
-              }
-            }
-            customElements.define('yes-or-no-button', YesOrNo);
-          </script>
-          <div style="margin: auto">
-            <h2>Yes or No?</h2>
-            <yes-or-no-button style="margin: auto"></yes-or-no-button>
-          </div>
-          <div class="notes">
-            To understand how this works, we need to know about two things
-          </div>
+          <ul>
+            <li>Custom elements</li>
+            <li>Shadow DOM</li>
+          </ul>
         </section>
         <section class="vertical">
           <img src="images/custom-elements.svg" style="flex-grow: 1" />
           <h2>Custom Elements</h2>
-        </section>
-        <section>
           <ul>
             <li>Register new HTML tags</li>
             <li>Control life cycle and behaviour</li>
           </ul>
+          <div class="notes">
+            Not content
+            Limited presentation - you can set style on element but that's it - there are better ways to do this
+          </div>
         </section>
         <section>
           <pre style="align-self: center"><code>customElements.define('my-element', MyElement)</code></pre>
           <div class="notes">
             customElements is available on window object in browsers that support it
             first argument is name - must have hyphen
-            second argument is class defined by you that controls the appearance, life-cycle and behaviour of the element
+            tag names are global - use namespacing if you're worrid about clashes
           </div>
         </section>
         <section class="vertical">
-          <pre style="align-self: center"><code>class MyElement extends HTMLElement {
+            <pre style="align-self: center"><code>class MyElement extends HTMLElement {
  constructor() {
   super();
  }
 
  connectedCallback() { ... }
- 
+
  disconnectedCallback() { ... }
 
  adoptedCallback() { ... }
 
  attributeChangedCallback() { ... } 
 }</code></pre>
-        </section>
-        <section class="vertical">
-          <img src="images/shadow-dom.svg" style="flex-grow: 1" />
-          <h2>Shadow DOM</h2>
-          <div class="notes">
-            shadow DOM is a bit trickier, but also something you've seen before.
-            browsers have been doing shadow DOM since forever - the new spec just opens up this capability to developers
-          </div>
-        </section>
-        <section class="vertical">
-          <pre style="align-self: center"><code class="html"><video controls></video></code></pre>
-          <video controls class="abc-tv hover-highlight" style="height: 400px; width: 600px; align-self: center"></video> 
-          <div class="notes">
-            show how it's only a single element in the dev tools
-            also can't affect the styling of the inside of the element eg control bar
-          </div>
-        </section>
-        <section>
-          <style>
-            #outer {
-              margin: auto;
-              background-color: var(--green);
-              width: 200px;
-              height: 200px;
-              display: flex;
-            }
-          </style>
-          <div id="outer"></div>
-          <script>
-            const shadowRoot = document.getElementById('outer').attachShadow({ mode: 'open' });
-            shadowRoot.innerHTML = `
-              <style>
-                .inner {
-                  border: 12px solid var(--mid-blue);
-                  width: 100px;
-                  height: 100px;
-                  margin: auto;
+            <div class="notes">
+              must extend HTMLElement or child class
+              must call super
+              may implement any of four lifecycle hooks
+            </div>
+          </section>
+          <section>
+            <h2>Expanding bubble demo!</h2>
+          </section>
+          <section>
+            <style>
+              expanding-bubble {
+                border: 4px solid var(--green);
+                border-radius: 50%;
+                margin: auto;
+              }
+            </style>
+            <script>
+              class BubbleElement extends HTMLElement {
+                constructor() {
+                  super();
+        
+        
+                  this.onclick = this.grow;
                 }
-              </style>
-              <div class="inner"></div>
-            `;
-          </script>
-          <div class="notes">
-            - can see shadow root in dev tools (unlike video element)
-            - can't affect inner element with new css class (like video element)
-            - can access inner element via JS (unlike video element)
-            - can make closed
-          </div>
-        </section>
-        <section class="vertical">
-          <h2>Shadow Root</h2>
-          <ul>
-            <li>Impervious to CSS</li>
-            <li>Semi-impervious to JS</li>
-            <li>Vulnerable to dev tools</li>
-          </ul>
+        
+                grow() {
+                  const diameter = this.getBoundingClientRect().width;
+                  const newDiameter = diameter * 1.1;
+                  this.style.width = `${newDiameter}px`;
+                  this.style.height = `${newDiameter}px`;
+                }
+              }
+              customElements.define('expanding-bubble', BubbleElement);
+            </script>
+            <expanding-bubble></expanding-bubble>  
+            <div class="notes">
+              limited by custom elements can't have children - no innerHTML, no appendChild
+            </div>
+          </section>
+
+          <section class="vertical">
+            <img src="images/shadow-dom.svg" style="flex-grow: 1" />
+            <h2>Shadow DOM</h2>
+            <div class="notes">
+              DOM fragment completely quarantined from the main DOM
+            </div>
+          </section>
+          <section data-background-image="images/dark-vs-light.jpg">
+            <div class="notes">
+                shadow DOM vs light DOM<
+                browsers have had shadow DOM for years
+                probably used it without realisng 
+              </div>
+          </section>
+          <section class="vertical">
+            <input type="file" />
+            <input type="range" />
+            <select>
+              <option>Option 1</option>
+              <option>Option 2</option>
+              <option>Option 3</option>
+            </select>
+            <video controls class="abc-tv hover-highlight" style="height: 400px; width: 600px; align-self: center"></video> 
+            <div class="notes">
+              elements that are clearly made of multiple parts, but appear as single element in DOM = shadow DOM
+              usually real bastards to style
+              check it out in Chrome
+              Show user agent shadow DOM setting in dev tools
+              shadow root - special element
+              create new style - won't apply to shadow root 
+              can't target it with JS
+              Shadow DOM spec is basically giving this ability to developers
+            </div>
+          </section>
+          <section>
+            <pre><code>myElement.attachShadow({ mode: 'open' });
+shadowRoot.innerHTML = `
+  <style>
+    .inner {
+      border: 12px solid var(--mid-blue);
+      width: 100px;
+      height: 100px;
+      margin: auto;
+    }
+  </style>
+  <div class="inner"></div>
+`;</code></pre>
+            <div class="notes">
+              mode - open vs closed
+              attach children via innerHTML or append child
+            </div>
+          </section>
+          <section>
+            <style>
+              #myElement {
+                margin: auto;
+                background-color: var(--green);
+                width: 200px;
+                height: 200px;
+                display: flex;
+              }
+            </style>
+            <div id="myElement"></div>
+            <script>
+              const shadowRoot = outer.attachShadow({ mode: 'open' });
+              shadowRoot.innerHTML = `
+                <style>
+                  .inner {
+                    border: 12px solid var(--mid-blue);
+                    width: 100px;
+                    height: 100px;
+                    margin: auto;
+                  }
+                </style>
+                <div class="inner"></div>
+              `;
+            </script>
+            <div class="notes">
+              - can see shadow root in dev tools
+              - can't affect inner element with new css class (although custom property works)
+              - can access inner element via JS
+            </div>
+          </section>
+          <section class="vertical">
+            <img src="images/shadow-dom.svg" style="flex-grow: 1" />
+            <h2>Shadow DOM</h2>
+            <ul>
+              <li>Impervious to CSS</li>
+              <li>Semi-impervious to JS</li>
+              <li>Vulnerable to dev tools</li>
+            </ul>
+          </section>
+    
+          <section>
+            <h2>Putting it together</h2>
+            <div class="class">
+              shadow DOM allows custom elements to have children
+              the excite
+            </div>
+          </section>
+          <section>
+            <style>
+              emoji-picker {
+                margin: auto;
+              }
+            </style>
+            <emoji-picker></emoji-picker>
+          </section>
+
+          <section>
+            <h2>Piercing the shadow DOM</h2>
+            <div class="notes">
+              encapsulation is great, but sometimes you really need to pass something in
+            </div>
+          </section>
+          <section>
+            <pre><code class="html"><my-awesome-value option="3"></my-awesome-value></code></pre>
+            <div class="notes">
+              unlike framework components - can only pass strings - no reason you can't stringify object
+            </div>
+          </section>
+          <section>
+            <pre><code class="js">const option = this.attributes.option.value</code></pre>
+            <div class="notes">
+              what if you need to pass in HTML though? eg select element
+            </div>
+          </section>
+          <section>
+            <style>
+              select {
+                margin: auto;
+              }
+            </style>
+            <select>
+              <option><b>Bold</b></option>
+              <option><i>Italics</i></option>
+            </select>
+            <div class="notes">
+              option elements can take any arbitrary html
+            </div>
+          </section>
+          <section>
+            <twoot-post avatar="images/bowser.png">
+              Hey Mario, the princess is in 
+              <a href="https://goo.gl/maps/cZzyjm8LMrF2">another castle</a>
+            </twoot-post> 
+            <div class="notes">the next big thing after Google plus</div>
+          </section>
+    
+ 
+ 
+ 
+ 
+    
+ 
+        <section>
+            So that’s a basic overview of web components. There’s a whole lot going on that we didn’t cover here - things like libraries to help you build components, polyfills to support … well.. IE, really, the component lifecycle and communicating between components. Hopefully though, I’ve shown you how easy it is to create web components, and convinced you that perhaps frameworks and web components working together is the way of the future!
         </section>
 
 
 
 
-        <section>
-          explanation of shadow DOM
-        </section>
-        <section>
-          description of media object pattern
-        </section>
-        <section>
-          media object web component - need to pass in content
-        </section>
-        <section>
-          description of slots
-        </section>
-        <section>
-          what's required to get this working cross browser - polyfills & libraries
-        </section>
-        <section>
-          custom elements life cycle & intercomponent communication: make a stream
-        </section>
-        <section>
-          Polymer style components with HTML template and HTML import
-        </section>
-        <section>
-          publishing a web component to NPM
-        </section>
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
         <section>
           thanks, twitter, shine, slides
         </section>
@@ -319,6 +413,8 @@
         ]
       });
     </script>
+    <script src="emoji-picker.js"></script>
+    <script src="twoot-post.js"></script>
   </body>
 </html>
       

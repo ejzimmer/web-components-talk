@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" href="shared.css">
+    <style>
+      body {
+        display: flex;
+        height: 100vh;
+      }
+      expanding-bubble {
+        border: 4px solid var(--green);
+        border-radius: 50%;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+
+    <expanding-bubble></expanding-bubble>
+    <script>
+      class BubbleElement extends HTMLElement {
+        constructor() {
+          super();
+
+          this.onclick = this.grow;
+        }
+
+        grow() {
+          const diameter = this.getBoundingClientRect().width;
+          const newDiameter = diameter * 1.1;
+          this.style.width = `${newDiameter}px`;
+          this.style.height = `${newDiameter}px`;
+        }
+      }
+      customElements.define('expanding-bubble', BubbleElement);
+    </script>
+  </body>
+</html>
