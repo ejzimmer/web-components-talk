@@ -32,7 +32,7 @@
             - To this day, Chrome is only browser to implement full original spec
           </div>
         </section>
-        <section>
+        <section class="vertical">
           <img src="images/polymer-logo.png" />
           <div>polymer</div>
           <div class="notes">
@@ -41,7 +41,7 @@
             - most popular web components around (based on Google results when researching this article), but still not hugely popular
           </div>
         </section>
-        <section>
+        <section class="vertical">
           <img src="images/jquery-logo.png" />
           <div class="notes">
             devs didn't care
@@ -147,6 +147,8 @@
         <section class="vertical">
           <img src="images/custom-elements.svg" style="flex-grow: 1" />
           <h2>Custom Elements</h2>
+        </section>
+        <section>
           <ul>
             <li>Register new HTML tags</li>
             <li>Control life cycle and behaviour</li>
@@ -185,7 +187,7 @@
             </div>
           </section>
           <section>
-            <h2>Expanding bubble demo!</h2>
+            <h2 style="font-size: 1.4em">Expanding bubble demo!</h2>
           </section>
           <section>
             <style>
@@ -283,7 +285,7 @@ shadowRoot.innerHTML = `
             </style>
             <div id="myElement"></div>
             <script>
-              const shadowRoot = outer.attachShadow({ mode: 'open' });
+              const shadowRoot = myElement.attachShadow({ mode: 'open' });
               shadowRoot.innerHTML = `
                 <style>
                   .inner {
@@ -302,9 +304,8 @@ shadowRoot.innerHTML = `
               - can access inner element via JS
             </div>
           </section>
-          <section class="vertical">
+          <section>
             <img src="images/shadow-dom.svg" style="flex-grow: 1" />
-            <h2>Shadow DOM</h2>
             <ul>
               <li>Impervious to CSS</li>
               <li>Semi-impervious to JS</li>
@@ -329,7 +330,7 @@ shadowRoot.innerHTML = `
           </section>
 
           <section>
-            <h2>Piercing the shadow DOM</h2>
+            <h2 style="font-size: 1.3em;">Piercing the shadow DOM</h2>
             <div class="notes">
               encapsulation is great, but sometimes you really need to pass something in
             </div>
@@ -337,31 +338,41 @@ shadowRoot.innerHTML = `
           <section>
             <pre><code class="html"><my-awesome-value option="3"></my-awesome-value></code></pre>
             <div class="notes">
+              the simplest way to pass things through the shadow DOM is via attributes on your custom element
               unlike framework components - can only pass strings - no reason you can't stringify object
+              framework will take care of stringification I think
             </div>
           </section>
           <section>
             <pre><code class="js">const option = this.attributes.option.value</code></pre>
             <div class="notes">
-              what if you need to pass in HTML though? eg select element
+              the more complicated way is to pass chunks of light DOM
             </div>
           </section>
           <section>
             <style>
               select {
                 margin: auto;
+                transform: scale(4);
               }
             </style>
             <select>
-              <option><b>Bold</b></option>
-              <option><i>Italics</i></option>
+              <option>Option 1</option>
+              <option>Option 2</option>
             </select>
             <div class="notes">
-              option elements can take any arbitrary html
+              select = shadow root
+              options exist light DOM
+              select has slot for options
             </div>
           </section>
           <section>
-            <twoot-post avatar="images/bowser.png">
+            <style>
+              twoot-post a {
+                color: var(--green);
+              }
+            </style>
+            <twoot-post avatar="images/bowser-avatar.png">
               Hey Mario, the princess is in 
               <a href="https://goo.gl/maps/cZzyjm8LMrF2">another castle</a>
             </twoot-post> 

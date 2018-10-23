@@ -14,7 +14,8 @@ class TwootPost extends HTMLElement {
         }
         .avatar {
           width: 100px;
-          border-right: 4px solid var(--blue);
+          border-right: 4px solid;
+          border-color: linear-gradient(red, blue);
           flex-shrink: 0;
           align-self: stretch;
           display: flex;
@@ -27,14 +28,19 @@ class TwootPost extends HTMLElement {
           font-size: 24px;
           padding: 0 1em;
         }
-        emoji-picker {
+        .reaction {
           flex-shrink: 0;
           border-left: 4px solid var(--blue);
+          display: flex;
+          align-items: center;
+        }
+        twoot-post {
+          margin: auto;
         }
       </style>
       <div class="avatar"><img /></div>
       <div class="content"><slot></slot></div>
-      <emoji-picker></emoji-picker>
+      <div class="reaction"><emoji-picker></emoji-picker></div>
     `;
 
     this.shadowRoot.querySelector('img').src = this.attributes.avatar.value;

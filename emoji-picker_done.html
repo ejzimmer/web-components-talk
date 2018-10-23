@@ -1,3 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="shared.css">
+    <style>
+      body {
+        display: flex;
+        height: 100vh;
+      }
+      emoji-picker {
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <emoji-picker></emoji-picker>
+    <script>
 class EmojiPicker extends HTMLElement {
   constructor() {
     super();
@@ -76,3 +94,7 @@ class EmojiPicker extends HTMLElement {
 }
 
 customElements.define('emoji-picker', EmojiPicker);
+
+    </script>
+  </body>
+</html>

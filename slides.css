@@ -10,10 +10,12 @@ body {
 .reveal .slides section {
   min-height: 90%;
   max-height: 90%;
+  align-items: center;
 }
 
 .reveal .slides section.vertical {
   flex-direction: column;
+  justify-content: space-around;
 }
 
 .notes {
@@ -68,7 +70,7 @@ li {
   filter: var(--drop-shadow);
 }
 
-svg .shadow {
+.shadow {
   filter: var(--drop-shadow);
 }
 
