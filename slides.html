@@ -33,7 +33,7 @@
           </div>
         </section>
         <section class="vertical">
-          <img src="images/polymer-logo.png" />
+          <img src="images/polymer-logo.png" style="margin: auto; margin-bottom: 50px;" />
           <div>polymer</div>
           <div class="notes">
             - created by Chrome
@@ -42,7 +42,7 @@
           </div>
         </section>
         <section class="vertical">
-          <img src="images/jquery-logo.png" />
+          <img src="images/jQuery-Logo_On_Dark.svg" style="margin: auto" />
           <div class="notes">
             devs didn't care
             we were all busy writing jquery plugins. components weren't even a thing.
@@ -69,6 +69,9 @@
             polyfills - fiddly - just like everything else in IE
           </div>
         </section>
+        <section>
+          <img src="images/ie-pony.gif" />
+        </section>
         <section data-background-image="images/batman-vs-superman.jpg">
           <div class="notes">
             frameworks: easy creation of components & component based architectures
@@ -77,12 +80,13 @@
           </div>
         </section>
         <section>
-          <ul>
-            <li>Automatic change detection</li>
-            <li>Binding</li>
-            <li>State management</li>
-            <li>Routing</li>
+          <ul style="position: absolute; left: 20px">
+            <li class="fragment fade-right">Automatic change detection</li>
+            <li class="fragment fade-right">Binding</li>
+            <li class="fragment fade-right">State management</li>
+            <li class="fragment fade-right">Routing</li>
           </ul>
+          <img src="images/superman.png" style="position: absolute; z-index: -1; right: 0; max-height: 80%" />
           <div class="notes">
             bunch of stuff frameworks give you that web components don't
             could implement with web components, but then you're just building a framework based on web components
@@ -103,18 +107,21 @@
           </div>
         </section>
         <section>
-          <iframe style="width: 100%" src="https://custom-elements-everywhere.com"></iframe>
+          <iframe style="width: 100%; height: 600px" src="https://custom-elements-everywhere.com"></iframe>
           <div class="notes">
             indication of how well your framework works with web components
             React: intercomponent communication - stringifying attributes + react's event system
             open issues to fix
           </div>
         </section>
-        <section class="framework-logos">
-          <img src="images/wordpress-logo.png" />
-          <img src="images/drupal-logo.png" />
-          <img src="images/joomla-logo.png" />
-          <img src="images/aem-logo.png" />
+        <section>
+          <img src="images/BatmanDCAU.png" style="position: absolute; left: -200px; z-index: -1; height: 700px; top: 10px" />
+          <div class="twoby-grid">
+            <div><img src="images/wordpress-logo.png" /></div>
+            <div><img src="images/drupal-logo.png" /></div>
+            <div style="padding: 20px"><img src="images/joomla-logo.png" /></div>
+            <div><img src="images/aem-logo.png" /></div>
+          </div>
           <div class="notes">
             not just frameworks
             share components between app and static site
@@ -125,18 +132,74 @@
           <div class="attribution">@richsimmonsart</div>
         </section>
 
-        <section>
-          <ul>
-            <li>HTML templates</li>
-            <li>ES imports</li>
-            <li>Custom elements</li>
-            <li>Shadow DOM</li>
+        <section data-state="specs-list">
+          <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+            <defs>
+              <g id="template">
+                <path d="M6.408 7.924v4.125l3.572 2.062 3.572-2.062V7.924L9.98 5.862zM22.838 17.07h-8.895l4.447-7.701z"></path>
+                <path d="M24.221 3.307l1.139 1.139v14.223l-1.139 1.139H4.498l-1.139-1.139V4.446l1.139-1.139h19.723zm1.138-2.75h-22l-2.75 2.75v16.5l2.75 2.75h22l2.75-2.75v-16.5l-2.75-2.75z"></path>
+              </g>
+              <path id="element" d="M6.35 0L0 11l6.35 11h12.702l6.35-11-6.35-11H6.35zm0 11l3.175-5.5h6.352l3.175 5.5-3.175 5.5H9.525L6.35 11z"></path>
+              <g id="shadow">
+                <path d="M11.215 8.135h3.14l.883-1.535h-5.06L7.637 11l2.54 4.4h.003l.883-1.536-1.575-2.76z"></path>
+                <path d="M7.36 20.254l-5.204-9.016 5.408-9.371h10.4L15.24 6.6l2.541 4.4-2.54 4.4h-5.08l-2.802 4.854zM19.05 0H6.35L0 11l6.35 11h12.7l6.352-11L19.05 0z"></path>
+              </g>
+              <path id="import" d="M13.466 0L4 5.466V16.534L13.467 22l9.466-5.466V5.466L13.466 0zM7.569 13.201h3.294V6.133l2.603-1.638h.001l2.603 1.638v7.068h3.294l-5.897 4.578-5.898-4.578z"></path>
+            </defs>
+          </svg>
+          <ul class="specs-list">
+            <li>
+              <svg viewBox="0 0 30 22"><use xlink:href="#import"></use></svg>
+              <span>ES modules</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 30 22"><use xlink:href="#template"></use></svg>
+              <span>HTML templates</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 30 22"><use xlink:href="#element"></use></svg>
+              <span>Custom elements</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 30 22"><use xlink:href="#shadow"></use></svg>
+              <span>Shadow DOM</span>
+            </li>
           </ul>
           <div class="notes">
             Not going to talk about ES imports as I assume you know how they work already
             Also not going to talk about HTML templates - not really useful without HTML imports
             You will see templates and HTML imports used with Polymer components & other components built on libraries and polyfills
           </div>
+          <script>
+            Reveal.addEventListener('specs-list', () => {
+              let index = 0;
+              const nextSpec = (event) => {
+                if (event.key === 'ArrowRight') {
+                  event.stopPropagation();
+                  index++;
+                  highlightItem();
+                }
+
+                if (index === 3) {
+                  document.body.removeEventListener('keydown', nextSpec);
+                }
+              }
+              const highlightItem = () => {
+                if (index > 1) {
+                  const previousElement = document.querySelector(`ul.specs-list li:nth-child(${index - 1})`);
+                  previousElement.classList.remove('highlighted');
+                  previousElement.classList.add('done');
+                }
+
+                if (index < 3) {
+                  const element = document.querySelector(`ul.specs-list li:nth-child(${index})`);
+                  element.classList.add('highlighted');
+                }
+
+              }
+              document.body.addEventListener('keydown', nextSpec);
+            });
+          </script>
         </section>
         <section>
           <ul>
