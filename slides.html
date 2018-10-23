@@ -139,7 +139,7 @@
                 <path d="M6.408 7.924v4.125l3.572 2.062 3.572-2.062V7.924L9.98 5.862zM22.838 17.07h-8.895l4.447-7.701z"></path>
                 <path d="M24.221 3.307l1.139 1.139v14.223l-1.139 1.139H4.498l-1.139-1.139V4.446l1.139-1.139h19.723zm1.138-2.75h-22l-2.75 2.75v16.5l2.75 2.75h22l2.75-2.75v-16.5l-2.75-2.75z"></path>
               </g>
-              <path id="element" d="M6.35 0L0 11l6.35 11h12.702l6.35-11-6.35-11H6.35zm0 11l3.175-5.5h6.352l3.175 5.5-3.175 5.5H9.525L6.35 11z"></path>
+              <path id="element" translate="2 0" d="M6.35 0L0 11l6.35 11h12.702l6.35-11-6.35-11H6.35zm0 11l3.175-5.5h6.352l3.175 5.5-3.175 5.5H9.525L6.35 11z"></path>
               <g id="shadow">
                 <path d="M11.215 8.135h3.14l.883-1.535h-5.06L7.637 11l2.54 4.4h.003l.883-1.536-1.575-2.76z"></path>
                 <path d="M7.36 20.254l-5.204-9.016 5.408-9.371h10.4L15.24 6.6l2.541 4.4-2.54 4.4h-5.08l-2.802 4.854zM19.05 0H6.35L0 11l6.35 11h12.7l6.352-11L19.05 0z"></path>
@@ -201,14 +201,8 @@
             });
           </script>
         </section>
-        <section>
-          <ul>
-            <li>Custom elements</li>
-            <li>Shadow DOM</li>
-          </ul>
-        </section>
         <section class="vertical">
-          <img src="images/custom-elements.svg" style="flex-grow: 1" />
+          <svg viewBox="0 0 26 22" class="blue-logo"><use xlink:href="#element"></use></svg>
           <h2>Custom Elements</h2>
         </section>
         <section>
@@ -250,9 +244,6 @@
             </div>
           </section>
           <section>
-            <h2 style="font-size: 1.4em">Expanding bubble demo!</h2>
-          </section>
-          <section>
             <style>
               expanding-bubble {
                 border: 4px solid var(--green);
@@ -285,7 +276,7 @@
           </section>
 
           <section class="vertical">
-            <img src="images/shadow-dom.svg" style="flex-grow: 1" />
+            <svg viewBox="0 0 26 22"><use xlink:href="#shadow"></use></svg>
             <h2>Shadow DOM</h2>
             <div class="notes">
               DOM fragment completely quarantined from the main DOM
@@ -318,7 +309,7 @@
               Shadow DOM spec is basically giving this ability to developers
             </div>
           </section>
-          <section>
+          <section class="vertical">
             <pre><code>myElement.attachShadow({ mode: 'open' });
 shadowRoot.innerHTML = `
   <style>
@@ -331,146 +322,150 @@ shadowRoot.innerHTML = `
   </style>
   <div class="inner"></div>
 `;</code></pre>
-            <div class="notes">
-              mode - open vs closed
-              attach children via innerHTML or append child
-            </div>
-          </section>
-          <section>
-            <style>
-              #myElement {
-                margin: auto;
-                background-color: var(--green);
-                width: 200px;
-                height: 200px;
-                display: flex;
-              }
-            </style>
-            <div id="myElement"></div>
-            <script>
-              const shadowRoot = myElement.attachShadow({ mode: 'open' });
-              shadowRoot.innerHTML = `
-                <style>
-                  .inner {
-                    border: 12px solid var(--mid-blue);
-                    width: 100px;
-                    height: 100px;
-                    margin: auto;
-                  }
-                </style>
-                <div class="inner"></div>
-              `;
-            </script>
-            <div class="notes">
-              - can see shadow root in dev tools
-              - can't affect inner element with new css class (although custom property works)
-              - can access inner element via JS
-            </div>
-          </section>
-          <section>
-            <img src="images/shadow-dom.svg" style="flex-grow: 1" />
-            <ul>
-              <li>Impervious to CSS</li>
-              <li>Semi-impervious to JS</li>
-              <li>Vulnerable to dev tools</li>
-            </ul>
-          </section>
-    
-          <section>
-            <h2>Putting it together</h2>
-            <div class="class">
-              shadow DOM allows custom elements to have children
-              the excite
-            </div>
-          </section>
-          <section>
-            <style>
-              emoji-picker {
-                margin: auto;
-              }
-            </style>
-            <emoji-picker></emoji-picker>
-          </section>
-
-          <section>
-            <h2 style="font-size: 1.3em;">Piercing the shadow DOM</h2>
-            <div class="notes">
-              encapsulation is great, but sometimes you really need to pass something in
-            </div>
-          </section>
-          <section>
-            <pre><code class="html"><my-awesome-value option="3"></my-awesome-value></code></pre>
-            <div class="notes">
-              the simplest way to pass things through the shadow DOM is via attributes on your custom element
-              unlike framework components - can only pass strings - no reason you can't stringify object
-              framework will take care of stringification I think
-            </div>
-          </section>
-          <section>
-            <pre><code class="js">const option = this.attributes.option.value</code></pre>
-            <div class="notes">
-              the more complicated way is to pass chunks of light DOM
-            </div>
-          </section>
-          <section>
-            <style>
-              select {
-                margin: auto;
-                transform: scale(4);
-              }
-            </style>
-            <select>
-              <option>Option 1</option>
-              <option>Option 2</option>
-            </select>
-            <div class="notes">
-              select = shadow root
-              options exist light DOM
-              select has slot for options
-            </div>
-          </section>
-          <section>
-            <style>
-              twoot-post a {
-                color: var(--green);
-              }
-            </style>
-            <twoot-post avatar="images/bowser-avatar.png">
-              Hey Mario, the princess is in 
-              <a href="https://goo.gl/maps/cZzyjm8LMrF2">another castle</a>
-            </twoot-post> 
-            <div class="notes">the next big thing after Google plus</div>
-          </section>
-    
- 
- 
- 
- 
-    
- 
+          <div class="notes">
+            mode - open vs closed
+            attach children via innerHTML or append child
+          </div>
+        </section>
         <section>
-            So that’s a basic overview of web components. There’s a whole lot going on that we didn’t cover here - things like libraries to help you build components, polyfills to support … well.. IE, really, the component lifecycle and communicating between components. Hopefully though, I’ve shown you how easy it is to create web components, and convinced you that perhaps frameworks and web components working together is the way of the future!
+          <style>
+            #myElement {
+              margin: auto;
+              background-color: var(--green);
+              width: 200px;
+              height: 200px;
+              display: flex;
+            }
+          </style>
+          <div id="myElement"></div>
+          <script>
+            const shadowRoot = myElement.attachShadow({ mode: 'open' });
+            shadowRoot.innerHTML = `
+              <style>
+                .inner {
+                  border: 12px solid var(--mid-blue);
+                  width: 100px;
+                  height: 100px;
+                  margin: auto;
+                }
+              </style>
+              <div class="inner"></div>
+            `;
+          </script>
+          <div class="notes">
+            - can see shadow root in dev tools
+            - can't affect inner element with new css class (although custom property works)
+            - can access inner element via JS
+          </div>
+        </section>
+        <section>
+          <img src="images/shadow-dom.svg" style="flex-grow: 1" />
+          <ul>
+            <li>Impervious to CSS</li>
+            <li>Semi-impervious to JS</li>
+            <li>Vulnerable to dev tools</li>
+          </ul>
+        </section>
+  
+        <section>
+          <h2>Putting it together</h2>
+          <div class="class">
+            shadow DOM allows custom elements to have children
+            the excite
+          </div>
+        </section>
+        <section>
+          <style>
+            emoji-picker {
+              margin: auto;
+            }
+          </style>
+          <emoji-picker></emoji-picker>
         </section>
 
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
         <section>
-          thanks, twitter, shine, slides
+          <h2 style="font-size: 1.3em;">Piercing the shadow DOM</h2>
+          <div class="notes">
+            encapsulation is great, but sometimes you really need to pass something in
+          </div>
+        </section>
+        <section>
+          <pre><code class="html"><my-awesome-value option="3"></my-awesome-value></code></pre>
+          <div class="notes">
+            the simplest way to pass things through the shadow DOM is via attributes on your custom element
+            unlike framework components - can only pass strings - no reason you can't stringify object
+            framework will take care of stringification I think
+          </div>
+        </section>
+        <section>
+          <pre><code class="js">const option = this.attributes.option.value</code></pre>
+          <div class="notes">
+            the more complicated way is to pass chunks of light DOM
+          </div>
+        </section>
+        <section>
+          <style>
+            select {
+              margin: auto;
+              transform: scale(4);
+            }
+          </style>
+          <select>
+            <option>Option 1</option>
+            <option>Option 2</option>
+          </select>
+          <div class="notes">
+            select = shadow root
+            options exist light DOM
+            select has slot for options
+          </div>
+        </section>
+        <section>
+          <style>
+            twoot-post {
+              margin: auto;
+            }
+            twoot-post a {
+              color: var(--green);
+            }
+          </style>
+          <twoot-post avatar="images/bowser-avatar.png">
+            Hey Mario, the princess is in 
+            <a href="https://goo.gl/maps/cZzyjm8LMrF2">another castle</a>
+          </twoot-post> 
+          <div class="notes">the next big thing after Google plus</div>
+        </section>
+        <section class="vertical">
+          <h2>Web components today... a start</h2>
+          <ul>
+            <li class="fragment">Shadow DOM + Custom elements = new HTML elements</li>
+            <li class="fragment">Available in (almost) all browsers</li>
+            <li class="fragment">Work with (almost) all frameworks</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Web components today... continued</h2>
+          <ul>
+            <li class="fragment">Named slots</li>
+            <li class="fragment">Custom elements lifecycle</li>
+            <li class="fragment">Polyfills</li>
+            <li class="fragment">Tools & libraries</li>
+            <li class="fragment">Intercomponent communication</li>
+          </ul>
+          <div class="notes">
+            writing web components this way involves a lot of boilerplate
+            tools & libraries available to cut down on boilerplate &
+            let you write your HTML & CSS as actual HTML & css
+            Also tools to allow you to write web components this way but nicer
+            - HTML syntax highlighting in template strings
+            - hopefully this is enough for you to pique your interest
+          </div>
+        </section>
+        <section>
+          <div class="card">Thanks</div>
+          <div class="card">Erin Zimmer <img src="images/shine-logo.png" /></div>
+          <div class="card">@ErinJZimmer</div>
+          <div class="card">ejzimmer.github.io/web-components-talk</div>
         </section>
       </div>
     </div>

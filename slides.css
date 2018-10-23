@@ -147,3 +147,8 @@ pre code.hljs {
   stroke: var(--grey);
   fill: var(--grey);
 }
+
+.blue-logo {
+  stroke: var(--blue);
+  fill: var(--blue);
+}

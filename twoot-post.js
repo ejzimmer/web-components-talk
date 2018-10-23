@@ -14,8 +14,7 @@ class TwootPost extends HTMLElement {
         }
         .avatar {
           width: 100px;
-          border-right: 4px solid;
-          border-color: linear-gradient(red, blue);
+          border-right: 4px solid var(--blue);
           flex-shrink: 0;
           align-self: stretch;
           display: flex;
