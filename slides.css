@@ -78,6 +78,7 @@ li {
 }
 .twoby-grid img {
   margin: auto;
+  max-width: 300px;
 }
 .twoby-grid div {
   display: flex;
@@ -147,3 +148,9 @@ pre code.hljs {
   stroke: var(--grey);
   fill: var(--grey);
 }
+
+select, input {
+  margin: auto;
+  transform: scale(4);
+}
+

@@ -12,6 +12,7 @@
         margin: auto;
       }
     </style>
+    <script>const html = string => string;</script>
   </head>
   <body>
     <emoji-picker></emoji-picker>
@@ -22,7 +23,7 @@ class EmojiPicker extends HTMLElement {
 
     this.attachShadow({ mode: 'open' });
 
-    const template = `
+    this.shadowRoot.innerHTML = html`
       <style>
         :host {
           width: 100px;
@@ -66,7 +67,6 @@ class EmojiPicker extends HTMLElement {
 
       <div class="selected-emoji">+</div>
     `;
-    this.shadowRoot.innerHTML = template;
 
     this.emojiPanel = this.shadowRoot.querySelector('.emoji-panel');
     this.selectedEmoji = this.shadowRoot.querySelector('.selected-emoji');
@@ -95,6 +95,6 @@ class EmojiPicker extends HTMLElement {
 
 customElements.define('emoji-picker', EmojiPicker);
 
-    </script>
+    </script>      
   </body>
 </html>
