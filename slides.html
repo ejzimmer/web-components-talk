@@ -318,9 +318,9 @@
           <section class="vertical">
             <input type="file" />
             <select>
-              <option>Nayru</option>
-              <option>Farore</option>
-              <option>Din</option>
+                <option>Farore</option>
+                <option>Nayru</option>
+                <option>Din</option>
             </select>
             <video controls class="abc-tv hover-highlight" style="height: 400px; width: 600px; align-self: center"></video> 
             <div class="notes">
@@ -384,14 +384,12 @@ shadowRoot.innerHTML = `
           </div>
         </section>
         <section>
-          <div style="display: flex; align-items: center">
-            <img src="images/darth-vader.png" style="height: 600px" />
-            <ul>
-              <li>Impervious to CSS</li>
-              <li>Semi-impervious to JS</li>
-              <li>Vulnerable to dev tools</li>
-            </ul>
-          </div>
+          <img src="images/darth-vader.png" style="height: 600px; position: absolute; left: -10%; z-index: -1;" />
+          <ul>
+            <li>Impervious to CSS</li>
+            <li>Semi-impervious to JS</li>
+            <li>Vulnerable to dev tools</li>
+          </ul>
         </section>
   
         <section data-background-image="images/dark-vs-light.jpg">
@@ -400,7 +398,7 @@ shadowRoot.innerHTML = `
             less like this and more like
           </div>
         </section>
-        <section data-background-image="images/obiwan-and-anakin.jpg">
+        <section data-background-image="images/obiwan-and-anakin.jpg" data-background-position="top">
         </section>
 
         <section>
@@ -426,7 +424,7 @@ shadowRoot.innerHTML = `
             framework will take care of stringification I think
           </div>
         </section>
-        <section>
+        <section data-background-image="images/mace-windu.png" data-background-position="bottom right" data-background-size="600px">
           <pre><code class="js">const saber = this.attributes.saber.value</code></pre>
           <div class="notes">
             the more complicated way is to pass chunks of light DOM
@@ -459,41 +457,33 @@ shadowRoot.innerHTML = `
           <div class="notes">the next big thing after Google plus</div>
         </section>
         <section class="vertical">
-          <h2>Web components today... a start</h2>
           <ul>
-            <li class="fragment">Shadow DOM + Custom elements = new HTML elements</li>
+            <li class="fragment">Shadow DOM + Custom elements</li>
             <li class="fragment">Available in (almost) all browsers</li>
             <li class="fragment">Work with (almost) all frameworks</li>
           </ul>
         </section>
-        <section class="vertical">
-          <h2>Web components today... continued</h2>
-          <ul>
-            <li class="fragment">Named slots</li>
-            <li class="fragment">Custom elements lifecycle</li>
-            <li class="fragment">Polyfills</li>
-            <li class="fragment">Tools & libraries</li>
-            <li class="fragment">Intercomponent communication</li>
-          </ul>
+        <section class="vertical" data-background-image="images/buzz-lightyear.png" data-background-position="left" data-background-size="contain">
+          <h2 style="text-align: right; margin: auto; margin-right: 0; text-transform: uppercase; font-style: italic; position: relative; top: 1em; font-weight: bolder; text-shadow: 4px 4px rebeccapurple; font-size: 2em">
+            To infinity <br> and beyond
+          </h2>
           <div class="notes">
-            writing web components this way involves a lot of boilerplate
-            tools & libraries available to cut down on boilerplate &
-            let you write your HTML & CSS as actual HTML & css
+            hopefully given you inspiration to find out more about web components
+            more advanced topics like named slots & lifecycle hooks
+            like I said - this is basic web components from spec
+            whole range of tools and frameworks to make writing easier 
+
             Also tools to allow you to write web components this way but nicer
             hybrid - object based API
             lit - tagged templates
             slim - extended lifecycle & binding
             stencil- framework component capabilitiees
-
-            - HTML syntax highlighting in template strings
-            - hopefully this is enough for you to pique your interest
           </div>
         </section>
-        <section>
-          <div class="card">Thanks</div>
-          <div class="card">Erin Zimmer <img src="images/shine-logo.png" /></div>
-          <div class="card">@ErinJZimmer</div>
-          <div class="card">ejzimmer.github.io/web-components-talk</div>
+        <section class="vertical" data-background-image="images/mario-end.jpg">
+          <div class="card" style="height: 25%">Thanks! </div>
+          <div class="card" style="background-image: url(images/shine-solutions-logo-dark.png); background-position: right; background-size: contain; background-repeat: no-repeat">@ErinJZimmer</div>
+          <div class="card" style="font-size: .8em">ejzimmer.github.io/web-components-talk</div>
         </section>
       </div>
     </div>
