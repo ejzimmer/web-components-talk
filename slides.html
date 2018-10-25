@@ -92,13 +92,15 @@
             could implement with web components, but then you're just building a framework based on web components
           </div>
         </section>
-        <section>
-          Intercomponent communication
+        <section data-transition="fade-out">
+          <img src="images/component-tree.png" style="margin: auto" />
           <div class="notes">
             web components can do parent -> child & broadcast publish/subscribe
             frameworks tend to do better child -> parent and sibling -> sibling (or between unrelated parts of the app)
           </div>
         </section>
+        <section data-transition="fade"><img src="images/parent-child-communication.png" style="margin: auto" /></section>
+        <section data-transition="fade-in"><img src="images/various-communication.png" style="margin: auto" /></section>
         <section data-background-image="images/contortionist.jpg">
           <div class="notes">
             strength of web components = flexibility
@@ -202,7 +204,7 @@
             Reveal.addEventListener('specs-list', () => {
               let index = 0;
               const nextSpec = (event) => {
-                if (event.key === 'ArrowRight') {
+                if (event.key === 'ArrowRight' || event.key === 'PageDown') {
                   event.stopPropagation();
                   index++;
                   highlightItem();
