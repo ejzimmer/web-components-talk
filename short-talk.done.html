@@ -16,13 +16,13 @@
       margin: auto;
     }
   </style>
-  <script>const html = (string, ...values) => string.reduce((built, next, index) => `${built}${next}${values[index] || ''}`, '');</script>
 </head>
 <body>
   <twoot-post avatar="images/bowser-avatar.png">
     Hey Mario,<br> the princess is in 
     <a href="https://goo.gl/maps/cZzyjm8LMrF2">another castle</a>
   </twoot-post>
+
   <script>
     customElements.define('twoot-post', class extends HTMLElement {
       constructor() {
@@ -66,9 +66,6 @@
               border: solid var(--blue);
               border-width: 0 2px;
             }
-            .content a {
-              color: white;
-            }
             .reaction {
               grid-area: reaction;
             }
@@ -105,7 +102,7 @@
       constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.innerHTML = html`
+        this.shadowRoot.innerHTML = `
           <style>
             :host {
               width: 100%;
