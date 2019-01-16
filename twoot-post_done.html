@@ -29,9 +29,11 @@
         constructor() {
           super();
 
+          const avatar = this.attributes.avatar.value;
+
           this.attachShadow({ mode: 'open' });
 
-          this.shadowRoot.innerHTML = `
+          this.shadowRoot.innerHTML = html`
             <style>
               :host {
                 display: flex;
@@ -60,12 +62,10 @@
                 border-left: 4px solid var(--blue);
               }
             </style>
-            <div class="avatar"><img /></div>
+            <div class="avatar"><img src="${avatar}" /></div>
             <div class="content"><slot></slot></div>
             <emoji-picker></emoji-picker>
           `;
-
-          this.shadowRoot.querySelector('img').src = this.attributes.avatar.value;
         }
 
       }

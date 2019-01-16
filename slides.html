@@ -92,13 +92,15 @@
             could implement with web components, but then you're just building a framework based on web components
           </div>
         </section>
-        <section>
-          Intercomponent communication
+        <section data-transition="fade-out">
+          <img src="images/component-tree.png" style="margin: auto" />
           <div class="notes">
             web components can do parent -> child & broadcast publish/subscribe
             frameworks tend to do better child -> parent and sibling -> sibling (or between unrelated parts of the app)
           </div>
         </section>
+        <section data-transition="fade"><img src="images/parent-child-communication.png" style="margin: auto" /></section>
+        <section data-transition="fade-in"><img src="images/various-communication.png" style="margin: auto" /></section>
         <section data-background-image="images/contortionist.jpg">
           <div class="notes">
             strength of web components = flexibility
@@ -130,6 +132,34 @@
         <section data-background-image="images/batman-and-superman.jpeg">
           <div class="notes">Why not both?</div>
           <div class="attribution">@richsimmonsart</div>
+        </section>
+
+        <section>
+          <div class="twoby-grid">
+            <img src="images/hybrids-logo.svg" />
+            <div style="display: flex"><div style="margin: auto">lit-html / LitElement</div></div>
+            <svg id="icon-logo" width="100%" height="100%" viewBox="0 0 916 220"> <g> <g> <path d="M277.9,134h33.2c0.5,8.1,6.5,15.7,20.1,15.7c12.5,0,18.9-4.4,18.9-11.1c0-20.3-67.1-1.2-67.1-49.1
+              c0-21.9,18.7-39.9,48.5-39.9c36.2,0,48.7,23.1,49.6,40.8h-31.6c-0.7-7.6-6.5-14.5-18.2-14.5c-10.6,0-16.6,5.1-16.6,11.8
+              c0,20.3,66.9,0,66.9,49.6c0,21.7-18.5,38.8-51.2,38.8C292.4,176,279.5,156.6,277.9,134z"></path> <polygon points="424.5,52.3 424.5,24.2 391.7,24.2 391.7,173.2 424.5,173.2 424.5,79 448.6,79 448.6,52.3 		"></polygon> <path d="M475.5,122.2c2.3,16.6,12.9,25.6,29.3,25.6c9.9,0,19.4-4.4,23.3-13.2h33c-7.2,24.5-29.3,41.3-57.2,41.3
+              c-35.8,0-60.9-26.3-60.9-63.4c0-35.8,24.9-63,60.7-63s60,27.2,60,63c0,5.3-0.5,9.7-0.5,9.7H475.5z M475.9,98.7h54.9
+              c-2.3-13.6-12.2-22.8-27.5-22.8C488.4,75.9,478.7,84.9,475.9,98.7z"></path> <path d="M606,67.1c5.5-10.4,18-17.5,36-17.5c29.1,0,44.5,19.4,44.5,48.2v75.4h-32.8v-71.8c0-14.1-6-23.8-20.5-23.8
+              c-15.9,0-24.7,10.2-24.7,26.3v69.2h-32.8V52.3H606V67.1z"></path> <path d="M759.3,49.6c37.6,0,55.4,26.5,57.7,47.1h-33.7c-2.5-10.4-12.2-18-24.2-18c-17.5,0-27.7,13.8-27.7,34.1
+              c0,20.3,10.2,34.1,27.7,34.1c12,0,21.7-7.6,24.2-18h33.7c-2.3,20.5-20.1,47.1-57.7,47.1c-35.1,0-60.7-27.2-60.7-63.2
+              S724.2,49.6,759.3,49.6z"></path> <path d="M825.7,23.3c0-11.5,8.3-19.8,19.8-19.8c11.5,0,19.8,8.3,19.8,19.8s-8.3,19.6-19.8,19.6C834.1,42.9,825.7,34.9,825.7,23.3z
+              M829.2,52.3H862v120.9h-32.8V52.3z"></path> <path d="M879.5,173.2V11.1h32.8v162.1H879.5z"></path> </g> <g> <path d="M145.1,2.4H77.5C36.9,2.4,3.7,35.6,3.7,76.2v67.6c0,40.6,33.2,73.8,73.8,73.8h67.6c40.6,0,73.8-33.2,73.8-73.8V76.2
+              C218.9,35.6,185.7,2.4,145.1,2.4z M161.7,144.5c0,11.3-16.4,20.5-27.7,20.5H88.6c-11.3,0-27.7-9.2-27.7-20.5v-1.1h100.8V144.5z
+              M161.7,120.8H88.6c-11.3,0-27.7-9.2-27.7-20.5v-1.1H134c11.3,0,27.7,9.2,27.7,20.5V120.8z M161.7,76.6H60.9v-1.1
+              C60.9,64.2,77.3,55,88.6,55H134c11.3,0,27.7,9.2,27.7,20.5V76.6z"></path> </g> </g>
+            </svg>
+            <img src="images/slimjs-logo.png" />
+          </div>
+          <div class="notes">
+            As well polymer, there are a bunch of other libraries and frameworks out there
+            to help you write web components - remove some of the boiler plate, improve tooling
+            fill in some of the gaps
+            hybrid, lit, slim, stencil
+            But today we're going to focus on what the browsers actually off you natively.
+          </div>
         </section>
 
         <section data-state="specs-list">
@@ -174,7 +204,7 @@
             Reveal.addEventListener('specs-list', () => {
               let index = 0;
               const nextSpec = (event) => {
-                if (event.key === 'ArrowRight') {
+                if (event.key === 'ArrowRight' || event.key === 'PageDown') {
                   event.stopPropagation();
                   index++;
                   highlightItem();
@@ -202,14 +232,15 @@
           </script>
         </section>
         <section class="vertical">
-          <svg viewBox="0 0 26 22" class="blue-logo"><use xlink:href="#element"></use></svg>
+          <svg viewBox="0 0 26 22" style="fill: var(--blue)"><use xlink:href="#element"></use></svg>
           <h2>Custom Elements</h2>
         </section>
         <section>
-          <ul>
+          <ul style="margin-left: 50px">
             <li>Register new HTML tags</li>
             <li>Control life cycle and behaviour</li>
           </ul>
+          <img src="images/Ben_Kenobi.png" />
           <div class="notes">
             Not content
             Limited presentation - you can set style on element but that's it - there are better ways to do this
@@ -249,6 +280,7 @@
                 border: 4px solid var(--green);
                 border-radius: 50%;
                 margin: auto;
+                transition: width .4s, height .8s;
               }
             </style>
             <script>
@@ -262,7 +294,7 @@
         
                 grow() {
                   const diameter = this.getBoundingClientRect().width;
-                  const newDiameter = diameter * 1.1;
+                  const newDiameter = diameter * 2;
                   this.style.width = `${newDiameter}px`;
                   this.style.height = `${newDiameter}px`;
                 }
@@ -280,22 +312,17 @@
             <h2>Shadow DOM</h2>
             <div class="notes">
               DOM fragment completely quarantined from the main DOM
+              shadow DOM vs light DOM<
+              browsers have had shadow DOM for years
+              probably used it without realisng 
             </div>
-          </section>
-          <section data-background-image="images/dark-vs-light.jpg">
-            <div class="notes">
-                shadow DOM vs light DOM<
-                browsers have had shadow DOM for years
-                probably used it without realisng 
-              </div>
           </section>
           <section class="vertical">
             <input type="file" />
-            <input type="range" />
             <select>
-              <option>Option 1</option>
-              <option>Option 2</option>
-              <option>Option 3</option>
+                <option>Farore</option>
+                <option>Nayru</option>
+                <option>Din</option>
             </select>
             <video controls class="abc-tv hover-highlight" style="height: 400px; width: 600px; align-self: center"></video> 
             <div class="notes">
@@ -311,7 +338,7 @@
           </section>
           <section class="vertical">
             <pre><code>myElement.attachShadow({ mode: 'open' });
-shadowRoot.innerHTML = `
+myElement.shadowRoot.innerHTML = `
   <style>
     .inner {
       border: 12px solid var(--mid-blue);
@@ -359,7 +386,7 @@ shadowRoot.innerHTML = `
           </div>
         </section>
         <section>
-          <img src="images/shadow-dom.svg" style="flex-grow: 1" />
+          <img src="images/darth-vader.png" style="height: 600px; position: absolute; left: -10%; z-index: -1;" />
           <ul>
             <li>Impervious to CSS</li>
             <li>Semi-impervious to JS</li>
@@ -367,13 +394,15 @@ shadowRoot.innerHTML = `
           </ul>
         </section>
   
-        <section>
-          <h2>Putting it together</h2>
-          <div class="class">
-            shadow DOM allows custom elements to have children
-            the excite
+        <section data-background-image="images/dark-vs-light.jpg">
+          <div class="notes">
+            what happens when we combine shadow DOM and custom elements?
+            less like this and more like
           </div>
         </section>
+        <section data-background-image="images/obiwan-and-anakin.jpg" data-background-position="top">
+        </section>
+
         <section>
           <style>
             emoji-picker {
@@ -383,36 +412,30 @@ shadowRoot.innerHTML = `
           <emoji-picker></emoji-picker>
         </section>
 
-        <section>
-          <h2 style="font-size: 1.3em;">Piercing the shadow DOM</h2>
+        <section data-background-image="images/lightsaber.jpg" data-background-size="600px" data-background-position="left">
+          <h2 style="font-size: 1.3em; position: fixed; right: 0; text-align: left">Piercing the<br> shadow DOM</h2>
           <div class="notes">
             encapsulation is great, but sometimes you really need to pass something in
           </div>
         </section>
-        <section>
-          <pre><code class="html"><my-awesome-value option="3"></my-awesome-value></code></pre>
+        <section data-background-image="images/mace-windu.png" data-background-position="bottom right" data-background-size="600px">
+          <pre style="margin: auto"><code class="html"><jedi-knight saber="purple"></jedi-knight></code></pre>
           <div class="notes">
             the simplest way to pass things through the shadow DOM is via attributes on your custom element
             unlike framework components - can only pass strings - no reason you can't stringify object
             framework will take care of stringification I think
           </div>
         </section>
-        <section>
-          <pre><code class="js">const option = this.attributes.option.value</code></pre>
+        <section data-background-image="images/mace-windu.png" data-background-position="bottom right" data-background-size="600px">
+          <pre><code class="js">const saber = this.attributes.saber.value</code></pre>
           <div class="notes">
             the more complicated way is to pass chunks of light DOM
           </div>
         </section>
         <section>
-          <style>
-            select {
-              margin: auto;
-              transform: scale(4);
-            }
-          </style>
           <select>
-            <option>Option 1</option>
-            <option>Option 2</option>
+            <option>Chewbacca</option>
+            <option>Wicket the Ewok</option>
           </select>
           <div class="notes">
             select = shadow root
@@ -436,36 +459,33 @@ shadowRoot.innerHTML = `
           <div class="notes">the next big thing after Google plus</div>
         </section>
         <section class="vertical">
-          <h2>Web components today... a start</h2>
           <ul>
-            <li class="fragment">Shadow DOM + Custom elements = new HTML elements</li>
+            <li class="fragment">Shadow DOM + Custom elements</li>
             <li class="fragment">Available in (almost) all browsers</li>
             <li class="fragment">Work with (almost) all frameworks</li>
           </ul>
         </section>
-        <section>
-          <h2>Web components today... continued</h2>
-          <ul>
-            <li class="fragment">Named slots</li>
-            <li class="fragment">Custom elements lifecycle</li>
-            <li class="fragment">Polyfills</li>
-            <li class="fragment">Tools & libraries</li>
-            <li class="fragment">Intercomponent communication</li>
-          </ul>
+        <section class="vertical" data-background-image="images/buzz-lightyear.png" data-background-position="left" data-background-size="contain">
+          <h2 style="text-align: right; margin: auto; margin-right: 0; text-transform: uppercase; font-style: italic; position: relative; top: 1em; font-weight: bolder; text-shadow: 4px 4px rebeccapurple; font-size: 2em">
+            To infinity <br> and beyond
+          </h2>
           <div class="notes">
-            writing web components this way involves a lot of boilerplate
-            tools & libraries available to cut down on boilerplate &
-            let you write your HTML & CSS as actual HTML & css
+            hopefully given you inspiration to find out more about web components
+            more advanced topics like named slots & lifecycle hooks
+            like I said - this is basic web components from spec
+            whole range of tools and frameworks to make writing easier 
+
             Also tools to allow you to write web components this way but nicer
-            - HTML syntax highlighting in template strings
-            - hopefully this is enough for you to pique your interest
+            hybrid - object based API
+            lit - tagged templates
+            slim - extended lifecycle & binding
+            stencil- framework component capabilitiees
           </div>
         </section>
-        <section>
-          <div class="card">Thanks</div>
-          <div class="card">Erin Zimmer <img src="images/shine-logo.png" /></div>
-          <div class="card">@ErinJZimmer</div>
-          <div class="card">ejzimmer.github.io/web-components-talk</div>
+        <section class="vertical" data-background-image="images/mario-end.jpg">
+          <div class="card" style="height: 25%">Thanks! </div>
+          <div class="card" style="background-image: url(images/shine-solutions-logo-dark.png); background-position: right; background-size: contain; background-repeat: no-repeat">@ErinJZimmer</div>
+          <div class="card" style="font-size: .8em">ejzimmer.github.io/web-components-talk</div>
         </section>
       </div>
     </div>
