@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <style>
+    body {
+      --tfl-blue: hsl(208, 70%, 34%);
+      --dark-blue: hsl(208, 70%, 20%);
+      --darker-blue: hsl(208, 65%, 10%);
+
+      background-color: var(--tfl-blue);
+      color: white;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+
+<mode-selector></mode-selector>
+<selected-mode></selected-mode>     
+
+<script>
+  const selectedLines = document.querySelector('selected-mode');
+  document.addEventListener('add-mode', event => selectedLines.setAttribute('mode', event.detail));
+
+  customElements.define('line-info', class extends HTMLElement {
+    constructor() {
+      super();
+
+      this.name = this.getAttribute('name');
+
+      this.attachShadow({ mode: 'open' });
+      this.shadowRoot.innerHTML = `
+        <style>
+          h2 {
+            --width: 15px;
+            background: white;
+            color: var(--dark-blue);
+            text-transform: uppercase;
+            font-size: .6em;  
+            width: 130px;
+            position: relative;
+            text-align: center;
+            height: var(--width);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+          }
+          h2::after {
+            --radius: 90px;
+            content: '';
+            display: block;
+            width: var(--radius);
+            height: var(--radius);
+            border: var(--width) solid white;
+            border-radius: 50%;
+            position: absolute;
+            z-index: -1;
+            left: 30px;
+            top: -32px;
+            box-sizing: border-box;
+          }
+        </style>
+        <h2>${this.name}</h2>
+      `;
+    }
+  })
+
+  customElements.define('selected-mode', class extends HTMLElement {
+    constructor() {
+      super();
+
+      this.attachShadow({ mode: 'open' });
+    }
+
+    static get observedAttributes() { return ['mode']; }
+
+    async attributeChangedCallback(name, oldValue, newValue) {
+      const response = await fetch(`https://api.tfl.gov.uk/Line/Mode/${newValue}?app_id=7bfe93c9&app_key=29cf3b84d4d9475e573aaf00238e7aa3`);
+      const lines = await response.json();
+
+      this.shadowRoot.innerHTML = `
+        <style>
+          .lines {
+            display: flex;
+          }
+        </style>
+        <div class="lines">
+          ${ lines.map(line => `<line-info id="${line.id}" name="${line.name}"></line-info>`).join('') }
+        </div>`;
+    }
+  });
+
+  customElements.define('select-mode', class extends HTMLElement {
+    constructor() {
+      super();
+
+      this.value = this.getAttribute('value');
+      this.name = this.capitalise(this.value);
+
+      if (this.name === 'Dlr') { this.name = 'DLR'; }
+      else if (this.name === 'Tflrail') { this.name = 'TFL rail'; }
+
+      this.innerHTML = `
+        <input type="radio" name="modes" id="${this.value}" />
+        <label for="${this.value}">${this.name}</label>`;
+
+      this.querySelector('input').addEventListener('click', this.onSelect.bind(this));
+    }
+
+    capitalise(string) {
+      const words = string.split('-');
+      return words.map(word => word.substring(0, 1).toUpperCase() + word.substring(1)).join(' ');
+    }
+
+    onSelect(event) {
+      this.selected = !this.selected;
+      const action = this.selected ? 'add' : 'remove';
+      this.dispatchEvent(new CustomEvent(`${action}-mode`, {
+        detail: this.value,
+        bubbles: true,
+        composed: true
+      }));
+    }
+
+  });
+
+  customElements.define('mode-selector', class extends HTMLElement {
+    constructor() {
+      super();
+
+      this.attachShadow({ mode: 'open' });
+      this.shadowRoot.innerHTML = `
+        <style>
+          ul {
+            list-style: none;
+            display: flex;
+            border-radius: 6px;
+            background-color: white;
+            color: var(--dark-blue);
+            border: 1px solid var(--dark-blue);
+            padding: 0;
+            width: fit-content;
+            overflow: hidden;
+            box-shadow: 1px 1px 4px var(--darker-blue);
+          }
+          li {
+            position: relative;
+          }
+          li:not(last-child) {
+            border-right: 1px solid currentColor;
+          }
+          select-mode {
+            display: flex;
+            height: 100%;
+            align-items: center;
+          }
+          input {
+            position: absolute;
+            opacity: 0;
+          }
+          label {
+            padding: 1em .5em;
+            display: flex;
+            cursor: pointer;
+            box-sizing: border-box;
+            height: 100%;
+            align-items: center;
+          }
+          label:hover {
+            background-color: hsl(208, 75%, 80%);
+          }
+          input:checked + label {
+            background-color: var(--dark-blue);
+            color: white;  
+          }
+        </style>
+      `;
+      
+      this.modesContainer = document.createElement('ul');
+      this.shadowRoot.appendChild(this.modesContainer);
+
+      this.addModes();
+    }
+
+    async addModes() {
+      const response = await fetch(`https://api.tfl.gov.uk/Line/Meta/Modes?app_id=7bfe93c9&app_key=29cf3b84d4d9475e573aaf00238e7aa3`);
+      const modes = (await response.json()).filter(mode => mode.isScheduledService).map(mode => mode.modeName);
+
+      const elements = modes.map(mode => `<li><select-mode value="${mode}"></select-mode></li>`);
+      this.modesContainer.innerHTML = elements.join('');
+    }
+  })
+</script>
+
+<div style="display: none">
+
+custom element
+shadow DOM
+:host
+::slot
+passing CSS through the shadow DOM
+pass in attributes - available as properties automatically?
+slot
+named slot
+lifecycle callback
+attributes changed callback 
+communicating via API
+communicating via events - propagating through shadow DOM
+passing css custom properties through shadow dom
+</div></body>
+</html>

@@ -94,17 +94,14 @@
               color: white;
             }
             .post {
-              border: solid var(--theme-colour);
-              border-width: 4px;
+              border: 4px solid var(--theme-colour);
               width: 80vw;
               min-height: 200px;
               display:grid;
-              grid-template: 
-                "avatar content reaction" auto
-                "reactions reactions reactions" 2em / 150px auto 150px;
+              grid-template-columns: 150px 1fr 150px;
+              grid-template-rows: auto 2em;
             }
             .avatar {
-              grid-area: avatar;
               display: flex;
               align-items: center;
             }
@@ -113,18 +110,14 @@
               margin: auto;
             }
             .content {
-              grid-area: content;
               font-size: 24px;
               padding: 1em;
-              border: solid var(--blue);
+              border: solid var(--theme-colour);
               border-width: 0 2px;
             }
-            .reaction {
-              grid-area: reaction;
-            }
             .reactions {
-              border-top: 2px solid var(--blue);
-              grid-area: reactions;
+              border-top: 2px solid var(--theme-colour);
+              grid-column: 1 / -1;
               display: flex;
               align-items: center;
               padding: 0 .5em;
@@ -252,20 +245,32 @@
 
         this.shadowRoot.querySelectorAll('li button').forEach((button) => {
           button.addEventListener('click', (event) => {
-            const reaction = event.target.textContent;
-            this.selected.textContent = reaction;
+            this.value = event.target.textContent;
             this.options.classList.add('hidden');
-
-            /*
-             * To send an event containing data, you need to use a CustomEvent (rather than an Event)
-             * and include your data in the detail property of the configuration object.
-             * Also, make sure to set bubbles to true, if you want it to reach the parent element.
-             * If you want your custom element to pass through the shadow barrier into the light DOM,
-             * you can set composed: true as well.
-             */
-            this.dispatchEvent(new CustomEvent('reaction-selected', { detail: reaction, bubbles: true }))
           })
         })
+      }
+
+      toggleList() {
+        this.options.classList.toggle('hidden');
+      }
+
+      set value(emoji) {
+        console.log('setting')
+        this._value = emoji;
+        this.selected.textContent = emoji;
+        
+        /*
+        * To send an event containing data, you need to use a CustomEvent (rather than an Event)
+        * and include your data in the detail property of the configuration object.
+        * Also, make sure to set bubbles to true, if you want it to reach the parent element.
+        * If you want your custom element to pass through the shadow barrier into the light DOM,
+        * you can set composed: true as well.
+        */
+        this.dispatchEvent(new CustomEvent('reaction-selected', { detail: emoji, bubbles: true }))
+      }
+      get value() {
+        return this._value;
       }
     });
   </script>  

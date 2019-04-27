@@ -63,6 +63,7 @@ class EmojiPicker extends HTMLElement {
 
   showEmojiPanel() {
     this.emojiPanel.classList.remove('hidden');
+    this.emojiPanel.querySelector('button').focus();
   }
   hideEmojiPanel() {
     this.emojiPanel.classList.add('hidden');
