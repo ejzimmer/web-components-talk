@@ -185,10 +185,16 @@
        * You need to specify which attributes to watch in a static get function 
        * named observedAttributes.
        */
-
+      attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'avatar') {
+          this.shadowRoot.querySelector('.avatar img').src = newValue;
+        }
+      }
     });
 
     customElements.define('reaction-picker', class extends HTMLElement {
+      static get observedAttributes() { return ['avatar']; }
+
       constructor() {
         super();
         this.attachShadow({ mode: 'open' });
