@@ -57,18 +57,21 @@
 				justify-content: flex-start;
 			}
 
-      .twoby-grid {
+      .twoby-grid, .threeby-grid {
         display: grid; 
         grid-template-columns: 300px 300px;
         max-width: 80%;
         margin: auto;
       }
-      .twoby-grid img {
+      .twoby-grid img, .threeby-grid img {
         margin: auto;
-        max-width: 300px;
+        max-width: 100%;
       }
-      .twoby-grid div {
+      .twoby-grid div, .threeby-grid div {
         display: flex;
+      }
+      .threeby-grid {
+        grid-template-columns: 1fr 1fr 1fr;
       }
 
       .attribution {
@@ -258,7 +261,7 @@
 
 
         <section>
-            <div class="twoby-grid">
+            <div class="threeby-grid">
               <img src="images/hybrids-logo.svg" />
               <div style="display: flex"><div style="margin: auto">lit-html / LitElement</div></div>
               <svg id="icon-logo" width="100%" height="100%" viewBox="0 0 916 220"> <g> <g> <path d="M277.9,134h33.2c0.5,8.1,6.5,15.7,20.1,15.7c12.5,0,18.9-4.4,18.9-11.1c0-20.3-67.1-1.2-67.1-49.1
@@ -275,33 +278,45 @@
                 C60.9,64.2,77.3,55,88.6,55H134c11.3,0,27.7,9.2,27.7,20.5V76.6z"></path> </g> </g>
               </svg>
               <img src="images/slimjs-logo.png" />
-              Polymer
-              Angular Elements
+              <img src="images/polymer-logo.png" />
+              <div style="display: flex; flex-direction: column">
+                <img src="images/angular-logo.png" style="width: 40%">
+                Elements
+              </div>
+            </div>
+            <div class="notes">
+              hybrid - object based API
+              lit - tagged templates
+              slim - extended lifecycle & binding
+              stencil- framework component capabilitiees    
             </div>
           </section>
   
-        <section class="vertical" data-background-image="images/buzz-lightyear.png" data-background-position="left" data-background-size="contain">
+        <section class="vertical" data-background-image="images/buzz-lightyear.png" data-background-position="left" data-background-size="contain" data-background-repeat="no-repeat">
           <h2 style="text-align: right; margin: auto; margin-right: 0; text-transform: uppercase; font-style: italic; position: relative; top: 1em; font-weight: bolder; text-shadow: 4px 4px rebeccapurple; font-size: 2em">
             To infinity <br> and beyond
           </h2>
           <div class="notes">
             hopefully given you inspiration to find out more about web components
-            more advanced topics like named slots & lifecycle hooks
-            like I said - this is basic web components from spec
-            whole range of tools and frameworks to make writing easier 
-
-            Also tools to allow you to write web components this way but nicer
             hybrid - object based API
             lit - tagged templates
             slim - extended lifecycle & binding
             stencil- framework component capabilitiees
           </div>
         </section>
-        <section class="vertical" data-background-image="images/mario-end.jpg">
-          <div class="card" style="height: 25%">Thanks! </div>
-          <div class="card" style="background-image: url(images/shine-solutions-logo-dark.png); background-position: right; background-size: contain; background-repeat: no-repeat">@ErinJZimmer</div>
-          <div class="card" style="font-size: .8em">web-components.ez.codes/slides.html</div>
-          <div class="card" style="font-size: .8em">web-components.ez.codes/demo.html</div>
+        <section class="vertical" data-background-image="images/mario-end.jpg" data-background-size="cover" data-state="dim">
+          <style>
+            .card {
+              width: 100%;
+              text-align: left;
+            }  
+          </style>
+          <div style="width: max-content; height: 100%; margin-top: 20%">
+            <div class="card" style="height: 25%">Thanks! </div>
+            <div class="card" style="background-image: url(images/shine-solutions-logo-dark.png); background-position: right; background-size: contain; background-repeat: no-repeat; margin-bottom: 1em;">@ErinJZimmer</div>
+            <div class="card" style="font-size: .8em">web-components.ez.codes/slides.html</div>
+            <div class="card" style="font-size: .8em">web-components.ez.codes/demo.html</div>
+          </div>
         </section>
       </div>
     </div>
