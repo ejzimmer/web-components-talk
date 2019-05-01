@@ -176,24 +176,32 @@
         });
       }
 
-      /*
-       * There are also a couple of lifecycle hooks you can use here, such as 
-       * connectedCallback - called when your element is added to the DOM
-       * disconnectedCallback - called when your element is removed from the DOM
-       * adoptedCallback - called when your element is moved to a new document
-       * attributeChangedCallback - called when an attribute is added, removed, or changed.
-       * You need to specify which attributes to watch in a static get function 
-       * named observedAttributes.
+      /* 
+       * attributeChangedCallback is called when the value of an avatar changes
+       * (including when it gets added to the DOM initially). However, you need 
+       * to register any attributes that you want to watch by creating an 
+       * array named observedAttributes that lists the names of the attributes.
+       * This needs to be a class attribute, which you can create as below.
+       * Using a getter like this ensures the array is readonly.
        */
+      static get observedAttributes() { return ['avatar']; }
+
       attributeChangedCallback(name, oldValue, newValue) {
         if (name === 'avatar') {
           this.shadowRoot.querySelector('.avatar img').src = newValue;
         }
       }
+
+      /*
+       * There are also a couple of other lifecycle hooks:
+       * connectedCallback - called when your element is added to the DOM
+       * disconnectedCallback - called when your element is removed from the DOM
+       * adoptedCallback - called when your element is moved to a new document
+       */
+
     });
 
     customElements.define('reaction-picker', class extends HTMLElement {
-      static get observedAttributes() { return ['avatar']; }
 
       constructor() {
         super();
@@ -260,12 +268,25 @@
         })
       }
 
+      /*
+       * You can call any functions that exist on your component - just grab a reference
+       * to the component using something like querySelector, and call the function
+       * eg document.querySelector('emoji-picker').toggleList()
+       * 
+       * Remember, if your component is within the shadow DOM of another component, you 
+       * need to call querySelector on that component's shadowRoot - you won't be able 
+       * to reach it directly from document!
+       */
       toggleList() {
         this.options.classList.toggle('hidden');
       }
 
+      /*
+       * You can access properties on your component in the same way that you call functions.
+       * Remember though that updating a propery won't update the binding in the HTML automatically.
+       * To get around this, you can use a setter to ensure any additional stuff you need gets run.
+       */
       set value(emoji) {
-        console.log('setting')
         this._value = emoji;
         this.selected.textContent = emoji;
         
@@ -278,6 +299,14 @@
         */
         this.dispatchEvent(new CustomEvent('reaction-selected', { detail: emoji, bubbles: true }))
       }
+      /*
+       * If you do create a setter - make sure you create a getter as well, else you won't be able to
+       * read the value!
+       * Using an underscore, like this._value, is a convention used to refer to a value that should be
+       * private and only accessed via getters and setters. There's nothing stopping you from accessing
+       * _value directly from outside the class, but it's frowned upon as it's not considered part of the
+       * component's external-facing API.
+       */
       get value() {
         return this._value;
       }
