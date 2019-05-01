@@ -1,78 +1,113 @@
 <!doctype html>
 <html>
   <head>
+    <title>Web Components</title>
     <link rel="stylesheet" href="reveal/reveal.css">
-		<link rel="stylesheet" href="zenburn.css">
+    <link rel="stylesheet" href="reveal/black.css">
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro"> 
-    <link rel="stylesheet" href="shared.css">
-    <link rel="stylesheet" href="slides.css">
     
     <script src="reveal/reveal.js"></script>
+
+    <style>
+      body {
+        --background: #333;
+        --black: #010101;
+        --blue: #29ABE2;
+        --green: #8FDB69;
+        --yellow: #E7F716;
+        --mid-blue: #166DA5;
+
+        --colour-1: #2A3B8F; /* no */
+        --colour-3: #B4D44E; /* yes */
+
+        --shadow-colour: #111;
+        --text-shadow: 2px 2px 4px var(--background);
+        --box-shadow: 2px 2px 8px 2px var(--shadow-colour);
+        --drop-shadow: drop-shadow(1px 1px 4px var(--shadow-colour));
+        margin: 0;
+        background: var(--background);
+        font-family: 'Source Sans Pro', sans-serif;
+        color: white;
+      }
+
+      html.dim .backgrounds .present {
+        filter: opacity(40%) saturate(0.6) blur(10px);
+      }
+
+			.notes {
+				display: none;
+      }
+      
+      .reveal section ul {
+				list-style-type: '\1F449';
+      }
+      .reveal section ul.superhero {
+        list-style-type: '\1f9b8';
+      }
+
+			.reveal section ul li {
+				padding-left: .5em;
+			}
+
+      .reveal .slides > section.present.horizontal, 
+				.reveal .slides > section > section.present.horizontal,
+				.reveal .slides section.horizontal {
+				flex-direction: row;
+				justify-content: flex-start;
+			}
+
+      .twoby-grid, .threeby-grid {
+        display: grid; 
+        grid-template-columns: 300px 300px;
+        max-width: 80%;
+        margin: auto;
+      }
+      .twoby-grid img, .threeby-grid img {
+        margin: auto;
+        max-width: 100%;
+      }
+      .twoby-grid div, .threeby-grid div {
+        display: flex;
+      }
+      .threeby-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .attribution {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+      }
+    </style>
 			
   </head>
   <body>
     <div class="reveal">
       <div class="slides">
         <section>
-          <img src="images/web-components-logo.svg" style="width: 50%; margin: auto" />
+          <img src="images/web-components-logo.svg" style="width: 50%; margin-top: 0" />
           <h1 class="overlay-text" style="top: calc(50% - 1.75em); text-shadow: var(--text-shadow)">Web Components</h1>
           <div class="overlay-text" style="top: calc(50%); text-shadow: var(--text-shadow); color: hsl(198, 76%, 80%)">It's about time.</div>
-          <div class="notes">
-            First proposed by Alex Russell at Fronteers conf 2011 as a way to create new HTML elements that are custom, reusable and encapsulated
-          </div>
         </section>
-        <section class="vertical">
-          <img src="images/proposal-video.png" class="border" style="margin: auto; width: 100%" />
-          <a style="font-size: .4em; position: relative; color: var(--green); bottom: 3.5em" 
-            href="https://fronteers.nl/congres/2011/sessions/web-components-and-model-driven-views-alex-russell">
-            https://fronteers.nl/congres/2011/sessions/web-components-and-model-driven-views-alex-russell
-          </a>
-          <div class="notes">
-            - Chrome loved them, but nobody else really got on board
-            - To this day, Chrome is only browser to implement full original spec
-          </div>
-        </section>
-        <section class="vertical">
-          <img src="images/polymer-logo.png" style="margin: auto; margin-bottom: 50px;" />
-          <div>polymer</div>
-          <div class="notes">
-            - created by Chrome
-            - cross-browser web components
-            - most popular web components around (based on Google results when researching this article), but still not hugely popular
-          </div>
-        </section>
-        <section class="vertical">
-          <img src="images/jQuery-Logo_On_Dark.svg" style="margin: auto" />
-          <div class="notes">
-            devs didn't care
-            we were all busy writing jquery plugins. components weren't even a thing.
-            it's not 2011 anymore though, and a few things have changed
-          </div>
-        </section>
-        <section class="framework-logos">
-          <img src="images/angular-logo.png" />
-          <img src="images/react-logo.png" />
-          <img src="images/vue-logo.png" />
-          <div class="notes">
-            jquery replaced by frameworks
-            and what do we build framework-based apps out of? components
-            seeing components in the wild = inspiration for spec writers and implementers
-            new, improved web components spec
-          </div>
-        </section>
+
         <section>
-          <img src="images/browser-support.png" class="border" style="align-self: center">
-          <div class="notes">
-            supported by all but Edge
-            Edge is working to support
-            no, IE doesn't support any of this, of course
-            polyfills - fiddly - just like everything else in IE
+          <style>
+            #frameworks-grid {
+              width: 100%;
+              height: 100%;
+              display: grid;
+              justify-items: center;
+            }	
+          </style>
+          <div id="frameworks-grid">
+            <img src="images/react-logo.png" style="grid-row: 1 / 3">
+            <img src="images/angular-logo.png" style="grid-row: 3 / 5; margin-right: -80%">	
+            <img src="images/vue-logo.png" style="grid-row: 2 / 4; height: 80%">
           </div>
         </section>
-        <section>
-          <img src="images/ie-pony.gif" />
-        </section>
-        <section data-background-image="images/batman-vs-superman.jpg">
+  
+        <section data-background-image="images/batman-vs-superman.jpg" data-background-size="cover">
           <div class="notes">
             frameworks: easy creation of components & component based architectures
             do we really need web components
@@ -80,34 +115,27 @@
           </div>
         </section>
         <section>
-          <ul style="position: absolute; left: 20px">
-            <li class="fragment fade-right">Automatic change detection</li>
-            <li class="fragment fade-right">Binding</li>
-            <li class="fragment fade-right">State management</li>
-            <li class="fragment fade-right">Routing</li>
+          <ul class="superhero" style="position: absolute; left: 20px">
+            <li class="fragment">Change detection</li>
+            <li class="fragment">Binding</li>
+            <li class="fragment">State management</li>
+            <li class="fragment">Routing</li>
           </ul>
           <img src="images/superman.png" style="position: absolute; z-index: -1; right: 0; max-height: 80%" />
           <div class="notes">
-            bunch of stuff frameworks give you that web components don't
-            could implement with web components, but then you're just building a framework based on web components
+            - can all be implemented using web components, but frameworks give them to you
+            - not free - big overhead with frameworks
+            - but definitely advantages to not having to build them yourself
           </div>
         </section>
-        <section data-transition="fade-out">
-          <img src="images/component-tree.png" style="margin: auto" />
-          <div class="notes">
-            web components can do parent -> child & broadcast publish/subscribe
-            frameworks tend to do better child -> parent and sibling -> sibling (or between unrelated parts of the app)
-          </div>
+        <section class="horizontal">
+          <img src="images/BatmanDCAU.png" style="max-height: 80%;">
+          <ul class="superhero" style="margin-left: 80px; margin-top: -2.7em">
+            <li class="fragment">Lightweight</li>
+            <li class="fragment">Flexible</li>
+          </ul>
         </section>
-        <section data-transition="fade"><img src="images/parent-child-communication.png" style="margin: auto" /></section>
-        <section data-transition="fade-in"><img src="images/various-communication.png" style="margin: auto" /></section>
-        <section data-background-image="images/contortionist.jpg">
-          <div class="notes">
-            strength of web components = flexibility
-            use them on their own with just a script tag
-            combine with framework
-          </div>
-        </section>
+
         <section>
           <iframe style="width: 100%; height: 600px" src="https://custom-elements-everywhere.com"></iframe>
           <div class="notes">
@@ -116,8 +144,8 @@
             open issues to fix
           </div>
         </section>
+
         <section>
-          <img src="images/BatmanDCAU.png" style="position: absolute; left: -200px; z-index: -1; height: 700px; top: 10px" />
           <div class="twoby-grid">
             <div><img src="images/wordpress-logo.png" /></div>
             <div><img src="images/drupal-logo.png" /></div>
@@ -129,40 +157,60 @@
             share components between app and static site
           </div>
         </section>
-        <section data-background-image="images/batman-and-superman.jpeg">
-          <div class="notes">Why not both?</div>
+
+        <section data-background-image="images/batman-and-superman.jpeg" data-background-size="cover" data-transition="fade-out" data-transition-speed="slow">
+          <div class="attribution">@richsimmonsart</div>
+        </section>
+        <section data-state="dim" data-background-image="images/batman-and-superman.jpeg" data-background-size="cover" data-transition="fade-in" data-transition-speed="slow">
+          <ul class="superhero">
+            <li class="fragment">No framework</li>
+            <li class="fragment">Share components between frameworks</li>
+            <li class="fragment">Components separate from framework</li>
+          </ul>
+          <div class="notes">Why not both?
+            component library
+            A/B testing
+            pages that don't need a framework
+          </div>
           <div class="attribution">@richsimmonsart</div>
         </section>
 
-        <section>
-          <div class="twoby-grid">
-            <img src="images/hybrids-logo.svg" />
-            <div style="display: flex"><div style="margin: auto">lit-html / LitElement</div></div>
-            <svg id="icon-logo" width="100%" height="100%" viewBox="0 0 916 220"> <g> <g> <path d="M277.9,134h33.2c0.5,8.1,6.5,15.7,20.1,15.7c12.5,0,18.9-4.4,18.9-11.1c0-20.3-67.1-1.2-67.1-49.1
-              c0-21.9,18.7-39.9,48.5-39.9c36.2,0,48.7,23.1,49.6,40.8h-31.6c-0.7-7.6-6.5-14.5-18.2-14.5c-10.6,0-16.6,5.1-16.6,11.8
-              c0,20.3,66.9,0,66.9,49.6c0,21.7-18.5,38.8-51.2,38.8C292.4,176,279.5,156.6,277.9,134z"></path> <polygon points="424.5,52.3 424.5,24.2 391.7,24.2 391.7,173.2 424.5,173.2 424.5,79 448.6,79 448.6,52.3 		"></polygon> <path d="M475.5,122.2c2.3,16.6,12.9,25.6,29.3,25.6c9.9,0,19.4-4.4,23.3-13.2h33c-7.2,24.5-29.3,41.3-57.2,41.3
-              c-35.8,0-60.9-26.3-60.9-63.4c0-35.8,24.9-63,60.7-63s60,27.2,60,63c0,5.3-0.5,9.7-0.5,9.7H475.5z M475.9,98.7h54.9
-              c-2.3-13.6-12.2-22.8-27.5-22.8C488.4,75.9,478.7,84.9,475.9,98.7z"></path> <path d="M606,67.1c5.5-10.4,18-17.5,36-17.5c29.1,0,44.5,19.4,44.5,48.2v75.4h-32.8v-71.8c0-14.1-6-23.8-20.5-23.8
-              c-15.9,0-24.7,10.2-24.7,26.3v69.2h-32.8V52.3H606V67.1z"></path> <path d="M759.3,49.6c37.6,0,55.4,26.5,57.7,47.1h-33.7c-2.5-10.4-12.2-18-24.2-18c-17.5,0-27.7,13.8-27.7,34.1
-              c0,20.3,10.2,34.1,27.7,34.1c12,0,21.7-7.6,24.2-18h33.7c-2.3,20.5-20.1,47.1-57.7,47.1c-35.1,0-60.7-27.2-60.7-63.2
-              S724.2,49.6,759.3,49.6z"></path> <path d="M825.7,23.3c0-11.5,8.3-19.8,19.8-19.8c11.5,0,19.8,8.3,19.8,19.8s-8.3,19.6-19.8,19.6C834.1,42.9,825.7,34.9,825.7,23.3z
-              M829.2,52.3H862v120.9h-32.8V52.3z"></path> <path d="M879.5,173.2V11.1h32.8v162.1H879.5z"></path> </g> <g> <path d="M145.1,2.4H77.5C36.9,2.4,3.7,35.6,3.7,76.2v67.6c0,40.6,33.2,73.8,73.8,73.8h67.6c40.6,0,73.8-33.2,73.8-73.8V76.2
-              C218.9,35.6,185.7,2.4,145.1,2.4z M161.7,144.5c0,11.3-16.4,20.5-27.7,20.5H88.6c-11.3,0-27.7-9.2-27.7-20.5v-1.1h100.8V144.5z
-              M161.7,120.8H88.6c-11.3,0-27.7-9.2-27.7-20.5v-1.1H134c11.3,0,27.7,9.2,27.7,20.5V120.8z M161.7,76.6H60.9v-1.1
-              C60.9,64.2,77.3,55,88.6,55H134c11.3,0,27.7,9.2,27.7,20.5V76.6z"></path> </g> </g>
-            </svg>
-            <img src="images/slimjs-logo.png" />
-          </div>
-          <div class="notes">
-            As well polymer, there are a bunch of other libraries and frameworks out there
-            to help you write web components - remove some of the boiler plate, improve tooling
-            fill in some of the gaps
-            hybrid, lit, slim, stencil
-            But today we're going to focus on what the browsers actually off you natively.
-          </div>
-        </section>
 
         <section data-state="specs-list">
+          <style>
+            .specs-list li {
+              display: flex;
+              align-items: center;
+              margin: 0;
+              padding: 20px 30px;
+            }
+            .specs-list svg {
+              width: 100px;
+              margin-right: 20px;
+            }
+            .highlight.green {
+              --highlight-colour: var(--green);
+            }
+            .highlight.blue {
+              --highlight-colour: var(--blue);
+            }
+            .reveal .slides section .specs-list li.fragment.highlight {
+              opacity: 1;
+              visibility: visible;
+            }
+            .reveal .slides section .specs-list li.fragment.visible.current-fragment.highlight {
+              opacity: 1;
+              visibility: visible;
+              color: var(--highlight-colour);
+              fill: var(--highlight-colour);
+            }
+            .reveal .slides section .specs-list li.fragment.visible.highlight {
+              --grey: #999;
+              color: var(--grey);
+              fill: var(--grey);
+            }
+
+          </style>
           <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
             <defs>
               <g id="template">
@@ -178,332 +226,110 @@
             </defs>
           </svg>
           <ul class="specs-list">
-            <li>
+            <li class="fragment highlight green" data-fragment-index="1">
               <svg viewBox="0 0 30 22"><use xlink:href="#import"></use></svg>
               <span>ES modules</span>
             </li>
-            <li>
+            <li class="fragment highlight green" data-fragment-index="2">
               <svg viewBox="0 0 30 22"><use xlink:href="#template"></use></svg>
               <span>HTML templates</span>
             </li>
-            <li>
+            <li class="fragment highlight blue" data-fragment-index="3">
               <svg viewBox="0 0 30 22"><use xlink:href="#element"></use></svg>
               <span>Custom elements</span>
             </li>
-            <li>
+            <li class="fragment highlight blue" data-fragment-index="3">
               <svg viewBox="0 0 30 22"><use xlink:href="#shadow"></use></svg>
               <span>Shadow DOM</span>
             </li>
           </ul>
-          <div class="notes">
-            Not going to talk about ES imports as I assume you know how they work already
-            Also not going to talk about HTML templates - not really useful without HTML imports
-            You will see templates and HTML imports used with Polymer components & other components built on libraries and polyfills
-          </div>
-          <script>
-            Reveal.addEventListener('specs-list', () => {
-              let index = 0;
-              const nextSpec = (event) => {
-                if (event.key === 'ArrowRight' || event.key === 'PageDown') {
-                  event.stopPropagation();
-                  index++;
-                  highlightItem();
-                }
-
-                if (index === 3) {
-                  document.body.removeEventListener('keydown', nextSpec);
-                }
-              }
-              const highlightItem = () => {
-                if (index > 1) {
-                  const previousElement = document.querySelector(`ul.specs-list li:nth-child(${index - 1})`);
-                  previousElement.classList.remove('highlighted');
-                  previousElement.classList.add('done');
-                }
-
-                if (index < 3) {
-                  const element = document.querySelector(`ul.specs-list li:nth-child(${index})`);
-                  element.classList.add('highlighted');
-                }
-
-              }
-              document.body.addEventListener('keydown', nextSpec);
-            });
-          </script>
         </section>
-        <section class="vertical">
-          <svg viewBox="0 0 26 22" style="fill: var(--blue)"><use xlink:href="#element"></use></svg>
-          <h2>Custom Elements</h2>
-        </section>
+
         <section>
-          <ul style="margin-left: 50px">
-            <li>Register new HTML tags</li>
-            <li>Control life cycle and behaviour</li>
-          </ul>
-          <img src="images/Ben_Kenobi.png" />
-          <div class="notes">
-            Not content
-            Limited presentation - you can set style on element but that's it - there are better ways to do this
-          </div>
-        </section>
-        <section>
-          <pre style="align-self: center"><code>customElements.define('my-element', MyElement)</code></pre>
-          <div class="notes">
-            customElements is available on window object in browsers that support it
-            first argument is name - must have hyphen
-            tag names are global - use namespacing if you're worrid about clashes
-          </div>
-        </section>
-        <section class="vertical">
-            <pre style="align-self: center"><code>class MyElement extends HTMLElement {
- constructor() {
-  super();
- }
-
- connectedCallback() { ... }
-
- disconnectedCallback() { ... }
-
- adoptedCallback() { ... }
-
- attributeChangedCallback() { ... } 
-}</code></pre>
-            <div class="notes">
-              must extend HTMLElement or child class
-              must call super
-              may implement any of four lifecycle hooks
-            </div>
-          </section>
-          <section>
-            <style>
-              expanding-bubble {
-                border: 4px solid var(--green);
-                border-radius: 50%;
-                margin: auto;
-                transition: width .4s, height .8s;
-              }
-            </style>
-            <script>
-              class BubbleElement extends HTMLElement {
-                constructor() {
-                  super();
-        
-        
-                  this.onclick = this.grow;
-                }
-        
-                grow() {
-                  const diameter = this.getBoundingClientRect().width;
-                  const newDiameter = diameter * 2;
-                  this.style.width = `${newDiameter}px`;
-                  this.style.height = `${newDiameter}px`;
-                }
-              }
-              customElements.define('expanding-bubble', BubbleElement);
-            </script>
-            <expanding-bubble></expanding-bubble>  
-            <div class="notes">
-              limited by custom elements can't have children - no innerHTML, no appendChild
-            </div>
-          </section>
-
-          <section class="vertical">
-            <svg viewBox="0 0 26 22"><use xlink:href="#shadow"></use></svg>
-            <h2>Shadow DOM</h2>
-            <div class="notes">
-              DOM fragment completely quarantined from the main DOM
-              shadow DOM vs light DOM<
-              browsers have had shadow DOM for years
-              probably used it without realisng 
-            </div>
-          </section>
-          <section class="vertical">
-            <input type="file" />
-            <select>
-                <option>Farore</option>
-                <option>Nayru</option>
-                <option>Din</option>
-            </select>
-            <video controls class="abc-tv hover-highlight" style="height: 400px; width: 600px; align-self: center"></video> 
-            <div class="notes">
-              elements that are clearly made of multiple parts, but appear as single element in DOM = shadow DOM
-              usually real bastards to style
-              check it out in Chrome
-              Show user agent shadow DOM setting in dev tools
-              shadow root - special element
-              create new style - won't apply to shadow root 
-              can't target it with JS
-              Shadow DOM spec is basically giving this ability to developers
-            </div>
-          </section>
-          <section class="vertical">
-            <pre><code>myElement.attachShadow({ mode: 'open' });
-myElement.shadowRoot.innerHTML = `
-  <style>
-    .inner {
-      border: 12px solid var(--mid-blue);
-      width: 100px;
-      height: 100px;
-      margin: auto;
-    }
-  </style>
-  <div class="inner"></div>
-`;</code></pre>
-          <div class="notes">
-            mode - open vs closed
-            attach children via innerHTML or append child
-          </div>
-        </section>
-        <section>
-          <style>
-            #myElement {
-              margin: auto;
-              background-color: var(--green);
-              width: 200px;
-              height: 200px;
-              display: flex;
-            }
-          </style>
-          <div id="myElement"></div>
-          <script>
-            const shadowRoot = myElement.attachShadow({ mode: 'open' });
-            shadowRoot.innerHTML = `
-              <style>
-                .inner {
-                  border: 12px solid var(--mid-blue);
-                  width: 100px;
-                  height: 100px;
-                  margin: auto;
-                }
-              </style>
-              <div class="inner"></div>
-            `;
-          </script>
-          <div class="notes">
-            - can see shadow root in dev tools
-            - can't affect inner element with new css class (although custom property works)
-            - can access inner element via JS
-          </div>
-        </section>
-        <section>
-          <img src="images/darth-vader.png" style="height: 600px; position: absolute; left: -10%; z-index: -1;" />
+          <h2>Live Coding</h2>
           <ul>
-            <li>Impervious to CSS</li>
-            <li>Semi-impervious to JS</li>
-            <li>Vulnerable to dev tools</li>
+            <li class="fragment">Custom Element & Shadow DOM</li>
+            <li class="fragment">Styling</li>
+            <li class="fragment">Passing data</li>
+            <li class="fragment">Behaviour</li>
+            <li class="fragment">Communication</li>
           </ul>
+          <div class="notes">
+            Styling: especially light & shadow DOM
+          </div>
         </section>
+
+
+        <section>
+            <div class="threeby-grid">
+              <img src="images/hybrids-logo.svg" />
+              <div style="display: flex"><div style="margin: auto">lit-html / LitElement</div></div>
+              <svg id="icon-logo" width="100%" height="100%" viewBox="0 0 916 220"> <g> <g> <path d="M277.9,134h33.2c0.5,8.1,6.5,15.7,20.1,15.7c12.5,0,18.9-4.4,18.9-11.1c0-20.3-67.1-1.2-67.1-49.1
+                c0-21.9,18.7-39.9,48.5-39.9c36.2,0,48.7,23.1,49.6,40.8h-31.6c-0.7-7.6-6.5-14.5-18.2-14.5c-10.6,0-16.6,5.1-16.6,11.8
+                c0,20.3,66.9,0,66.9,49.6c0,21.7-18.5,38.8-51.2,38.8C292.4,176,279.5,156.6,277.9,134z"></path> <polygon points="424.5,52.3 424.5,24.2 391.7,24.2 391.7,173.2 424.5,173.2 424.5,79 448.6,79 448.6,52.3 		"></polygon> <path d="M475.5,122.2c2.3,16.6,12.9,25.6,29.3,25.6c9.9,0,19.4-4.4,23.3-13.2h33c-7.2,24.5-29.3,41.3-57.2,41.3
+                c-35.8,0-60.9-26.3-60.9-63.4c0-35.8,24.9-63,60.7-63s60,27.2,60,63c0,5.3-0.5,9.7-0.5,9.7H475.5z M475.9,98.7h54.9
+                c-2.3-13.6-12.2-22.8-27.5-22.8C488.4,75.9,478.7,84.9,475.9,98.7z"></path> <path d="M606,67.1c5.5-10.4,18-17.5,36-17.5c29.1,0,44.5,19.4,44.5,48.2v75.4h-32.8v-71.8c0-14.1-6-23.8-20.5-23.8
+                c-15.9,0-24.7,10.2-24.7,26.3v69.2h-32.8V52.3H606V67.1z"></path> <path d="M759.3,49.6c37.6,0,55.4,26.5,57.7,47.1h-33.7c-2.5-10.4-12.2-18-24.2-18c-17.5,0-27.7,13.8-27.7,34.1
+                c0,20.3,10.2,34.1,27.7,34.1c12,0,21.7-7.6,24.2-18h33.7c-2.3,20.5-20.1,47.1-57.7,47.1c-35.1,0-60.7-27.2-60.7-63.2
+                S724.2,49.6,759.3,49.6z"></path> <path d="M825.7,23.3c0-11.5,8.3-19.8,19.8-19.8c11.5,0,19.8,8.3,19.8,19.8s-8.3,19.6-19.8,19.6C834.1,42.9,825.7,34.9,825.7,23.3z
+                M829.2,52.3H862v120.9h-32.8V52.3z"></path> <path d="M879.5,173.2V11.1h32.8v162.1H879.5z"></path> </g> <g> <path d="M145.1,2.4H77.5C36.9,2.4,3.7,35.6,3.7,76.2v67.6c0,40.6,33.2,73.8,73.8,73.8h67.6c40.6,0,73.8-33.2,73.8-73.8V76.2
+                C218.9,35.6,185.7,2.4,145.1,2.4z M161.7,144.5c0,11.3-16.4,20.5-27.7,20.5H88.6c-11.3,0-27.7-9.2-27.7-20.5v-1.1h100.8V144.5z
+                M161.7,120.8H88.6c-11.3,0-27.7-9.2-27.7-20.5v-1.1H134c11.3,0,27.7,9.2,27.7,20.5V120.8z M161.7,76.6H60.9v-1.1
+                C60.9,64.2,77.3,55,88.6,55H134c11.3,0,27.7,9.2,27.7,20.5V76.6z"></path> </g> </g>
+              </svg>
+              <img src="images/slimjs-logo.png" />
+              <img src="images/polymer-logo.png" />
+              <div style="display: flex; flex-direction: column">
+                <img src="images/angular-logo.png" style="width: 40%">
+                Elements
+              </div>
+            </div>
+            <div class="notes">
+              hybrid - object based API
+              lit - tagged templates
+              slim - extended lifecycle & binding
+              stencil- framework component capabilitiees    
+            </div>
+          </section>
   
-        <section data-background-image="images/dark-vs-light.jpg">
-          <div class="notes">
-            what happens when we combine shadow DOM and custom elements?
-            less like this and more like
-          </div>
-        </section>
-        <section data-background-image="images/obiwan-and-anakin.jpg" data-background-position="top">
-        </section>
-
-        <section>
-          <style>
-            emoji-picker {
-              margin: auto;
-            }
-          </style>
-          <emoji-picker></emoji-picker>
-        </section>
-
-        <section data-background-image="images/lightsaber.jpg" data-background-size="600px" data-background-position="left">
-          <h2 style="font-size: 1.3em; position: fixed; right: 0; text-align: left">Piercing the<br> shadow DOM</h2>
-          <div class="notes">
-            encapsulation is great, but sometimes you really need to pass something in
-          </div>
-        </section>
-        <section data-background-image="images/mace-windu.png" data-background-position="bottom right" data-background-size="600px">
-          <pre style="margin: auto"><code class="html"><jedi-knight saber="purple"></jedi-knight></code></pre>
-          <div class="notes">
-            the simplest way to pass things through the shadow DOM is via attributes on your custom element
-            unlike framework components - can only pass strings - no reason you can't stringify object
-            framework will take care of stringification I think
-          </div>
-        </section>
-        <section data-background-image="images/mace-windu.png" data-background-position="bottom right" data-background-size="600px">
-          <pre><code class="js">const saber = this.attributes.saber.value</code></pre>
-          <div class="notes">
-            the more complicated way is to pass chunks of light DOM
-          </div>
-        </section>
-        <section>
-          <select>
-            <option>Chewbacca</option>
-            <option>Wicket the Ewok</option>
-          </select>
-          <div class="notes">
-            select = shadow root
-            options exist light DOM
-            select has slot for options
-          </div>
-        </section>
-        <section>
-          <style>
-            twoot-post {
-              margin: auto;
-            }
-            twoot-post a {
-              color: var(--green);
-            }
-          </style>
-          <twoot-post avatar="images/bowser-avatar.png">
-            Hey Mario, the princess is in 
-            <a href="https://goo.gl/maps/cZzyjm8LMrF2">another castle</a>
-          </twoot-post> 
-          <div class="notes">the next big thing after Google plus</div>
-        </section>
-        <section class="vertical">
-          <ul>
-            <li class="fragment">Shadow DOM + Custom elements</li>
-            <li class="fragment">Available in (almost) all browsers</li>
-            <li class="fragment">Work with (almost) all frameworks</li>
-          </ul>
-        </section>
-        <section class="vertical" data-background-image="images/buzz-lightyear.png" data-background-position="left" data-background-size="contain">
+        <section class="vertical" data-background-image="images/buzz-lightyear.png" data-background-position="left" data-background-size="contain" data-background-repeat="no-repeat">
           <h2 style="text-align: right; margin: auto; margin-right: 0; text-transform: uppercase; font-style: italic; position: relative; top: 1em; font-weight: bolder; text-shadow: 4px 4px rebeccapurple; font-size: 2em">
             To infinity <br> and beyond
           </h2>
           <div class="notes">
             hopefully given you inspiration to find out more about web components
-            more advanced topics like named slots & lifecycle hooks
-            like I said - this is basic web components from spec
-            whole range of tools and frameworks to make writing easier 
-
-            Also tools to allow you to write web components this way but nicer
             hybrid - object based API
             lit - tagged templates
             slim - extended lifecycle & binding
             stencil- framework component capabilitiees
           </div>
         </section>
-        <section class="vertical" data-background-image="images/mario-end.jpg">
-          <div class="card" style="height: 25%">Thanks! </div>
-          <div class="card" style="background-image: url(images/shine-solutions-logo-dark.png); background-position: right; background-size: contain; background-repeat: no-repeat">@ErinJZimmer</div>
-          <div class="card" style="font-size: .8em">ejzimmer.github.io/web-components-talk</div>
+        <section class="vertical" data-background-image="images/mario-end.jpg" data-background-size="cover" data-state="dim">
+          <style>
+            .card {
+              width: 100%;
+              text-align: left;
+            }  
+          </style>
+          <div style="width: max-content; height: 100%; margin-top: 20%">
+            <div class="card" style="height: 25%">Thanks! </div>
+            <div class="card" style="background-image: url(images/shine-solutions-logo-dark.png); background-position: right; background-size: contain; background-repeat: no-repeat; margin-bottom: 1em;">@ErinJZimmer</div>
+            <div class="card" style="font-size: .8em">web-components.ez.codes/slides.html</div>
+            <div class="card" style="font-size: .8em">web-components.ez.codes/demo.html</div>
+          </div>
         </section>
       </div>
     </div>
     <script src="reveal/head.min.js"></script>
     <script>
-      Reveal.initialize({
-        controls: false,
-        progress: false,
-        history: true,
-        center: false,
-        display: 'flex',
-        dependencies: [
-          { src: 'reveal/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-        ]
-      });
+			Reveal.initialize({
+				controls: false,
+				history: true,
+				display: 'flex',
+				progress: false,
+				center: false,
+			});
     </script>
-    <script src="emoji-picker.js"></script>
-    <script src="twoot-post.js"></script>
   </body>
 </html>
       

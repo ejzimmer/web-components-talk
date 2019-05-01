@@ -1,41 +1,38 @@
-          <style>
-            .post {
-              border: solid var(--theme-colour);
-              border-width: 4px;
-              width: 80vw;
-              min-height: 200px;
-              display:grid;
-              grid-template: 
-                "avatar content reaction" auto
-                "reactions reactions reactions" 2em / 150px auto 150px;
-            }
-            .avatar {
-              grid-area: avatar;
-              display: flex;
-              align-items: center;
-            }
-            .avatar img {
-              max-width: 100%;
-              margin: auto;
-            }
-            .content {
-              grid-area: content;
-              font-size: 24px;
-              padding: 1em;
-              border: solid var(--theme-colour);
-              border-width: 0 2px;
-            }
-            .reaction {
-              grid-area: reaction;
-            }
-            .reactions {
-              border-top: 2px solid var(--theme-colour);
-              grid-area: reactions;
-              display: flex;
-              align-items: center;
-              padding: 0 .5em;
-            }
-          </style>
+<style>
+  :host {
+    font-size: 24px;
+    font-family: inherit;
+  }
+  .post {
+    border: 4px solid var(--theme-colour);
+    width: 80vw;
+    min-height: 200px;
+    display:grid;
+    grid-template-columns: 150px 1fr 150px;
+    grid-template-rows: auto 2em;
+  }
+  .avatar {
+    display: flex;
+    align-items: center;
+  }
+  .avatar img {
+    max-width: 100%;
+    margin: auto;
+  }
+  .content {
+    font-size: 24px;
+    padding: 1em;
+    border: solid var(--theme-colour);
+    border-width: 0 2px;
+  }
+  .reactions {
+    border-top: 2px solid var(--theme-colour);
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    padding: 0 .5em;
+  }
+</style>
 
 ==============================================================================
 
@@ -50,36 +47,39 @@ Hey Mario,<br> the princess is in
 
 ===============================================================================
 
-          <style>
-            :host {
-              width: 100%;
-              height: 100%;
-              display: flex;
-              position: relative;
-            }
-            button {
-              border: none;
-              background: none;
-              color: var(--picker-colour);
-              margin: auto;
-              font-size: 3em;
-              cursor: pointer;
-            }
-            button:active, button:focus {
-              outline: inherit; 
-            }
-            ul {
-              position: absolute;
-              border: 2px solid var(--picker-colour);
-              list-style: none;
-              display: flex;
-              padding: 1em;
-              justify-content: space-between;
-              left: -50%;
-              top: -25%;
-              background: var(--background);
-            }
-            ul.hidden {
-              display: none;
-            }
-          </style>
+  <style>
+    :host {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      position: relative;
+    }
+    button {
+      border: none;
+      background: none;
+      color: var(--picker-colour);
+      margin: auto;
+      font-size: 3em;
+      cursor: pointer;
+    }
+    button:active, button:focus {
+      outline: inherit; 
+    }
+    li button:hover, li button:focus {
+      background: var(--picker-colour);
+    }
+    ul {
+      position: absolute;
+      border: 2px solid var(--picker-colour);
+      list-style: none;
+      display: flex;
+      padding: 1em;
+      justify-content: space-between;
+      left: -50%;
+      top: -25%;
+      background: var(--background);
+    }
+    ul.hidden {
+      display: none;
+    }
+  </style>
