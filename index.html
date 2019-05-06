@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body {
+      --background: #333;
+      --black: #010101;
+      --blue: #29ABE2;
+      --green: #8FDB69;
+      --yellow: #E7F716;
+      --mid-blue: #166DA5;
+
+      --colour-1: #2A3B8F; /* no */
+      --colour-3: #B4D44E; /* yes */
+
+      --shadow-colour: #111;
+      --text-shadow: 2px 2px 4px var(--background);
+      --box-shadow: 2px 2px 8px 2px var(--shadow-colour);
+      --drop-shadow: drop-shadow(1px 1px 4px var(--shadow-colour));
+      margin: 0;
+      background: var(--background);
+      font-family: 'Source Sans Pro', sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
+
+    h1 {
+      font-size: 4em;
+    }
+
+    a {
+      font-size: 3em;
+      color: var(--blue);
+      font-family: 'Courier New', Courier, monospace;
+    }
+    a:visited {
+      color: var(--green);
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+      width: 63ch;
+    }
+    li {
+      margin-bottom: .5em;
+    }
+  </style>
+</head>
+<body>
+  <img src="images/web-components-logo.svg" style="width: 20vw; margin-top: 0" />
+  <h1 style="text-align: center">
+    <div>Web Components</div>
+    <div style="font-size: .8em; color: hsl(198, 76%, 80%)">It's about time.</div>    
+  </h1>
+  <ul>
+    <li><a href="slides.html">Slides</a></li>
+    <li><a href="demo.html">Completed demo</a></li>
+  </ul>
+</body>
+</html>
