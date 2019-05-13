@@ -260,12 +260,10 @@
           this.options.classList.remove('hidden');
         });
 
-        this.shadowRoot.querySelectorAll('li button').forEach((button) => {
-          button.addEventListener('click', (event) => {
-            this.value = event.target.textContent;
-            this.options.classList.add('hidden');
-          })
-        })
+        this.options.addEventListener('click', (event) => {
+          this.value = event.target.textContent;
+          this.options.classList.add('hidden');
+        });
       }
 
       /*
