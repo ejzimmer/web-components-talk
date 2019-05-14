@@ -83,3 +83,13 @@ Hey Mario,<br> the princess is in
       display: none;
     }
   </style>
+
+=======================================
+
+setTimeout(() => {
+  document.querySelector('twoot-post').setAttribute('avatar', 'images/bowser-avatar.png');
+  document.querySelector('twoot-post').innerHTML = `
+    Hey Mario,<br> the princess is in 
+    <a href="https://goo.gl/maps/cZzyjm8LMrF2">another castle</a>
+  `;  
+}, 2000)
