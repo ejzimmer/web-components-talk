@@ -33,6 +33,17 @@
     padding: 0 .5em;
   }
 </style>
+<div class="post">
+  <div class="avatar">
+    <img src="">
+  </div>
+  <div class="content"><slot></slot></div>
+  <div class="reaction">
+    <emoji-picker></emoji-picker>
+  </div>
+  <div class="reactions"></div>
+</div>
+
 
 ==============================================================================
 
@@ -40,12 +51,6 @@ Hey Mario,<br> the princess is in
 <a href="https://goo.gl/maps/cZzyjm8LMrF2">another castle</a>
 
 ==============================================================================
-
-<li><button>😃</button></li>
-<li><button>😞</button></li>
-<li><button>🚡</button></li>
-
-===============================================================================
 
   <style>
     :host {
@@ -83,6 +88,12 @@ Hey Mario,<br> the princess is in
       display: none;
     }
   </style>
+  <button class="selected">+</button>
+  <ul class="hidden">
+    <li><button>😃</button></li>
+    <li><button>😞</button></li>
+    <li><button>🚡</button></li>
+  </ul>
 
 =======================================
 
