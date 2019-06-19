@@ -13,10 +13,6 @@
       --green: #8FDB69;
       --yellow: #E7F716;
       --mid-blue: #166DA5;
-
-      --colour-1: #2A3B8F; /* no */
-      --colour-3: #B4D44E; /* yes */
-
       --shadow-colour: #111;
       --text-shadow: 2px 2px 4px var(--background);
       --box-shadow: 2px 2px 8px 2px var(--shadow-colour);
@@ -27,40 +23,49 @@
       color: white;
       display: flex;
       flex-direction: column;
-      height: 100vh;
+      min-height: 100vh;
       align-items: center;
-      justify-content: center;
+      justify-content: space-around;
     }
+
+		img {
+			height: 30vh;
+      margin-top: 10vh;
+		}
 
     h1 {
-      font-size: 4em;
+      font-size: 6em;
+			margin: 0;
     }
 
-    a {
-      font-size: 3em;
-      color: var(--blue);
-      font-family: 'Courier New', Courier, monospace;
-    }
-    a:visited {
-      color: var(--green);
-    }
+		div {
+			font-size: 3em;
+			color: var(--blue);
+			margin-bottom: 1em;
+		}
 
     ul {
-      list-style-type: none;
-      padding-left: 0;
-      width: 63ch;
+      margin-top: 20vh;
+      font-size: 36px;
+      margin-bottom: 100vh;
+      list-style-type: '\1f680';
     }
     li {
-      margin-bottom: .5em;
+      margin: 1em 0;
+      padding-left: .75em;
     }
+
   </style>
 </head>
 <body>
-  <img src="images/web-components-logo.svg" style="width: 20vw; margin-top: 0" />
-  <h1 style="text-align: center">Let's build a web component!</h1>
+  <img src="images/web-components-logo.svg" />
+	<h1 style="text-align: center">Let's build a<br> web component!</h1>
+  <div>@ErinJZimmer</div>
   <ul>
-    <li><a href="slides.html">Slides</a></li>
-    <li><a href="demo.html">Completed demo</a></li>
+    <li>Custom Elements</li>
+    <li>Shadow DOM</li>
+    <li>HTML Templates</li>
+    <li>ES Imports</li>
   </ul>
 </body>
 </html>

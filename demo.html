@@ -20,6 +20,137 @@
       margin: auto;
     }
   </style>
+
+  <!-- template elements create a DocumentFragment - a piece of DOM that can be accessed from
+    your page, but doesn't affect the rendering in any way. Because they don't affect rendering,
+    you can stick them in the head, if you want. Just remember to include your template on the 
+    page _before_ you try to reference it in your custom element
+  -->
+  <template id="twoot-post">
+    <style>
+      /*
+        * The :host pseudo-class refers to the element itself.
+        * Notice that both 'inherit' and custom properties pass through
+        * the shadow root barrier, allowing you to access CSS from outside
+        * the shadow DOM in a controlled fashion.
+        */
+      :host {
+        font-size: 24px;
+        font-family: inherit;
+      }
+
+      /*
+        * The ::slotted pseudo-element gives you access to the light DOM.
+        * This is so you can style the content inside a slot element, which
+        * is actually in the light DOM.
+        * You need to pass it a CSS selector. If you just want your style to
+        * apply to everything in the slot, use * like I have here.
+        */
+      ::slotted(*) {
+        color: white;
+      }
+      .post {
+        border: 4px solid var(--theme-colour);
+        width: 80vw;
+        min-height: 200px;
+        display:grid;
+        grid-template-columns: 150px 1fr 150px;
+        grid-template-rows: auto 2em;
+      }
+      .avatar {
+        display: flex;
+        align-items: center;
+      }
+      .avatar img {
+        max-width: 100%;
+        margin: auto;
+      }
+      .content {
+        font-size: 24px;
+        padding: 1em;
+        border: solid var(--theme-colour);
+        border-width: 0 2px;
+      }
+      .reactions {
+        border-top: 2px solid var(--theme-colour);
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: center;
+        padding: 0 .5em;
+      }
+    </style>
+    <div class="post">
+      <div class="avatar"><img></div>
+
+      <!-- The slot element creates a kind of tunnel to the light DOM.
+            Any content inside your custom element will be passed through
+            to this slot.
+            You can give your slot default content, eg <slot>default text</slot>.
+            If there is no content in the custom element, the content of the slot
+            will appear.
+            You can also have multiple slots. You just need to give each slot a name:
+            <slot name="first-slot"></slot>
+            Then, when the custom element is used, the user needs to specify which 
+            slot each part of the content needs to go in, eg
+            <my-custom-element>
+              <p slot="first-slot">some content</p>
+              <p slot="second-slot">more content</p>
+            </my-custom-element>
+            Any content which isn't in a slot (or is referencing a slot which doesn't
+            exist) just won't show up. -->
+      <div class="content"><slot></slot></div>
+      <div class="reaction">
+        <!-- You can have custom elements inside of custom elements! -->
+        <reaction-picker></reaction-picker>
+      </div>
+      <div class="reactions"></div>
+    </div>
+  </template>
+
+  <template id="emoji-picker">
+    <style>
+      :host {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        position: relative;
+      }
+      button {
+        border: none;
+        background: none;
+        color: var(--theme-colour);
+        margin: auto;
+        font-size: 3em;
+        cursor: pointer;
+      }
+      button:active, button:focus {
+        outline: inherit; 
+      }
+      ul {
+        position: absolute;
+        border: 2px solid var(--theme-colour);
+        list-style: none;
+        display: flex;
+        padding: 1em;
+        justify-content: space-between;
+        left: -50%;
+        top: -25%;
+        background: var(--background);
+      }
+      ul.hidden {
+        display: none;
+      }
+      li button:hover, li button:focus {
+        background: var(--picker-colour);
+      }
+    </style>
+    <button class="selected">+</button>
+    <ul class="hidden">
+      <li><button>😃</button></li>
+      <li><button>😞</button></li>
+      <li><button>🚡</button></li>
+    </ul>
+  </template>
 </head>
 <body>
   <!-- Our custom element can take attributes and content,
@@ -40,6 +171,7 @@
      *    class inline, like I have here, or define it somewhere else and 
      *    pass it in.
      */
+     
     customElements.define('twoot-post', class extends HTMLElement {
 
       /*
@@ -64,104 +196,27 @@
 
         /*
          * You can add children to your shadow root using any of the usual methods you 
-         * use to add children to an HTML element, such as this.shadowRoot.appendChild().
-         * I'm using innerHTML because I can pass it a template string and easily pass 
-         * things into the template string. Libraries like lit-html can help make this
-         * bit easier to manage and more performant.
+         * use to add children to an HTML element, such as creating HTML nodes and appending
+         * them, or using innerHTML. 
+         *
+         * Here, we're grabbing a reference to a DocumentFragment in a template node, creating
+         * a copy of it, and appending it to our shadow root. The true flag of cloneNode indicates
+         * that we're creating a deep copy.
          */
-        this.shadowRoot.innerHTML = `
-          <style>
-            /*
-             * The :host pseudo-class refers to the shadow root itself.
-             * Notice that both 'inherit' and custom properties pass through
-             * the shadow root barrier, allowing you to access CSS from outside
-             * the shadow DOM in a controlled fashion.
-             */
-            :host {
-              font-size: 24px;
-              font-family: inherit;
-              --picker-colour: var(--theme-colour);
-            }
-
-            /*
-             * The ::slotted pseudo-element gives you access to the light DOM.
-             * This is so you can style the content inside a slot element, which
-             * is actually in the light DOM.
-             * You need to pass it a CSS selector. If you just want your style to
-             * apply to everything in the slot, use * like I have here.
-             */
-            ::slotted(*) {
-              color: white;
-            }
-            .post {
-              border: 4px solid var(--theme-colour);
-              width: 80vw;
-              min-height: 200px;
-              display:grid;
-              grid-template-columns: 150px 1fr 150px;
-              grid-template-rows: auto 2em;
-            }
-            .avatar {
-              display: flex;
-              align-items: center;
-            }
-            .avatar img {
-              max-width: 100%;
-              margin: auto;
-            }
-            .content {
-              font-size: 24px;
-              padding: 1em;
-              border: solid var(--theme-colour);
-              border-width: 0 2px;
-            }
-            .reactions {
-              border-top: 2px solid var(--theme-colour);
-              grid-column: 1 / -1;
-              display: flex;
-              align-items: center;
-              padding: 0 .5em;
-            }
-          </style>
-          <div class="post">
-            <div class="avatar">
-              <!-- You can easily access your custom elements attributes using
-                   this.attributes, which works exactly the same as the
-                   attributes property on any HTML element -->
-              <img src="${ this.attributes.avatar.value }" />
-            </div>
-
-            <!-- The slot element creates a kind of tunnel to the light DOM.
-                 Any content inside your custom element will be passed through
-                 to this slot.
-                 You can give your slot default content, eg <slot>default text</slot>.
-                 If there is no content in the custom element, the content of the slot
-                 will appear.
-                 You can also have multiple slots. You just need to give each slot a name:
-                 <slot name="first-slot"></slot>
-                 Then, when the custom element is used, the user needs to specify which 
-                 slot each part of the content needs to go in, eg
-                 <my-custom-element>
-                   <p slot="first-slot">some content</p>
-                   <p slot="second-slot">more content</p>
-                 </my-custom-element>
-                 Any content which isn't in a slot (or is referencing a slot which doesn't
-                 exist) just won't show up. -->
-            <div class="content"><slot></slot></div>
-            <div class="reaction">
-              <!-- You can have custom elements inside of custom elements! -->
-              <reaction-picker></reaction-picker>
-            </div>
-            <div class="reactions"></div>
-          </div>`;
+        const template = document.getElementById('twoot-post').content.cloneNode(true);
+        this.shadowRoot.appendChild(template);
 
         /*
-         * You can grab a reference to the elements inside your custom element using 
-         * any of the selector functions you can normally use (querySelector, getElementById).
-         * Just remember to use them on the shadow root, not on document.
-         * Of course, if you created elements using document.createElement(...), you probably
-         * already have a reference to them and don't need to do this
+         * You can access your custom element's attributes the same way you would access the
+         * attribute of any other HTML element.
+         *
+         * You can also use the standard selector functions - like querySelector & getElementById
+         * - on the shadow root. Just remember to use this.shadowRoot.querySelector NOT
+         * document.querySelector!
          */
+        const avatar = this.getAttribute('avatar');
+        this.shadowRoot.querySelector('img').src = avatar;
+        
         this.reactionsElement = this.shadowRoot.querySelector('.reactions');
         this.reactions = [];
 
@@ -175,30 +230,6 @@
           this.reactionsElement.textContent = this.reactions.join('');
         });
       }
-
-      /* 
-       * attributeChangedCallback is called when the value of an avatar changes
-       * (including when it gets added to the DOM initially). However, you need 
-       * to register any attributes that you want to watch by creating an 
-       * array named observedAttributes that lists the names of the attributes.
-       * This needs to be a class attribute, which you can create as below.
-       * Using a getter like this ensures the array is readonly.
-       */
-      static get observedAttributes() { return ['avatar']; }
-
-      attributeChangedCallback(name, oldValue, newValue) {
-        if (name === 'avatar') {
-          this.shadowRoot.querySelector('.avatar img').src = newValue;
-        }
-      }
-
-      /*
-       * There are also a couple of other lifecycle hooks:
-       * connectedCallback - called when your element is added to the DOM
-       * disconnectedCallback - called when your element is removed from the DOM
-       * adoptedCallback - called when your element is moved to a new document
-       */
-
     });
 
     customElements.define('reaction-picker', class extends HTMLElement {
@@ -206,50 +237,9 @@
       constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.innerHTML = `
-          <style>
-            :host {
-              width: 100%;
-              height: 100%;
-              display: flex;
-              position: relative;
-            }
-            button {
-              border: none;
-              background: none;
-              color: var(--picker-colour);
-              margin: auto;
-              font-size: 3em;
-              cursor: pointer;
-            }
-            button:active, button:focus {
-              outline: inherit; 
-            }
-            ul {
-              position: absolute;
-              border: 2px solid var(--picker-colour);
-              list-style: none;
-              display: flex;
-              padding: 1em;
-              justify-content: space-between;
-              left: -50%;
-              top: -25%;
-              background: var(--background);
-            }
-            ul.hidden {
-              display: none;
-            }
-            li button:hover, li button:focus {
-              background: var(--picker-colour);
-            }
-          </style>
-          <button class="selected">+</button>
-          <ul class="hidden">
-            <li><button>😃</button></li>
-            <li><button>😞</button></li>
-            <li><button>🚡</button></li>
-          </ul>
-        `;
+
+        const template = document.getElementById('emoji-picker').content.cloneNode(true);
+        this.shadowRoot.appendChild(template);
 
         this.selected = this.shadowRoot.querySelector('button.selected');
         this.options = this.shadowRoot.querySelector('ul');
@@ -309,6 +299,8 @@
         return this._value;
       }
     });
-  </script>  
+  </script>
+
+
 </body>
 </html>

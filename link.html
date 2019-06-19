@@ -13,10 +13,6 @@
       --green: #8FDB69;
       --yellow: #E7F716;
       --mid-blue: #166DA5;
-
-      --colour-1: #2A3B8F; /* no */
-      --colour-3: #B4D44E; /* yes */
-
       --shadow-colour: #111;
       --text-shadow: 2px 2px 4px var(--background);
       --box-shadow: 2px 2px 8px 2px var(--shadow-colour);
@@ -29,38 +25,29 @@
       flex-direction: column;
       height: 100vh;
       align-items: center;
-      justify-content: center;
+      justify-content: space-around;
     }
+
+		img {
+			height: 40%;
+		}
 
     h1 {
       font-size: 4em;
+			margin: 0;
     }
 
-    a {
-      font-size: 3em;
-      color: var(--blue);
-      font-family: 'Courier New', Courier, monospace;
-    }
-    a:visited {
-      color: var(--green);
-    }
+		div {
+			font-size: 3em;
+			color: var(--blue);
+			margin-bottom: 1em;
+		}
 
-    ul {
-      list-style-type: none;
-      padding-left: 0;
-      width: 63ch;
-    }
-    li {
-      margin-bottom: .5em;
-    }
   </style>
 </head>
 <body>
-  <img src="images/web-components-logo.svg" style="width: 20vw; margin-top: 0" />
-  <h1 style="text-align: center">Let's build a web component!</h1>
-  <ul>
-    <li><a href="slides.html">Slides</a></li>
-    <li><a href="demo.html">Completed demo</a></li>
-  </ul>
+  <img src="images/web-components-logo.svg" style="margin-top: 0" />
+	<h1 style="text-align: center">web-components.ez.codes</h1>
+	<div>@ErinJZimmer</div>
 </body>
 </html>

@@ -34,13 +34,9 @@
   }
 </style>
 <div class="post">
-  <div class="avatar">
-    <img src="">
-  </div>
-  <div class="content"><slot></slot></div>
-  <div class="reaction">
-    <emoji-picker></emoji-picker>
-  </div>
+  <div class="avatar"></div>
+  <div class="content"></div>
+  <div class="reaction"></div>
   <div class="reactions"></div>
 </div>
 
@@ -62,7 +58,7 @@ Hey Mario,<br> the princess is in
     button {
       border: none;
       background: none;
-      color: var(--picker-colour);
+      color: var(--theme-colour);
       margin: auto;
       font-size: 3em;
       cursor: pointer;
@@ -71,11 +67,11 @@ Hey Mario,<br> the princess is in
       outline: inherit; 
     }
     li button:hover, li button:focus {
-      background: var(--picker-colour);
+      background: var(--theme-colour);
     }
     ul {
       position: absolute;
-      border: 2px solid var(--picker-colour);
+      border: 2px solid var(--theme-colour);
       list-style: none;
       display: flex;
       padding: 1em;
